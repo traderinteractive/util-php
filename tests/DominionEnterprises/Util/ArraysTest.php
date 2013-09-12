@@ -39,48 +39,6 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::merge
-     */
-    public function merge()
-    {
-        $arrayOne = array(
-            'a' => 'foo',
-            'b' => 'bar',
-            'c' => array(
-                'A' => 1,
-                'B' => 2,
-            ),
-            'd' => null,
-            'e' => 123,
-        );
-
-        $arrayTwo = array(
-            'b' => 'baz',
-            'c' => array(
-                'A' => 1,
-                'C' => 3,
-            ),
-            'd' => 'foo',
-            'e' => null,
-        );
-
-        $expected = array(
-            'a' => 'foo',
-            'b' => 'baz',
-            'c' => array(
-                'A' => 1,
-                'B' => 2,
-                'C' => 3,
-            ),
-            'd' => 'foo',
-            'e' => null,
-        );
-
-        $this->assertSame($expected, A::merge($arrayOne, $arrayTwo));
-    }
-
-    /**
-     * @test
      * @covers \DominionEnterprises\Util\Arrays::tryGet
      */
     public function tryGet_nullKey()
