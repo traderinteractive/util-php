@@ -1,14 +1,15 @@
 <?php
 /**
- * Defines the \DominionEnterprises\HttpUtil class.
+ * Defines the \DominionEnterprises\Util\Http class.
  */
 
-namespace DominionEnterprises;
+namespace DominionEnterprises\Util;
+use DominionEnterprises\Util;
 
 /**
  * Static class with various HTTP related functions.
  */
-final class HttpUtil
+final class Http
 {
     /**
      * Parses HTTP headers into an associative array.

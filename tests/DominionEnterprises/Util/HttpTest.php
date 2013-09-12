@@ -1,20 +1,20 @@
 <?php
 /**
- * Defines the HttpUtilTest class
+ * Defines the \DominionEnterprises\Util\HttpTest class
  */
 
-namespace DominionEnterprises;
-use DominionEnterprises\HttpUtil as H;
+namespace DominionEnterprises\Util;
+use DominionEnterprises\Util\Http as H;
 
 /**
- * Defines unit tests for the \DominionEnterprises\HttpUtil class
+ * Defines unit tests for the \DominionEnterprises\Util\Http class
  */
-final class HttpUtilTest extends \PHPUnit_Framework_TestCase
+final class HttpTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
      * @group unit
-     * @covers \DominionEnterprises\HttpUtil::parseHeaders
+     * @covers \DominionEnterprises\Util\Http::parseHeaders
      */
     public function parseHeaders_basicUsage()
     {
@@ -26,7 +26,7 @@ final class HttpUtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @group unit
-     * @covers \DominionEnterprises\HttpUtil::parseHeaders
+     * @covers \DominionEnterprises\Util\Http::parseHeaders
      */
     public function parseHeaders_malformed()
     {
@@ -44,7 +44,7 @@ final class HttpUtilTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      * @group unit
-     * @covers \DominionEnterprises\HttpUtil::parseHeaders
+     * @covers \DominionEnterprises\Util\Http::parseHeaders
      */
     public function parseHeaders_peclHttpFunctionality()
     {
@@ -72,7 +72,7 @@ EOT;
      *
      * @test
      * @group unit
-     * @covers \DominionEnterprises\HttpUtil::parseHeaders
+     * @covers \DominionEnterprises\Util\Http::parseHeaders
      */
     public function parseHeaders_methodAndUrlSet()
     {
@@ -132,7 +132,7 @@ EOT;
      *
      * @test
      * @group unit
-     * @covers \DominionEnterprises\HttpUtil::getQueryParams
+     * @covers \DominionEnterprises\Util\Http::getQueryParams
      */
     public function getQueryParams_normal()
     {
@@ -158,7 +158,7 @@ EOT;
      *
      * @test
      * @group unit
-     * @covers \DominionEnterprises\HttpUtil::getQueryParams
+     * @covers \DominionEnterprises\Util\Http::getQueryParams
      */
     public function getQueryParams_emptyParameter()
     {
@@ -180,7 +180,7 @@ EOT;
      *
      * @test
      * @group unit
-     * @covers \DominionEnterprises\HttpUtil::getQueryParams
+     * @covers \DominionEnterprises\Util\Http::getQueryParams
      */
     public function getQueryParams_garbage()
     {
@@ -190,7 +190,7 @@ EOT;
     /**
      * @test
      * @group unit
-     * @covers \DominionEnterprises\HttpUtil::getQueryParams
+     * @covers \DominionEnterprises\Util\Http::getQueryParams
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $url was not a string
      */

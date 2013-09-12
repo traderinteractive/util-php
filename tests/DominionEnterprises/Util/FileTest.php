@@ -1,16 +1,16 @@
 <?php
 /**
- * Defines the FileUtilTest class
+ * Defines the \DominionEnterprises\Util\FileTest class
  */
 
-namespace DominionEnterprises;
-use DominionEnterprises\FileUtil as F;
-use DominionEnterprises\TimeUtil as T;
+namespace DominionEnterprises\Util;
+use DominionEnterprises\Util\File as F;
+use DominionEnterprises\Util\Time as T;
 
 /**
- * Test class for \DominionEnterprises\FileUtil.
+ * Test class for \DominionEnterprises\Util\File.
  */
-final class FileUtilTest extends \PHPUnit_Framework_TestCase
+final class FileTest extends \PHPUnit_Framework_TestCase
 {
     private $_topLevelDirPath;
     private $_topLevelFilePath;

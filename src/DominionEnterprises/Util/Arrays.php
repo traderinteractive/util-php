@@ -1,14 +1,14 @@
 <?php
 /**
- * Defines the \DominionEnterprises\ArrayUtil class.
+ * Defines the \DominionEnterprises\Util\Arrays class.
  */
 
-namespace DominionEnterprises;
+namespace DominionEnterprises\Util;
 
 /**
  * Class of static array utility functions.
  */
-final class ArrayUtil
+final class Arrays
 {
     /**
      * Simply returns an array value if the key exist or null if it does not.
