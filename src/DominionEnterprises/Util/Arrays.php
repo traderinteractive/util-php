@@ -44,27 +44,6 @@ final class Arrays
     }
 
     /**
-     * Merge two arrays recursively overwriting values
-     *
-     * @param array $array Initial array to merge
-     * @param array $anotherArray array to recursively merge
-     *
-     * @return array the merge result
-     */
-    public static function merge(array $array, array $anotherArray)
-    {
-        foreach ($anotherArray as $key => $value) {
-            if (is_array($value) && array_key_exists($key, $array) && is_array($array[$key])) {
-                $array[$key] = self::merge($array[$key], $value);
-            } else {
-                $array[$key] = $value;
-            }
-        }
-
-         return $array;
-    }
-
-    /**
      * Returns true and fills $value if $key exists in $array, otherwise fills $value with null and returns false
      *
      * @param array $array The array to pull from
