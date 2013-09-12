@@ -16,6 +16,7 @@ final class TimeUtilTest extends \PHPUnit_Framework_TestCase
      */
     public function getAnsiSqlTimestamp_basic()
     {
+        date_default_timezone_set('America/New_York');
         $this->assertSame("(TIMESTAMP'2013-05-02 10:57:08')", T::getAnsiSqlTimestamp(1367506628));
     }
 
