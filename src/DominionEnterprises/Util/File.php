@@ -1,14 +1,15 @@
 <?php
 /**
- * Defines the \DominionEnterprises\FileUtil class.
+ * Defines the \DominionEnterprises\Util\File class.
  */
 
-namespace DominionEnterprises;
+namespace DominionEnterprises\Util;
+use DominionEnterprises\Util;
 
 /**
  * Class of static file utility functions.
  */
-final class FileUtil
+final class File
 {
     /**
      * Recursively deletes directory contents

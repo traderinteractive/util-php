@@ -1,15 +1,15 @@
 <?php
 /**
- * Defines the TimeUtilTest class
+ * Defines the \DominionEnterprises\Util\TimeTest class
  */
 
-namespace DominionEnterprises;
-use DominionEnterprises\TimeUtil as T;
+namespace DominionEnterprises\Util;
+use DominionEnterprises\Util\Time as T;
 
 /**
- * Test class for \DominionEnterprises\TimeUtil.
+ * Test class for \DominionEnterprises\Util\Time.
  */
-final class TimeUtilTest extends \PHPUnit_Framework_TestCase
+final class TimeTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
