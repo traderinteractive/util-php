@@ -1,14 +1,14 @@
 <?php
 /**
- * Defines \DominionEnterprises\StringUtil class.
+ * Defines \DominionEnterprises\Util\String class.
  */
 
-namespace DominionEnterprises;
+namespace DominionEnterprises\Util;
 
 /**
  * Static class with various string functions.
  */
-final class StringUtil
+final class String
 {
     /**
      * Replaces the format items in a specified string with the string representation of n specified objects.

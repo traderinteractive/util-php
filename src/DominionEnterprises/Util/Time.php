@@ -1,14 +1,14 @@
 <?php
 /**
- * Defines \DominionEnterprises\TimeUtil class.
+ * Defines \DominionEnterprises\Util\Time class.
  */
 
-namespace DominionEnterprises;
+namespace DominionEnterprises\Util;
 
 /**
  * Static class for time based functions.
  */
-final class TimeUtil
+final class Time
 {
     /**
      * Converts unix timestamp into an ansi sql timestamp literal

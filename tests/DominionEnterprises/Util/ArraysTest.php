@@ -1,19 +1,19 @@
 <?php
 /**
- * Defines the \DominionEnterprises\ArrayUtilTest class
+ * Defines the \DominionEnterprises\Util\ArraysTest class
  */
 
-namespace DominionEnterprises;
-use DominionEnterprises\ArrayUtil as A;
+namespace DominionEnterprises\Util;
+use DominionEnterprises\Util\Arrays as A;
 
 /**
  * Test class for \DominionEnterprises\ArrayUtil.
  */
-final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
+final class ArraysTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::get
+     * @covers \DominionEnterprises\Util\Arrays::get
      */
     public function get()
     {
@@ -25,7 +25,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::copyIfKeysExist
+     * @covers \DominionEnterprises\Util\Arrays::copyIfKeysExist
      */
     public function copyIfKeysExist()
     {
@@ -39,7 +39,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::merge
+     * @covers \DominionEnterprises\Util\Arrays::merge
      */
     public function merge()
     {
@@ -81,7 +81,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::tryGet
+     * @covers \DominionEnterprises\Util\Arrays::tryGet
      */
     public function tryGet_nullKey()
     {
@@ -92,7 +92,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::tryGet
+     * @covers \DominionEnterprises\Util\Arrays::tryGet
      */
     public function tryGet_classForKey()
     {
@@ -103,7 +103,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::tryGet
+     * @covers \DominionEnterprises\Util\Arrays::tryGet
      */
     public function tryGet_valueStringKey()
     {
@@ -114,7 +114,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::tryGet
+     * @covers \DominionEnterprises\Util\Arrays::tryGet
      */
     public function tryGet_valueIntegerKey()
     {
@@ -125,7 +125,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::project
+     * @covers \DominionEnterprises\Util\Arrays::project
      */
     public function project_basicUse()
     {
@@ -137,7 +137,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::project
+     * @covers \DominionEnterprises\Util\Arrays::project
      * @expectedException \InvalidArgumentException
      */
     public function project_strictKeyFail()
@@ -147,7 +147,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::project
+     * @covers \DominionEnterprises\Util\Arrays::project
      */
     public function project_strictKeyFalse()
     {
@@ -159,7 +159,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::project
+     * @covers \DominionEnterprises\Util\Arrays::project
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $strictKeyCheck was not a bool
      */
@@ -170,7 +170,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::project
+     * @covers \DominionEnterprises\Util\Arrays::project
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage a value in $input was not an array
      */
@@ -183,7 +183,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
      * Verifies basic usage for where() with exact matching
      *
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::where
+     * @covers \DominionEnterprises\Util\Arrays::where
      */
     public function where_basicUsage()
     {
@@ -202,7 +202,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
      * Verifies that where() returns empty array when nothing matches
      *
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::where
+     * @covers \DominionEnterprises\Util\Arrays::where
      */
     public function where_returnsEmptyArray()
     {
@@ -220,7 +220,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
      * Verifies use of multiple conditions
      *
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::where
+     * @covers \DominionEnterprises\Util\Arrays::where
      */
     public function where_withMultipleConditions()
     {
@@ -239,7 +239,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
      * Verifies use of multiple conditions
      *
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::where
+     * @covers \DominionEnterprises\Util\Arrays::where
      */
     public function where_returnsMultipleResults()
     {
@@ -260,7 +260,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::where
+     * @covers \DominionEnterprises\Util\Arrays::where
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage a value in $array was not an array
      */
@@ -273,7 +273,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
      * Verifies that embedInto works well with adding new items into an existing array.
      *
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::embedInto
+     * @covers \DominionEnterprises\Util\Arrays::embedInto
      */
     public function embedInto_basicUse()
     {
@@ -294,7 +294,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
      * Verifies that embedInto works well with creating new records.
      *
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::embedInto
+     * @covers \DominionEnterprises\Util\Arrays::embedInto
      */
     public function embedInto_emptyDestination()
     {
@@ -308,7 +308,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
      * Verifies that embedInto requires string for fieldname
      *
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::embedInto
+     * @covers \DominionEnterprises\Util\Arrays::embedInto
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $fieldName was not a string
      */
@@ -321,7 +321,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
      * Verifies that embedInto requires destination entries to be arrays.
      *
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::embedInto
+     * @covers \DominionEnterprises\Util\Arrays::embedInto
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage a value in $destination was not an array
      */
@@ -334,7 +334,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
      * Verifies that embedInto refuses to overwrite field names.
      *
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::embedInto
+     * @covers \DominionEnterprises\Util\Arrays::embedInto
      * @expectedException Exception
      */
     public function embedInto_existingFieldName()
@@ -346,7 +346,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
      * Verifies that embedInto does nothing with 0 items to embed.
      *
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::embedInto
+     * @covers \DominionEnterprises\Util\Arrays::embedInto
      */
     public function embedInto_noItems()
     {
@@ -357,7 +357,7 @@ final class ArrayUtilTest extends \PHPUnit_Framework_TestCase
      * Basic usage of fillIfKeysExist()
      *
      * @test
-     * @covers \DominionEnterprises\ArrayUtil::fillIfKeysExist
+     * @covers \DominionEnterprises\Util\Arrays::fillIfKeysExist
      */
     public function fillIfKeysExist()
     {
