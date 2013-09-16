@@ -220,6 +220,17 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @expectedException \DominionEnterprises\HttpException
+     * @expectedExceptionMessage bah
+     * @expectedExceptionCode 404
+     */
+    public function ensureNot_dynamicExceptionWithAlias()
+    {
+        U::ensureNot(false, is_string(1), 'http', array('bah', 404, 404));
+    }
+
+    /**
+     * @test
      */
     public function ensure_success()
     {
@@ -262,5 +273,26 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     public function ensure_dynamicException()
     {
         U::ensure(true, is_string(1), 'Exception', array('bah'));
+    }
+
+    /**
+     * @test
+     * @expectedException \DominionEnterprises\HttpException
+     * @expectedExceptionMessage bah
+     * @expectedExceptionCode 404
+     */
+    public function ensure_dynamicExceptionWithAlias()
+    {
+        U::ensure(true, is_string(1), 'http', array('bah', 404, 404));
+    }
+
+    /**
+     * @test
+     */
+    public function setExceptionAliases_getSet()
+    {
+        $exceptionAliases = array('shortNameOne' => 'fullNameOne', 'shortNameTwo' => 'fullNameTwo');
+        U::setExceptionAliases($exceptionAliases);
+        $this->assertSame($exceptionAliases, U::getExceptionAliases());
     }
 }
