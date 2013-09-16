@@ -10,6 +10,8 @@ namespace DominionEnterprises;
  */
 final class Util
 {
+    private static $_exceptionAliases = array('http' => '\DominionEnterprises\HttpException');
+
     /**
      * Returns exception info in array.
      *
@@ -48,7 +50,8 @@ final class Util
      *
      * @param mixed $valueToEnsure the value to throw on if $valueToCheck equals it
      * @param mixed $valueToCheck the value to check against $valueToEnsure
-     * @param string|null $exception a string for an Exception or null
+     * @param string|null $exception a fully qualified exception class name, string for an Exception message, or null.
+     *     The fully qualified exception class name could also be an alias in getExceptionAliases()
      * @param array|null $exceptionArgs arguments to pass to a new instance of $exception. If using this parameter make sure these arguments
      *     match the constructor for an exception of type $exception.
      *
@@ -69,6 +72,10 @@ final class Util
             if ($exceptionArgs === null) {
                 throw new \Exception($exception);
             } else {
+                if (array_key_exists($exception, self::$_exceptionAliases)) {
+                    $exception = self::$_exceptionAliases[$exception];
+                }
+
                 $reflectionClass = new \ReflectionClass($exception);
                 throw $reflectionClass->newInstanceArgs($exceptionArgs);
             }
@@ -86,7 +93,8 @@ final class Util
      *
      * @param mixed $valueToThrowOn the value to throw on if $valueToCheck equals it
      * @param mixed $valueToCheck the value to check against $valueToThrowOn
-     * @param string|null $exception a string for an Exception or null
+     * @param string|null $exception a fully qualified exception class name, string for an Exception message, or null.
+     *     The fully qualified exception class name could also be an alias in getExceptionAliases()
      * @param array|null $exceptionArgs arguments to pass to a new instance of $exception. If using this parameter make sure these arguments
      *     match the constructor for an exception of type $exception.
      *
@@ -107,6 +115,10 @@ final class Util
             if ($exceptionArgs === null) {
                 throw new \Exception($exception);
             } else {
+                if (array_key_exists($exception, self::$_exceptionAliases)) {
+                    $exception = self::$_exceptionAliases[$exception];
+                }
+
                 $reflectionClass = new \ReflectionClass($exception);
                 throw $reflectionClass->newInstanceArgs($exceptionArgs);
             }
@@ -232,5 +244,25 @@ final class Util
                     throw new \InvalidArgumentException('a type was not one of the is_ functions');
             }
         }
+    }
+
+    /**
+     * Return the exception aliases.
+     *
+     * @return array array where keys are aliases and values are strings to a fully qualified exception class names.
+     */
+    public static function getExceptionAliases()
+    {
+        return self::$_exceptionAliases;
+    }
+
+    /**
+     * Set the exception aliases.
+     *
+     * @param array $filters array where keys are aliases and values are strings to a fully qualified exception class names.
+     */
+    public static function setExceptionAliases(array $aliases)
+    {
+        self::$_exceptionAliases = $aliases;
     }
 }
