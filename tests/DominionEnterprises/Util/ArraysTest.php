@@ -312,6 +312,26 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     * @covers \DominionEnterprises\Util\Arrays::embedInto
+     */
+    public function embedInto_overwrite()
+    {
+        $this->assertSame(array(array('key' => true)), A::embedInto(array(true), 'key', array(array('key' => false)), true));
+    }
+
+    /**
+     * @test
+     * @covers \DominionEnterprises\Util\Arrays::embedInto
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $overwrite was not a bool
+     */
+    public function embedInto_overwriteNotBool()
+    {
+        A::embedInto(array(), 'key', array(), 1);
+    }
+
+    /**
      * Basic usage of fillIfKeysExist()
      *
      * @test
