@@ -154,6 +154,7 @@ final class Arrays
      * @param string $fieldName The name of the field to embed the items into.  This field must not exist in the destination items already.
      * @param array $destination An optional array of arrays to embed the items into.  If this is not provided then empty records are assumed
      *     and the new record will be created only containing $fieldName.
+     * @param bool $overwrite whether to overwrite $fieldName in $destination array
      *
      * @return array $destination, with all items in $items added using their keys, but underneath a nested $fieldName key.
      *
@@ -161,10 +162,14 @@ final class Arrays
      * @throws \InvalidArgumentException if a value in $destination was not an array
      * @throws \Exception if $fieldName key already exists in a $destination array
      */
-    public static function embedInto(array $items, $fieldName, array $destination = array())
+    public static function embedInto(array $items, $fieldName, array $destination = array(), $overwrite = false)
     {
         if (!is_string($fieldName)) {
             throw new \InvalidArgumentException('$fieldName was not a string');
+        }
+
+        if ($overwrite !== false && $overwrite !== true) {
+            throw new \InvalidArgumentException('$overwrite was not a bool');
         }
 
         foreach ($items as $key => $item) {
@@ -173,7 +178,7 @@ final class Arrays
                     throw new \InvalidArgumentException('a value in $destination was not an array');
                 }
 
-                if (array_key_exists($fieldName, $destination[$key])) {
+                if (!$overwrite && array_key_exists($fieldName, $destination[$key])) {
                     throw new \Exception('$fieldName key already exists in a $destination array');
                 }
 
