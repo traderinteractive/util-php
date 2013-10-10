@@ -295,4 +295,70 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
         U::setExceptionAliases($exceptionAliases);
         $this->assertSame($exceptionAliases, U::getExceptionAliases());
     }
+
+    /**
+     * @test
+     */
+    public function callStatic_private()
+    {
+        $this->assertSame('testPrivateBoo', U::callStatic('\DominionEnterprises\CallStaticTest::testPrivate', array('Boo')));
+    }
+
+    /**
+     * @test
+     */
+    public function callStatic_protected()
+    {
+        $this->assertSame('testProtectedBoo', U::callStatic('\DominionEnterprises\CallStaticTest::testProtected', array('Boo')));
+    }
+
+    /**
+     * @test
+     */
+    public function callStatic_public()
+    {
+        $this->assertSame('testPublicBoo', U::callStatic('\DominionEnterprises\CallStaticTest::testPublic', array('Boo')));
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $method was not a string
+     */
+    public function callStatic_notStringMethod()
+    {
+        U::callStatic(true);
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $method was not static
+     */
+    public function callStatic_notStaticMethod()
+    {
+        U::callStatic('\DominionEnterprises\CallStaticTest::notStatic');
+    }
+}
+
+final class CallStaticTest
+{
+    private static function testPrivate($arg)
+    {
+        return 'testPrivate' . $arg;
+    }
+
+    protected static function testProtected($arg)
+    {
+        return 'testProtected' . $arg;
+    }
+
+    public static function testPublic($arg)
+    {
+        return 'testPublic' . $arg;
+    }
+
+    private function notStatic()
+    {
+    }
 }
