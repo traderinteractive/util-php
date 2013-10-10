@@ -265,4 +265,31 @@ final class Util
     {
         self::$_exceptionAliases = $aliases;
     }
+
+    /**
+     * Call a static (possibly non public) method through reflection. Intended for use in testing, but should only use on methods as one would
+     * use a package level method in another language, since php does not have the feature.
+     *
+     * @param string fully qualified method name
+     * @param array $args arguments to pass to the reflected method
+     *
+     * @return mixed result of the reflected method call
+     *
+     * @throws \InvalidArgumentException if $method was not a string
+     * @throws \InvalidArgumentException if $method was not static
+     */
+    public static function callStatic($method, array $args = array())
+    {
+        if (!is_string($method)) {
+            throw new \InvalidArgumentException('$method was not a string');
+        }
+
+        $method = new \ReflectionMethod($method);
+        if (!$method->isStatic()) {
+            throw new \InvalidArgumentException('$method was not static');
+        }
+
+        $method->setAccessible(true);
+        return $method->invokeArgs(null, $args);
+    }
 }
