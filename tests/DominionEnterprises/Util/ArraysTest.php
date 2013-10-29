@@ -38,6 +38,20 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Verify behavior with numeric array $keyMap
+     *
+     * @test
+     * @covers \DominionEnterprises\Util\Arrays::copyIfKeysExist
+     */
+    public function copyIfKeysExist_numericKeyMap()
+    {
+        $source = array('a' => 'foo', 'b' => 'bar', 'd' => 'baz');
+        $result = array();
+        A::copyIfKeysExist($source, $result, array('a', 'b', 'c'));
+        $this->assertSame(array('a' => 'foo', 'b' => 'bar'), $result);
+    }
+
+    /**
      * @test
      * @covers \DominionEnterprises\Util\Arrays::tryGet
      */

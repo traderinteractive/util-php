@@ -29,18 +29,22 @@ final class Arrays
      *
      * @param array $source
      * @param array &$dest
-     * @param array $keyMap mapping of dest keys to source keys
+     * @param array $keyMap mapping of dest keys to source keys. If $keyMap is associative, the keys will be the destination keys. If numeric
+     *                      the values will be the destination keys
      *
      * @return void
      */
     public static function copyIfKeysExist(array $source, array &$dest, array $keyMap)
     {
         foreach ($keyMap as $destKey => $sourceKey) {
+            if (is_int($destKey)) {
+                $destKey = $sourceKey;
+            }
+
             if (array_key_exists($sourceKey, $source)) {
                 $dest[$destKey] = $source[$sourceKey];
             }
         }
-
     }
 
     /**
