@@ -68,20 +68,22 @@ final class Util
 
         if ($exception === null) {
             throw new \Exception("'{$valueToEnsure}' did not equal '{$valueToCheck}'");
-        } elseif (is_string($exception)) {
+        }
+
+        if (is_string($exception)) {
             if ($exceptionArgs === null) {
                 throw new \Exception($exception);
-            } else {
-                if (array_key_exists($exception, self::$_exceptionAliases)) {
-                    $exception = self::$_exceptionAliases[$exception];
-                }
-
-                $reflectionClass = new \ReflectionClass($exception);
-                throw $reflectionClass->newInstanceArgs($exceptionArgs);
             }
-        } else {
-            throw new \InvalidArgumentException('$exception was not a string, Exception or null');
+
+            if (array_key_exists($exception, self::$_exceptionAliases)) {
+                $exception = self::$_exceptionAliases[$exception];
+            }
+
+            $reflectionClass = new \ReflectionClass($exception);
+            throw $reflectionClass->newInstanceArgs($exceptionArgs);
         }
+
+        throw new \InvalidArgumentException('$exception was not a string, Exception or null');
     }
 
     /**
@@ -111,20 +113,22 @@ final class Util
 
         if ($exception === null) {
             throw new \Exception("'{$valueToThrowOn}' equals '{$valueToCheck}'");
-        } elseif (is_string($exception)) {
+        }
+
+        if (is_string($exception)) {
             if ($exceptionArgs === null) {
                 throw new \Exception($exception);
-            } else {
-                if (array_key_exists($exception, self::$_exceptionAliases)) {
-                    $exception = self::$_exceptionAliases[$exception];
-                }
-
-                $reflectionClass = new \ReflectionClass($exception);
-                throw $reflectionClass->newInstanceArgs($exceptionArgs);
             }
-        } else {
-            throw new \InvalidArgumentException('$exception was not a string or null');
+
+            if (array_key_exists($exception, self::$_exceptionAliases)) {
+                $exception = self::$_exceptionAliases[$exception];
+            }
+
+            $reflectionClass = new \ReflectionClass($exception);
+            throw $reflectionClass->newInstanceArgs($exceptionArgs);
         }
+
+        throw new \InvalidArgumentException('$exception was not a string or null');
     }
 
     /**
