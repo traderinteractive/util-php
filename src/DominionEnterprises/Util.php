@@ -47,10 +47,11 @@ final class Util
      * Can be used like: $result = ensure(true, is_string('boo'))
      * Or like: $result = ensure(true, is_string('boo'), 'the message')
      * Or like: $result = ensure(true, is_string('boo'), 'MyException', array('the message', 2))
+     * Or like: $result = ensure(true, is_string('boo'), new MyException('the message', 2))
      *
      * @param mixed $valueToEnsure the value to throw on if $valueToCheck equals it
      * @param mixed $valueToCheck the value to check against $valueToEnsure
-     * @param string|null $exception a fully qualified exception class name, string for an Exception message, or null.
+     * @param null|string|\Exception $exception null, a fully qualified exception class name, string for an Exception message, or an Exception.
      *     The fully qualified exception class name could also be an alias in getExceptionAliases()
      * @param array|null $exceptionArgs arguments to pass to a new instance of $exception. If using this parameter make sure these arguments
      *     match the constructor for an exception of type $exception.
@@ -58,7 +59,7 @@ final class Util
      * @return mixed returns $valueToCheck
      *
      * @throws \Exception if $valueToEnsure !== $valueToCheck
-     * @throws \InvalidArgumentException if $exception was not a string or null
+     * @throws \InvalidArgumentException if $exception was not null, a string, or an Exception
      */
     public static function ensure($valueToEnsure, $valueToCheck, $exception = null, array $exceptionArgs = null)
     {
@@ -83,7 +84,11 @@ final class Util
             throw $reflectionClass->newInstanceArgs($exceptionArgs);
         }
 
-        throw new \InvalidArgumentException('$exception was not a string, Exception or null');
+        if ($exception instanceof \Exception) {
+            throw $exception;
+        }
+
+        throw new \InvalidArgumentException('$exception was not null, a string, or an Exception');
     }
 
     /**
@@ -92,10 +97,11 @@ final class Util
      * Can be used like: $curl = ensureNot(false, curl_init('boo'))
      * Or like: $curl = ensureNot(false, curl_init('boo'), 'bad message')
      * Or like: $curl = ensureNot(false, curl_init('boo'), 'MyException', array('bad message', 2))
+     * Or like: $curl = ensureNot(false, curl_init('boo'), new MyException('bad message', 2))
      *
      * @param mixed $valueToThrowOn the value to throw on if $valueToCheck equals it
      * @param mixed $valueToCheck the value to check against $valueToThrowOn
-     * @param string|null $exception a fully qualified exception class name, string for an Exception message, or null.
+     * @param null|string|\Exception $exception null, a fully qualified exception class name, string for an Exception message, or an Exception.
      *     The fully qualified exception class name could also be an alias in getExceptionAliases()
      * @param array|null $exceptionArgs arguments to pass to a new instance of $exception. If using this parameter make sure these arguments
      *     match the constructor for an exception of type $exception.
@@ -103,7 +109,7 @@ final class Util
      * @return mixed returns $valueToCheck
      *
      * @throws \Exception if $valueToThrowOn === $valueToCheck
-     * @throws \InvalidArgumentException if $exception was not a string or null
+     * @throws \InvalidArgumentException if $exception was not null, a string, or an Exception
      */
     public static function ensureNot($valueToThrowOn, $valueToCheck, $exception = null, array $exceptionArgs = null)
     {
@@ -128,7 +134,11 @@ final class Util
             throw $reflectionClass->newInstanceArgs($exceptionArgs);
         }
 
-        throw new \InvalidArgumentException('$exception was not a string or null');
+        if ($exception instanceof \Exception) {
+            throw $exception;
+        }
+
+        throw new \InvalidArgumentException('$exception was not null, a string, or an Exception');
     }
 
     /**

@@ -231,6 +231,17 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @expectedException \Exception
+     * @expectedExceptionMessage foo
+     * @expectedExceptionCode 2
+     */
+    public function ensureNot_exception()
+    {
+        U::ensureNot(false, false, new \Exception('foo', 2));
+    }
+
+    /**
+     * @test
      */
     public function ensure_success()
     {
@@ -284,6 +295,17 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     public function ensure_dynamicExceptionWithAlias()
     {
         U::ensure(true, is_string(1), 'http', array('bah', 404, 404));
+    }
+
+    /**
+     * @test
+     * @expectedException \Exception
+     * @expectedExceptionMessage foo
+     * @expectedExceptionCode 2
+     */
+    public function ensure_exception()
+    {
+        U::ensure(true, false, new \Exception('foo', 2));
     }
 
     /**
