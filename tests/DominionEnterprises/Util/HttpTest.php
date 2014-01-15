@@ -202,4 +202,62 @@ EOT;
     {
         H::getQueryParams(1);
     }
+
+    /**
+     * @test
+     * @covers ::getQueryParamsCollapsed
+     */
+    public function getQueryParamsCollapsed()
+    {
+        $url = 'http://foo.com/bar/?boo=1&foo=bar&boo=2';
+        $actual = H::getQueryParamsCollapsed($url, array('boo'));
+        $this->assertSame(array('boo' => array('1', '2'), 'foo' => 'bar'), $actual);
+    }
+
+    /**
+     * @test
+     * @covers ::getQueryParamsCollapsed
+     * @expectedException \Exception
+     * @expectedExceptionMessage Parameter 'boo' is not expected to be an array, but array given
+     */
+    public function getQueryParamsCollapsed_unexpectedArray()
+    {
+        $url = 'http://foo.com/bar/?boo=1&foo=bar&boo=2';
+        H::getQueryParamsCollapsed($url);
+    }
+
+    /**
+     * @test
+     * @covers ::getQueryParamsCollapsed
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $url was not a string
+     */
+    public function getQueryParamsCollapsed_urlNotString()
+    {
+        H::getQueryParamsCollapsed(1);
+    }
+
+    /**
+     * Verifies multi parameter method with a garbage query string
+     *
+     * @test
+     * @covers ::getQueryParamsCollapsed
+     */
+    public function getQueryParamsCollasped_garbage()
+    {
+        $this->assertSame(array(), H::getQueryParamsCollapsed('GARBAGE'));
+    }
+
+    /**
+     * Verifies Mulit Parameter Method can handle a url with an empty parameter
+     *
+     * @test
+     * @covers ::getQueryParamsCollapsed
+     */
+    public function getQueryParamsCollapsed_emptyParameter()
+    {
+        $url = 'http://foo.com/bar/?stuff=yeah&moreStuff=&moreStuff=jazz&otherStuff';
+        $expected = array('stuff' => 'yeah', 'moreStuff' => array('', 'jazz'), 'otherStuff' => '');
+        $this->assertSame($expected, H::getQueryParamsCollapsed($url, array('moreStuff')));
+    }
 }

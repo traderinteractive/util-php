@@ -178,4 +178,56 @@ final class Http
 
         return $result;
     }
+
+    /**
+     * Get an array of all url parameters.
+     *
+     * @param string $url The url to parse such as http://foo.com/bar/?single=boo&multi=wee&multi=boo
+     * @param array $expectedArrayParams List of parameter names which are not collapsed.
+     *
+     * @return array such as ['single' => 'boo', 'multi' => ['wee', 'boo']] if 'multi' is given in $expectedArrayParams
+     *
+     * @throws \InvalidArgumentException if $url was not a string
+     * @throws \Exception if a parameter is given as array but not included in the expected array argument
+     */
+    public static function getQueryParamsCollapsed($url, array $expectedArrayParams = array())
+    {
+        if (!is_string($url)) {
+            throw new \InvalidArgumentException('$url was not a string');
+        }
+
+        $queryString = parse_url($url, PHP_URL_QUERY);
+        if (!is_string($queryString)) {
+            return array();
+        }
+
+        $result = array();
+        foreach (explode('&', $queryString) as $arg) {
+            $name = $arg;
+            $value = '';
+            if (strpos($arg, '=') !== false) {
+                list($name, $value) = explode('=', $arg);
+            }
+
+            $name = urldecode($name);
+            $value = urldecode($value);
+
+            if (!array_key_exists($name, $result)) {
+                $result[$name] = $value;
+                continue;
+            }
+
+            if (!in_array($name, $expectedArrayParams)) {
+                throw new \Exception("Parameter '{$name}' is not expected to be an array, but array given");
+            }
+
+            if (!is_array($result[$name])) {
+                $result[$name] = array($result[$name]);
+            }
+
+            $result[$name][] = $value;
+        }
+
+        return $result;
+    }
 }
