@@ -160,13 +160,10 @@ final class Http
 
         $result = array();
         foreach (explode('&', $queryString) as $arg) {
-            $name = null;
-            $value = null;
+            $name = $arg;
+            $value = '';
             if (strpos($arg, '=') !== false) {
                 list($name, $value) = explode('=', $arg);
-            } else {
-                $name = $arg;
-                $value = '';
             }
 
             $name = urldecode($name);
