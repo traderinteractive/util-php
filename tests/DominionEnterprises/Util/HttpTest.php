@@ -198,4 +198,41 @@ EOT;
     {
         H::getQueryParams(1);
     }
+
+    /**
+     * @test
+     * @group unit
+     * @covers \DominionEnterprises\Util\Http::getQueryParams
+     * @expectedException \Exception
+     * @expectedExceptionMessage Parameter 'array' is not expected to be an array, but array given
+     */
+    public function getQueryParams_unexpectedArray()
+    {
+        $url = 'http://foo.com/bar/?array=1&foo=bar&array=2';
+        H::getQueryParams($url, true, array());
+    }
+
+    /**
+     * @test
+     * @group unit
+     * @covers \DominionEnterprises\Util\Http::getQueryParams
+     */
+    public function getQueryParams_collapsed()
+    {
+        $url = 'http://foo.com/bar/?array=1&foo=bar&array=2';
+        $actual = H::getQueryParams($url, true, array('array'));
+        $this->assertSame(array('array' => array('1', '2'), 'foo' => 'bar'), $actual);
+    }
+
+    /**
+     * @test
+     * @group unit
+     * @covers \DominionEnterprises\Util\Http::getQueryParams
+     * @expectedException \Exception
+     * @expectedExceptionMessage $collapse was not a bool
+     */
+    public function getQueryParams_collapseNotBool()
+    {
+        H::getQueryParams('not under test', 1, array());
+    }
 }

@@ -142,15 +142,23 @@ final class Http
      * Get an array of all url parameters.
      *
      * @param string $url The url to parse such as http://foo.com/bar/?id=boo&another=wee&another=boo
+     * @param bool $collapse Flag to collapse single value array parameters
+     * @param array $expectedArrayParams List of parameter names which are allowed to be repeated
      *
      * @return array such as ['id' => ['boo'], 'another' => ['wee', 'boo']]
      *
      * @throws \InvalidArgumentException if $url was not a string
+     * @throws \InvalidArgumentException if $collapse was not a bool
+     * @throws \Exception if a parameter is given as array but not included in the expected array argument
      */
-    public static function getQueryParams($url)
+    public static function getQueryParams($url, $collapse = false, array $expectedArrayParams = array())
     {
         if (!is_string($url)) {
             throw new \InvalidArgumentException('$url was not a string');
+        }
+
+        if ($collapse !== true && $collapse !== false) {
+            throw new \InvalidArgumentException('$collapse was not a bool');
         }
 
         $queryString = parse_url($url, PHP_URL_QUERY);
@@ -172,8 +180,26 @@ final class Http
             $name = urldecode($name);
             $value = urldecode($value);
 
+            if (!$collapse) {
+                if (!array_key_exists($name, $result)) {
+                    $result[$name] = array();
+                }
+
+                $result[$name][] = $value;
+                continue;
+            }
+
             if (!array_key_exists($name, $result)) {
-                $result[$name] = array();
+                $result[$name] = $value;
+                continue;
+            }
+
+            if (!in_array($name, $expectedArrayParams)) {
+                throw new \Exception("Parameter '{$name}' is not expected to be an array, but array given");
+            }
+
+            if (!is_array($result[$name])) {
+                $result[$name] = array($result[$name]);
             }
 
             $result[$name][] = $value;
