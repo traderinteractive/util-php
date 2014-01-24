@@ -162,8 +162,9 @@ final class Http
         foreach (explode('&', $queryString) as $arg) {
             $name = $arg;
             $value = '';
-            if (strpos($arg, '=') !== false) {
-                list($name, $value) = explode('=', $arg);
+            $nameAndValue = explode('=', $arg);
+            if (isset($nameAndValue[1])) {
+                list($name, $value) = $nameAndValue;
             }
 
             $name = urldecode($name);
@@ -205,8 +206,9 @@ final class Http
         foreach (explode('&', $queryString) as $arg) {
             $name = $arg;
             $value = '';
-            if (strpos($arg, '=') !== false) {
-                list($name, $value) = explode('=', $arg);
+            $nameAndValue = explode('=', $arg);
+            if (isset($nameAndValue[1])) {
+                list($name, $value) = $nameAndValue;
             }
 
             $name = urldecode($name);
