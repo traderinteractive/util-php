@@ -20,7 +20,7 @@ To add the library as a local, per-project dependency use [Composer](http://getc
 }
 ```
 ##Documentation
-Found in the [source](src/DominionEnterprises) itself, take a look!
+PHP docs for the project can be found [here](http://dominionenterprises.github.io/util-php). 
 
 ##Contact
 Developers may be contacted at:
