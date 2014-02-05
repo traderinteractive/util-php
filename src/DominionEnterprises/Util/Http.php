@@ -142,12 +142,14 @@ final class Http
      * Get an array of all url parameters.
      *
      * @param string $url The url to parse such as http://foo.com/bar/?id=boo&another=wee&another=boo
+     * @param array $collapsedParams Parameters to collapse. ex. 'id' => ['boo'] to just 'id' => 'boo'. Exception thrown if more than 1 value
      *
      * @return array such as ['id' => ['boo'], 'another' => ['wee', 'boo']]
      *
      * @throws \InvalidArgumentException if $url was not a string
+     * @throws \Exception if more than one value in a $collapsedParams param
      */
-    public static function getQueryParams($url)
+    public static function getQueryParams($url, array $collapsedParams = array())
     {
         if (!is_string($url)) {
             throw new \InvalidArgumentException('$url was not a string');
@@ -157,6 +159,8 @@ final class Http
         if (!is_string($queryString)) {
             return array();
         }
+
+        $collapsedParams = array_flip($collapsedParams);
 
         $result = array();
         foreach (explode('&', $queryString) as $arg) {
@@ -169,9 +173,19 @@ final class Http
 
             $name = urldecode($name);
             $value = urldecode($value);
+            $collapsed = isset($collapsedParams[$name]);
 
             if (!array_key_exists($name, $result)) {
+                if ($collapsed) {
+                    $result[$name] = $value;
+                    continue;
+                }
+
                 $result[$name] = array();
+            }
+
+            if ($collapsed) {
+                throw new \Exception("Parameter '{$name}' had more than one value but in \$collapsedParams");
             }
 
             $result[$name][] = $value;

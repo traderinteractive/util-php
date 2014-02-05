@@ -205,6 +205,27 @@ EOT;
 
     /**
      * @test
+     * @covers ::getQueryParams
+     */
+    public function getQueryParams_collapsed()
+    {
+        $result = H::getQueryParams('http://foo.com/bar/?stuff=yeah&moreStuff=mhmm', array('stuff', 'notThere'));
+        $this->assertSame(array('stuff' => 'yeah', 'moreStuff' => array('mhmm')), $result);
+    }
+
+    /**
+     * @test
+     * @covers ::getQueryParams
+     * @expectedException \Exception
+     * @expectedExceptionMessage Parameter 'stuff' had more than one value but in $collapsedParams
+     */
+    public function getQueryParams_collapsedMoreThanOneValue()
+    {
+        H::getQueryParams('http://foo.com/bar/?stuff=yeah&stuff=boy&moreStuff=mhmm', array('stuff'));
+    }
+
+    /**
+     * @test
      * @covers ::getQueryParamsCollapsed
      */
     public function getQueryParamsCollapsed()
