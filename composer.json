@@ -29,6 +29,6 @@
         "lib-libxml": "*"
     },
     "autoload": {
-        "psr-0": { "DominionEnterprises": "src" }
+        "psr-4": { "DominionEnterprises\\": "src" }
     }
 }
