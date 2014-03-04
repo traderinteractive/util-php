@@ -20,7 +20,7 @@ To add the library as a local, per-project dependency use [Composer](http://getc
 }
 ```
 ##Documentation
-Found in the [source](src/DominionEnterprises) itself, take a look!
+Found in the [source](src) itself, take a look!
 
 ##Contact
 Developers may be contacted at:
