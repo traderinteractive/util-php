@@ -95,4 +95,35 @@ final class String
         $nonSuffix = substr($string, 0, -$suffixLength);
         return true;
     }
+
+    /**
+     * Takes a string and optional array of delimeters which are to be used to
+     * uppercase character that follow them. More flexible than normal php
+     * ucwords because that will just capitalize character after a space.
+     *
+     * Here is an inline example:
+     * <code>
+     * <?php
+     * $sString = 'HARLEY-DAVIDSON O'BANNON MARK_ANTHONY WILL+SMITH LARK test,this:phrase';
+     * echo TOL_Inflector::ucwords($sString);
+     * // Should output the following: Harley-Davidson O'Bannon Mark_Anthony Will+Smith Lark Test,This:Phrase
+     * echo TOL_Inflector::ucwords($sString, ['\A','-','\s]);
+     * // Should output the following: Harley-Davidson O'bannon Mark_anthony Will+smith Lark Test,this:phrase
+     * ? >
+     * </code>
+     *
+     * @param string $input
+     * @param array $markers
+     * @return string
+     */
+    public static function ucwords($input, array $markers = array('\A', '\-', '\_', '\+', "\'", '\s', '\:', '\/', '\,', '\.'))
+    {
+        return preg_replace_callback(
+            '/(' . implode('|', $markers) . ')([^' . implode('', $markers) . ']?)/',
+            function ($matches) {
+                return strtoupper($matches[0]);
+            },
+            strtolower($input)
+        );
+    }
 }
