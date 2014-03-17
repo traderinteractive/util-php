@@ -1,13 +1,11 @@
 <?php
-/**
- * Defines the \DominionEnterprises\Util\StringTest class
- */
 
 namespace DominionEnterprises\Util;
 use DominionEnterprises\Util\String as S;
 
 /**
- * Test class for \DominionEnterprises\Util\String.
+ * @defaultCoversClass \DominionEnterprises\Util\String
+ * @covers ::<private>
  */
 final class StringTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +13,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage StringUtil::format() takes at least 2 arguments
-     * @covers \DominionEnterprises\Util\String::format
+     * @covers ::format
      */
     public function format_onlyOneArgumentn()
     {
@@ -25,7 +23,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException InvalidArgumentException
-     * @covers \DominionEnterprises\Util\String::format
+     * @covers ::format
      */
     public function format_nonStringCastableObject()
     {
@@ -34,7 +32,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\String::format
+     * @covers ::format
      */
     public function format_stringCastableObject()
     {
@@ -43,7 +41,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\String::format
+     * @covers ::format
      */
     public function format_keysAreRepeatable()
     {
@@ -52,7 +50,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\String::format
+     * @covers ::format
      */
     public function format_keyOrderDoesNotMatter()
     {
@@ -63,7 +61,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $format is not a string
-     * @covers \DominionEnterprises\Util\String::format
+     * @covers ::format
      */
     public function format_nonStringFormat()
     {
@@ -72,7 +70,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\String::endsWith
+     * @covers ::endsWith
      */
     public function endsWith_matches()
     {
@@ -83,7 +81,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\String::endsWith
+     * @covers ::endsWith
      */
     public function endsWith_noMatches()
     {
@@ -96,7 +94,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $string is not a string
-     * @covers \DominionEnterprises\Util\String::endsWith
+     * @covers ::endsWith
      */
     public function endsWith_badTypeForSubject()
     {
@@ -107,7 +105,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $suffix is not a string
-     * @covers \DominionEnterprises\Util\String::endsWith
+     * @covers ::endsWith
      */
     public function endsWith_badTypeForSuffix()
     {
@@ -116,7 +114,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\String::endsWith
+     * @covers ::endsWith
      */
     public function endsWith_emptyBoth()
     {
@@ -127,7 +125,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\String::endsWith
+     * @covers ::endsWith
      */
     public function endsWith_emptySuffix()
     {
@@ -138,7 +136,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\String::endsWith
+     * @covers ::endsWith
      */
     public function endsWith_emptySubject()
     {
