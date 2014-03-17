@@ -6,12 +6,13 @@
 namespace DominionEnterprises;
 
 /**
- * Unit tests for the \DominionEnterprises\Exception class
+ * @coversDefaultClass \DominionEnterprises\HttpException
  */
 final class HttpExceptionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
+     * @covers ::__construct
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $message was not a string
      */
@@ -22,6 +23,7 @@ final class HttpExceptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::__construct
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $httpStatusCode was not an int
      */
@@ -32,6 +34,7 @@ final class HttpExceptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::__construct
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $code was not an int
      */
@@ -42,6 +45,7 @@ final class HttpExceptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::__construct
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $userMessage was not null and not a string
      */
@@ -52,6 +56,8 @@ final class HttpExceptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::__construct()
+     * @covers ::getUserMessage()
      */
     public function userMessage()
     {
@@ -64,6 +70,8 @@ final class HttpExceptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::__construct()
+     * @covers ::getHttpStatusCode()
      */
     public function httpCode()
     {

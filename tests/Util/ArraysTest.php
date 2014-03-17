@@ -7,13 +7,13 @@ namespace DominionEnterprises\Util;
 use DominionEnterprises\Util\Arrays as A;
 
 /**
- * Test class for \DominionEnterprises\ArrayUtil.
+ * @coversDefaultClass \DominionEnterprises\Util\Arrays
  */
 final class ArraysTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::get
+     * @covers ::get
      */
     public function get()
     {
@@ -25,7 +25,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::copyIfKeysExist
+     * @covers ::copyIfKeysExist
      */
     public function copyIfKeysExist()
     {
@@ -41,7 +41,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * Verify behavior with numeric array $keyMap
      *
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::copyIfKeysExist
+     * @covers ::copyIfKeysExist
      */
     public function copyIfKeysExist_numericKeyMap()
     {
@@ -53,7 +53,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::tryGet
+     * @covers ::tryGet
      */
     public function tryGet_nullKey()
     {
@@ -64,7 +64,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::tryGet
+     * @covers ::tryGet
      */
     public function tryGet_classForKey()
     {
@@ -75,7 +75,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::tryGet
+     * @covers ::tryGet
      */
     public function tryGet_valueStringKey()
     {
@@ -86,7 +86,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::tryGet
+     * @covers ::tryGet
      */
     public function tryGet_valueIntegerKey()
     {
@@ -97,7 +97,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::project
+     * @covers ::project
      */
     public function project_basicUse()
     {
@@ -109,7 +109,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::project
+     * @covers ::project
      * @expectedException \InvalidArgumentException
      */
     public function project_strictKeyFail()
@@ -119,7 +119,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::project
+     * @covers ::project
      */
     public function project_strictKeyFalse()
     {
@@ -131,7 +131,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::project
+     * @covers ::project
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $strictKeyCheck was not a bool
      */
@@ -142,7 +142,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::project
+     * @covers ::project
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage a value in $input was not an array
      */
@@ -155,7 +155,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * Verifies basic usage for where() with exact matching
      *
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::where
+     * @covers ::where
      */
     public function where_basicUsage()
     {
@@ -174,7 +174,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * Verifies that where() returns empty array when nothing matches
      *
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::where
+     * @covers ::where
      */
     public function where_returnsEmptyArray()
     {
@@ -192,7 +192,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * Verifies use of multiple conditions
      *
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::where
+     * @covers ::where
      */
     public function where_withMultipleConditions()
     {
@@ -211,7 +211,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * Verifies use of multiple conditions
      *
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::where
+     * @covers ::where
      */
     public function where_returnsMultipleResults()
     {
@@ -232,7 +232,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::where
+     * @covers ::where
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage a value in $array was not an array
      */
@@ -245,7 +245,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * Verifies that embedInto works well with adding new items into an existing array.
      *
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::embedInto
+     * @covers ::embedInto
      */
     public function embedInto_basicUse()
     {
@@ -266,7 +266,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * Verifies that embedInto works well with creating new records.
      *
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::embedInto
+     * @covers ::embedInto
      */
     public function embedInto_emptyDestination()
     {
@@ -280,7 +280,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * Verifies that embedInto requires string for fieldname
      *
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::embedInto
+     * @covers ::embedInto
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $fieldName was not a string
      */
@@ -293,7 +293,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * Verifies that embedInto requires destination entries to be arrays.
      *
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::embedInto
+     * @covers ::embedInto
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage a value in $destination was not an array
      */
@@ -306,7 +306,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * Verifies that embedInto refuses to overwrite field names.
      *
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::embedInto
+     * @covers ::embedInto
      * @expectedException Exception
      */
     public function embedInto_existingFieldName()
@@ -318,7 +318,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * Verifies that embedInto does nothing with 0 items to embed.
      *
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::embedInto
+     * @covers ::embedInto
      */
     public function embedInto_noItems()
     {
@@ -327,7 +327,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::embedInto
+     * @covers ::embedInto
      */
     public function embedInto_overwrite()
     {
@@ -336,7 +336,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::embedInto
+     * @covers ::embedInto
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $overwrite was not a bool
      */
@@ -349,7 +349,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * Basic usage of fillIfKeysExist()
      *
      * @test
-     * @covers \DominionEnterprises\Util\Arrays::fillIfKeysExist
+     * @covers ::fillIfKeysExist
      */
     public function fillIfKeysExist()
     {
