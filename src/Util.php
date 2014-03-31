@@ -273,7 +273,7 @@ final class Util
     /**
      * Set the exception aliases.
      *
-     * @param array $filters array where keys are aliases and values are strings to a fully qualified exception class names.
+     * @param array $aliases array where keys are aliases and values are strings to a fully qualified exception class names.
      */
     public static function setExceptionAliases(array $aliases)
     {

@@ -57,7 +57,7 @@ final class File
     /**
      * Deletes the given file specified by $path
      *
-     * @param string $filename path to the file to be deleted
+     * @param string $path path to the file to be deleted
      *
      * @return void
      *
