@@ -7,12 +7,13 @@ namespace DominionEnterprises\Util;
 use DominionEnterprises\Util\Time as T;
 
 /**
- * Test class for \DominionEnterprises\Util\Time.
+ * @coversDefaultClass \DominionEnterprises\Util\Time
  */
 final class TimeTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
+     * @covers ::getAnsiSqlTimestamp
      */
     public function getAnsiSqlTimestamp_basic()
     {
@@ -22,6 +23,7 @@ final class TimeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::getAnsiSqlTimestamp
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $unixTimestamp was not an int
      */
@@ -32,6 +34,7 @@ final class TimeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::inMillis
      */
     public function inMillis()
     {

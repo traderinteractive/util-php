@@ -14,7 +14,7 @@ final class Arrays
      * Simply returns an array value if the key exist or null if it does not.
      *
      * @param array $array the array to be searched
-     * @param string $key the key to search for
+     * @param string|integer $key the key to search for
      * @param mixed $default the value to return if the $key is not found in $array
      *
      * @return mixed array value or given default value
@@ -22,6 +22,20 @@ final class Arrays
     public static function get(array $array, $key, $default = null)
     {
         return array_key_exists($key, $array) ? $array[$key] : $default;
+    }
+
+    /**
+     * Simply returns an array value if the key isset, $default if it is not
+     *
+     * @param array $array the array to be searched
+     * @param string|integer $key the key to search for
+     * @param mixed $default the value to return if the $key is not found in $array or if the value of $key element is null
+     *
+     * @return mixed array value or given default value
+     */
+    public static function getIfSet(array $array, $key, $default = null)
+    {
+        return isset($array[$key]) ? $array[$key] : $default;
     }
 
     /**
@@ -51,7 +65,7 @@ final class Arrays
      * Returns true and fills $value if $key exists in $array, otherwise fills $value with null and returns false
      *
      * @param array $array The array to pull from
-     * @param mixed $key The key to get
+     * @param string|integer $key The key to get
      * @param mixed &$value The value to set
      *
      * @return bool true if $key was found and filled in $value, false if $key was not found and $value was set to null
@@ -83,7 +97,7 @@ final class Arrays
      * but if $strictKeyCheck = true then an InvalidArgumentException occurs since 'key 2' wasnt in item 3
      *
      * @param array $input the array to project from
-     * @param mixed $key the key which values we are to project
+     * @param string|integer $key the key which values we are to project
      * @param boolean $strictKeyCheck ensure key is in each $input array or not
      *
      * @return array the projection
