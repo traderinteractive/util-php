@@ -8,7 +8,7 @@ use DominionEnterprises\Util\File as F;
 use DominionEnterprises\Util\Time as T;
 
 /**
- * Test class for \DominionEnterprises\Util\File.
+ * @coversDefaultClass \DominionEnterprises\Util\File
  */
 final class FileTest extends \PHPUnit_Framework_TestCase
 {
@@ -64,6 +64,7 @@ final class FileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::deleteDirectoryContents
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $directoryPath is not a string
      */
@@ -74,6 +75,7 @@ final class FileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::deleteDirectoryContents
      * @expectedException \Exception
      * @expectedExceptionMessage cannot list directory '/some/where/that/doesnt/exist'
      */
@@ -85,6 +87,7 @@ final class FileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::deleteDirectoryContents
      */
     public function deleteDirectoryContents_empty()
     {
@@ -97,6 +100,7 @@ final class FileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::deleteDirectoryContents
      */
     public function deleteDirectoryContents_withFiles()
     {
@@ -112,6 +116,7 @@ final class FileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::deleteDirectoryContents
      * @expectedException \Exception
      * @expectedExceptionCode 2
      */
@@ -129,6 +134,7 @@ final class FileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::deleteDirectoryContents
      * @expectedException \Exception
      * @expectedExceptionCode 1
      */
@@ -144,6 +150,7 @@ final class FileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::delete
      */
     public function delete_basic()
     {
@@ -155,6 +162,7 @@ final class FileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::delete
      */
     public function delete_nonExistent()
     {
@@ -164,6 +172,7 @@ final class FileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::delete
      * @expectedException \Exception
      */
     public function delete_directory()
@@ -174,6 +183,7 @@ final class FileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::delete
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $path is not a string or is whitespace
      */
@@ -184,6 +194,7 @@ final class FileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::delete
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $path is not a string or is whitespace
      */

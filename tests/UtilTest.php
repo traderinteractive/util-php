@@ -7,12 +7,13 @@ namespace DominionEnterprises;
 use DominionEnterprises\Util as U;
 
 /**
- * Test class for \DominionEnterprises\Util
+ * @coversDefaultClass \DominionEnterprises\Util
  */
 final class UtilTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
+     * @covers ::getExceptionInfo
      */
     public function getExceptionInfo()
     {
@@ -34,6 +35,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::raiseException
      * @expectedException \ErrorException
      * @covers \DominionEnterprises\Util::raiseException
      */
@@ -46,6 +48,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::raiseException
      * @covers \DominionEnterprises\Util::raiseException
      */
     public function raiseException_setsExceptionPropertiesCorrectly()
@@ -66,7 +69,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers \DominionEnterprises\Util::raiseException
+     * @covers ::raiseException
      */
     public function raiseException_returnsFalseIfErrorReportingDisabled()
     {
@@ -77,6 +80,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::throwIfNotType
      */
     public function throwIfNotType_basicSuccess()
     {
@@ -85,6 +89,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
     public function throwIfNotType_stringFailure()
@@ -94,6 +99,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
     public function throwIfNotType_boolFailure()
@@ -103,6 +109,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
     public function throwIfNotType_nullFailure()
@@ -112,6 +119,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
     public function throwIfNotType_intFailure()
@@ -121,6 +129,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
     public function throwIfNotType_notStringTypeArg()
@@ -130,6 +139,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
     public function throwIfNotType_notBoolAllowNullsArg()
@@ -139,6 +149,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
     public function throwIfNotType_notBoolFailOnWhitespaceArg()
@@ -148,6 +159,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
     public function throwIfNotType_badFunctionName()
@@ -157,6 +169,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::throwIfNotType
      */
     public function throwIfNotType_allowNullsSuccess()
     {
@@ -165,6 +178,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
     public function throwIfNotType_whitespaceFailure()
@@ -174,6 +188,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensureNot
      */
     public function ensureNot_success()
     {
@@ -182,6 +197,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensureNot
      * @expectedException \InvalidArgumentException
      */
     public function ensureNot_badArg()
@@ -191,6 +207,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensureNot
      * @expectedException \Exception
      */
     public function ensureNot_baseException()
@@ -200,6 +217,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensureNot
      * @expectedException \Exception
      * @expectedExceptionMessage bah
      */
@@ -210,6 +228,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensureNot
      * @expectedException \Exception
      * @expectedExceptionMessage bah
      */
@@ -220,6 +239,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensureNot
      * @expectedException \DominionEnterprises\HttpException
      * @expectedExceptionMessage bah
      * @expectedExceptionCode 404
@@ -231,6 +251,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensureNot
      * @expectedException \Exception
      * @expectedExceptionMessage foo
      * @expectedExceptionCode 2
@@ -242,6 +263,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensure
      */
     public function ensure_success()
     {
@@ -250,6 +272,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensure
      * @expectedException \InvalidArgumentException
      */
     public function ensure_badArg()
@@ -259,6 +282,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensure
      * @expectedException \Exception
      */
     public function ensure_baseException()
@@ -268,6 +292,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensure
      * @expectedException \Exception
      * @expectedExceptionMessage bah
      */
@@ -278,6 +303,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensure
      * @expectedException \Exception
      * @expectedExceptionMessage bah
      */
@@ -288,6 +314,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensure
      * @expectedException \DominionEnterprises\HttpException
      * @expectedExceptionMessage bah
      * @expectedExceptionCode 404
@@ -299,6 +326,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::ensure
      * @expectedException \Exception
      * @expectedExceptionMessage foo
      * @expectedExceptionCode 2
@@ -310,6 +338,8 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::setExceptionAliases
+     * @covers ::getExceptionAliases
      */
     public function setExceptionAliases_getSet()
     {
@@ -320,6 +350,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::callStatic
      */
     public function callStatic_private()
     {
@@ -328,6 +359,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::callStatic
      */
     public function callStatic_protected()
     {
@@ -336,6 +368,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::callStatic
      */
     public function callStatic_public()
     {
@@ -344,6 +377,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::callStatic
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $method was not a string
      */
@@ -354,6 +388,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::callStatic
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $method was not static
      */
