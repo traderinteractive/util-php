@@ -25,6 +25,19 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers ::getIfSet
+     */
+    public function getIfSet()
+    {
+        $array = array('a' => 'foo', 'b' => null);
+        $this->assertSame('foo', A::getIfSet($array, 'a'));
+        $this->assertSame('bar', A::getIfSet($array, 'b', 'bar'));
+        $this->assertSame(null, A::getIfSet($array, 'c'));
+        $this->assertSame('bar', A::getIfSet($array, 'c', 'bar'));
+    }
+
+    /**
+     * @test
      * @covers ::copyIfKeysExist
      */
     public function copyIfKeysExist()

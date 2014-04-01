@@ -25,6 +25,20 @@ final class Arrays
     }
 
     /**
+     * Simply returns an array value if the key isset, $default if it is not
+     *
+     * @param array $array the array to be searched
+     * @param string|integer $key the key to search for
+     * @param mixed $default the value to return if the $key is not found in $array or if the value of $key element is null
+     *
+     * @return mixed array value or given default value
+     */
+    public static function getIfSet(array $array, $key, $default = null)
+    {
+        return isset($array[$key]) ? $array[$key] : $default;
+    }
+
+    /**
      * Sets destination array values to be the source values if the source key exist in the source array.
      *
      * @param array $source
