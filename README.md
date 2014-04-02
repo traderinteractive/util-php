@@ -1,6 +1,12 @@
 # util-php
 [![Build Status](https://travis-ci.org/dominionenterprises/util-php.png)](https://travis-ci.org/dominionenterprises/util-php)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dominionenterprises/util-php/badges/quality-score.png?s=dc0ef0f4cdd53117a6dc2fae55bac8817b704b92)](https://scrutinizer-ci.com/g/dominionenterprises/util-php/)
+[![Code Coverage](https://scrutinizer-ci.com/g/dominionenterprises/util-php/badges/coverage.png?s=f9d87c7dfce01e2623760f62b8305c05cf7afb64)](https://scrutinizer-ci.com/g/dominionenterprises/util-php/)
 
+[![Latest Stable Version](https://poser.pugx.org/dominionenterprises/util/v/stable.png)](https://packagist.org/packages/dominionenterprises/util)
+[![Total Downloads](https://poser.pugx.org/dominionenterprises/util/downloads.png)](https://packagist.org/packages/dominionenterprises/util)
+[![Latest Unstable Version](https://poser.pugx.org/dominionenterprises/util/v/unstable.png)](https://packagist.org/packages/dominionenterprises/util)
+[![License](https://poser.pugx.org/dominionenterprises/util/license.png)](https://packagist.org/packages/dominionenterprises/util)
 
 A collection of general utilities for making common programming tasks easier.
 
