@@ -40,3 +40,5 @@ With a checkout of the code get [Composer](http://getcomposer.org) in your PATH 
 ```sh
 ./build.php
 ```
+
+For more information on our build process, read through out our [Contribution Guidelines](CONTRIBUTING.md).
