@@ -143,6 +143,117 @@ final class StringTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(S::endsWith('', 'b', $nonSuffix));
         $this->assertSame('', $nonSuffix);
     }
+
+    /**
+     * @test
+     * @covers ::ellipsize
+     */
+    public function ellipsize()
+    {
+        $input = 'Short text is an arbitrary thing.';
+        $this->assertSame($input, S::ellipsize($input, -1));
+        $this->assertSame($input, S::ellipsize($input, 0));
+        $this->assertSame($input, S::ellipsize($input, 3));
+        $this->assertSame('S...', S::ellipsize($input, 4));
+        $this->assertSame('Short text...', S::ellipsize($input, 13));
+        $this->assertSame($input, S::ellipsize($input, 50));
+    }
+
+    /**
+     * @test
+     * @covers ::ellipsize
+     */
+    public function ellipsize_override()
+    {
+        $this->assertSame('Test!', S::ellipsize('Testing', 5, '!'));
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage $string is not a string
+     * @covers ::ellipsize
+     */
+    public function ellipsize_badTypeString()
+    {
+        S::ellipsize(null, 10);
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage $maxLength is not an integer
+     * @covers ::ellipsize
+     */
+    public function ellipsize_badTypeMaxLength()
+    {
+        S::ellipsize('test', 'a');
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage $suffix is not a string
+     * @covers ::ellipsize
+     */
+    public function ellipsize_badTypeSuffix()
+    {
+        S::ellipsize('test', 10, 0);
+    }
+
+    /**
+     * @test
+     * @covers ::ucwords
+     */
+    public function ucwords()
+    {
+        $input = 'break-down o\'boy up_town you+me here now,this:place';
+        $this->assertSame('Break-Down O\'Boy Up_Town You+Me Here Now,This:Place', S::ucwords($input));
+    }
+
+    /**
+     * @test
+     * @covers ::ucwords
+     */
+    public function ucwords_optionalMarkers()
+    {
+        $input = 'break-down o\'boy up_town you+me here now,this:place';
+        $markers = array('\A', '-', '\s');
+        $this->assertSame('Break-Down O\'boy Up_town You+me Here Now,this:place', S::ucwords($input, $markers));
+    }
+
+    /**
+     * @test
+     * @covers ::ucwords
+     */
+    public function ucwords_simpleMarkers()
+    {
+        $input = 'Marry had a little-lamb';
+        $markers = array('a', '-', 'l');
+        $this->assertSame('MaRry haD a lIttlE-laMb', S::ucwords($input, $markers));
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage $string is not a string
+     * @covers ::ucwords
+     */
+    public function ucwords_badTypeString()
+    {
+        S::ucwords(null);
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage $markers is not an array
+     * @covers ::ucwords
+     */
+    public function ucwords_badTypeMarkers()
+    {
+        S::ucwords('test', null);
+    }
 }
 
 class TestObjectWithToString
