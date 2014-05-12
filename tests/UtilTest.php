@@ -244,6 +244,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensureNot
+     * @uses \DominionEnterprises\HttpException
      * @expectedException \DominionEnterprises\HttpException
      * @expectedExceptionMessage bah
      * @expectedExceptionCode 404
@@ -319,6 +320,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensure
+     * @uses \DominionEnterprises\HttpException
      * @expectedException \DominionEnterprises\HttpException
      * @expectedExceptionMessage bah
      * @expectedExceptionCode 404

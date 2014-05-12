@@ -23,6 +23,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException InvalidArgumentException
      * @covers ::format
+     * @uses \DominionEnterprises\Util::raiseException
      */
     public function format_nonStringCastableObject()
     {

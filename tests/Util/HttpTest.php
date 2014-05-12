@@ -16,6 +16,8 @@ final class HttpTest extends \PHPUnit_Framework_TestCase
      * @test
      * @group unit
      * @covers ::parseHeaders
+     * @uses \DominionEnterprises\Util::throwIfNotType
+     * @uses \DominionEnterprises\Util::raiseException
      */
     public function parseHeaders_basicUsage()
     {
@@ -28,6 +30,8 @@ final class HttpTest extends \PHPUnit_Framework_TestCase
      * @test
      * @group unit
      * @covers ::parseHeaders
+     * @uses \DominionEnterprises\Util::throwIfNotType
+     * @uses \DominionEnterprises\Util::raiseException
      */
     public function parseHeaders_malformed()
     {
@@ -46,6 +50,8 @@ final class HttpTest extends \PHPUnit_Framework_TestCase
      * @test
      * @group unit
      * @covers ::parseHeaders
+     * @uses \DominionEnterprises\Util::throwIfNotType
+     * @uses \DominionEnterprises\Util::raiseException
      */
     public function parseHeaders_peclHttpFunctionality()
     {
@@ -74,6 +80,8 @@ EOT;
      * @test
      * @group unit
      * @covers ::parseHeaders
+     * @uses \DominionEnterprises\Util::throwIfNotType
+     * @uses \DominionEnterprises\Util::raiseException
      */
     public function parseHeaders_methodAndUrlSet()
     {
