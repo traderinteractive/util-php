@@ -85,6 +85,8 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     public function throwIfNotType_basicSuccess()
     {
         U::throwIfNotType(array('string' => array('string1', 'string2'), 'integer' => array(1, 2), 'int' => 3, 'null' => null));
+        //Added for strict tests. throwIfNotType() throws on failure
+        $this->assertTrue(true);
     }
 
     /**
@@ -174,6 +176,8 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     public function throwIfNotType_allowNullsSuccess()
     {
         U::throwIfNotType(array('int' => array(1, null), 'string' => null, 'bool' => null), false, true);
+        //Added for strict tests. throwIfNotType() throws on failure
+        $this->assertTrue(true);
     }
 
     /**
