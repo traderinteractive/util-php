@@ -386,4 +386,141 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($expected, $actual);
     }
+
+    /**
+     * Basic usage of extract()
+     *
+     * @test
+     * @covers ::extract
+     * @uses \DominionEnterprises\Util\Arrays::get
+     */
+    public function extract()
+    {
+        $input = array(
+            array('key' => 'foo', 'value' => 'bar', 'extra' => 'abc'),
+            array('extra' => 123, 'key' => 'baz', 'value' => 'fez'),
+            array('value' => 'duplicate1', 'extra' => true, 'key' => 'boo'),
+            array('extra' => true, 'key' => 'noValue'),
+            array('value' => 'duplicate2', 'extra' => true, 'key' => 'boo'),
+        );
+
+        $expected = array('foo' => 'bar', 'baz' => 'fez', 'boo' => 'duplicate2', 'noValue' => null);
+
+        $this->assertSame($expected, A::extract($input, 'key', 'value'));
+    }
+
+    /**
+     * Basic usage of extract() with 'takeFirst' option
+     *
+     * @test
+     * @covers ::extract
+     * @uses \DominionEnterprises\Util\Arrays::get
+     */
+    public function extract_takeFirst()
+    {
+        $input = array(
+            array('key' => 'foo', 'value' => 'bar', 'extra' => 'abc'),
+            array('extra' => 123, 'key' => 'baz', 'value' => 'fez'),
+            array('value' => 'duplicate1', 'extra' => true, 'key' => 'boo'),
+            array('extra' => true, 'key' => 'noValue'),
+            array('value' => 'duplicate2', 'extra' => true, 'key' => 'boo'),
+        );
+
+        $expected = array('foo' => 'bar', 'baz' => 'fez', 'boo' => 'duplicate1', 'noValue' => null);
+
+        $this->assertSame($expected, A::extract($input, 'key', 'value', 'takeFirst'));
+    }
+
+    /**
+     * Basic usage of extract() with 'throw' option
+     *
+     * @test
+     * @covers ::extract
+     * @uses \DominionEnterprises\Util\Arrays::get
+     * @expectedException \Exception
+     * @expectedExceptionMessage Duplicate entry for 'boo' found.
+     */
+    public function extract_throwOnDuplicate()
+    {
+        $input = array(
+            array('key' => 'foo', 'value' => 'bar', 'extra' => 'abc'),
+            array('extra' => 123, 'key' => 'baz', 'value' => 'fez'),
+            array('value' => 'duplicate1', 'extra' => true, 'key' => 'boo'),
+            array('extra' => true, 'key' => 'noValue'),
+            array('value' => 'duplicate2', 'extra' => true, 'key' => 'boo'),
+        );
+
+        A::extract($input, 'key', 'value', 'throw');
+    }
+
+    /**
+     * Verify behavior when a single dimensional array is given to extract().
+     *
+     * @test
+     * @covers ::extract
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $arrays was not a multi-dimensional array
+     */
+    public function extract_withSingleDimensionalArray()
+    {
+        A::extract(array('key' => 'foo', 'value' => 'bar', 'extra' => 'abc'), 'key', 'value');
+    }
+
+    /**
+     * Verify behavior when $arrays contain a invalid key value in the supplied $keyIndex field.
+     *
+     * @test
+     * @covers ::extract
+     * @uses \DominionEnterprises\Util\Arrays::get
+     * @expectedException \UnexpectedValueException
+     * @expectedExceptionMessage Value for $arrays[1][key] was not a string or integer
+     */
+    public function extract_withInvalidKeyValue()
+    {
+        $input = array(
+            array('key' => 'foo', 'value' => 'bar', 'extra' => 'abc'),
+            array('extra' => 123, 'key' => array(), 'value' => 'fez'),
+        );
+
+        A::extract($input, 'key', 'value', 'throw');
+    }
+
+    /**
+     * Verify behavior when $keyIndex is not a string or integer
+     *
+     * @test
+     * @covers ::extract
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $keyIndex was not a string or integer
+     */
+    public function extract_withInvalidKeyIndex()
+    {
+        A::extract(array(), true, 'value');
+    }
+
+    /**
+     * Verify behavior when $valueIndex is not a string or integer
+     *
+     * @test
+     * @covers ::extract
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $valueIndex was not a string or integer
+     */
+    public function extract_withInvalidValueIndex()
+    {
+        A::extract(array(), 'key', array());
+    }
+
+    /**
+     * Verify behavior when $duplicateBehavior is not valid
+     *
+     * @test
+     * @covers ::extract
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $duplicateBehavior was not 'takeFirst', 'takeLast', or 'throw'
+     */
+    public function extract_withInvalidDuplicateBehavior()
+    {
+        A::extract(array(), 'key', 'value', 'invalid');
+    }
 }

@@ -228,4 +228,65 @@ final class Arrays
 
         return $result;
     }
+
+    /**
+     * Extracts an associative array from the given multi-dimensional array.
+     *
+     * @param array $input The multi-dimensional array.
+     * @param string|int $keyIndex The index to be used as the key of the resulting single dimensional result array.
+     * @param string|int $valueIndex The index to be used as the value of the resulting single dimensional result array.
+     *                               If a sub array does not contain this element null will be used as the value.
+     * @param string $duplicateBehavior Instruct how to handle duplicate resulting values, 'takeFirst', 'takeLast', 'throw'
+     *
+     * @return array an associative array
+     *
+     * @throws \InvalidArgumentException Thrown if $input is not an multi-dimensional array
+     * @throws \InvalidArgumentException Thrown if $keyIndex is not an int or string
+     * @throws \InvalidArgumentException Thrown if $valueIndex is not an int or string
+     * @throws \InvalidArgumentException Thrown if $duplicateBehavior is not 'takeFirst', 'takeLast', 'throw'
+     * @throws \UnexpectedValueException Thrown if a $keyIndex value is not a string or integer
+     * @throws \Exception Thrown if $duplicatedBehavior is 'throw' and duplicate entries are found.
+     */
+    public static function extract(array $input, $keyIndex, $valueIndex, $duplicateBehavior = 'takeLast')
+    {
+        if (!in_array($duplicateBehavior, array('takeFirst', 'takeLast', 'throw'))) {
+            throw new \InvalidArgumentException("\$duplicateBehavior was not 'takeFirst', 'takeLast', or 'throw'");
+        }
+
+        if (!is_string($keyIndex) && !is_int($keyIndex)) {
+            throw new \InvalidArgumentException('$keyIndex was not a string or integer');
+        }
+
+        if (!is_string($valueIndex) && !is_int($valueIndex)) {
+            throw new \InvalidArgumentException('$valueIndex was not a string or integer');
+        }
+
+        $result = array();
+        foreach ($input as $index => $array) {
+            if (!is_array($array)) {
+                throw new \InvalidArgumentException('$arrays was not a multi-dimensional array');
+            }
+
+            $key = self::get($array, $keyIndex);
+            if (!is_string($key) && !is_int($key)) {
+                throw new \UnexpectedValueException("Value for \$arrays[{$index}][{$keyIndex}] was not a string or integer");
+            }
+
+            $value = self::get($array, $valueIndex);
+            if (!array_key_exists($key, $result)) {
+                $result[$key] = $value;
+                continue;
+            }
+
+            if ($duplicateBehavior === 'throw') {
+                throw new \Exception("Duplicate entry for '{$key}' found.");
+            }
+
+            if ($duplicateBehavior === 'takeLast') {
+                $result[$key] = $value;
+            }
+        }
+
+        return $result;
+    }
 }

@@ -151,6 +151,7 @@ final class FileTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::delete
+     * @uses \DominionEnterprises\Util::ensure
      */
     public function delete_basic()
     {
