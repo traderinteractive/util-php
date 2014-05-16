@@ -224,6 +224,68 @@ final class StringTest extends \PHPUnit_Framework_TestCase
     {
         S::ellipsize('test', 10, 0);
     }
+
+    /**
+     * @test
+     * @covers ::ucwords
+     */
+    public function ucwords()
+    {
+        $input = 'break-down o\'boy up_town you+me here now,this:place';
+        $this->assertSame('Break-Down O\'Boy Up_Town You+Me Here Now,This:Place', S::ucwords($input));
+    }
+
+    /**
+     * @test
+     * @covers ::ucwords
+     */
+    public function ucwords_optionalDelimiters()
+    {
+        $input = 'break-down o\'boy up_town you+me here now,this:place';
+        $this->assertSame('Break-Down O\'boy Up_town You+me Here Now,this:place', S::ucwords($input, '- '));
+    }
+
+    /**
+     * @test
+     * @covers ::ucwords
+     */
+    public function ucwords_noDelimiters()
+    {
+        $input = 'Mary had a little-lamb';
+        $this->assertSame($input, S::ucwords($input, ''));
+    }
+
+    /**
+     * @test
+     * @covers ::ucwords
+     */
+    public function ucwords_singleDelimiter()
+    {
+        $input = 'Mary had a little-lamb';
+        $this->assertSame('MaRy haD a little-laMb', S::ucwords($input, 'a'));
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage $string is not a string
+     * @covers ::ucwords
+     */
+    public function ucwords_badTypeString()
+    {
+        S::ucwords(null);
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage $delimiters is not a string
+     * @covers ::ucwords
+     */
+    public function ucwords_badTypeDelimiters()
+    {
+        S::ucwords('test', null);
+    }
 }
 
 class TestObjectWithToString
