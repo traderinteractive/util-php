@@ -95,4 +95,50 @@ final class String
         $nonSuffix = substr($string, 0, -$suffixLength);
         return true;
     }
+
+    /**
+     * Truncates the string to the given length, with an ellipsis at the end.
+     *
+     * @param string $string The string to shorten.
+     * @param int $maxLength The length to truncate the string to.  The result will not be longer than this, but may be shorter.
+     * @param string $suffix The string to append when truncating.  Typically this will be an ellipsis.
+     *
+     * @return string The truncated string with the ellipsis included if truncation occured.
+     *
+     * @throws \InvalidArgumentException if $string is not a string
+     * @throws \InvalidArgumentException if $maxLength is not an integer
+     * @throws \InvalidArgumentException if $maxLength is negative
+     * @throws \InvalidArgumentException if $suffix is not a string
+     */
+    public static function ellipsize($string, $maxLength, $suffix = '...')
+    {
+        if (!is_string($string)) {
+            throw new \InvalidArgumentException('$string is not a string');
+        }
+
+        if (!is_int($maxLength)) {
+            throw new \InvalidArgumentException('$maxLength is not an integer');
+        }
+
+        if ($maxLength < 0) {
+            throw new \InvalidArgumentException('$maxLength is negative');
+        }
+
+        if (!is_string($suffix)) {
+            throw new \InvalidArgumentException('$suffix is not a string');
+        }
+
+        if (strlen($string) <= $maxLength) {
+            return $string;
+        }
+
+        $trimmedLength = $maxLength - strlen($suffix);
+        $string = substr($string, 0, max(0, $trimmedLength));
+
+        if ($string === '') {
+            return substr($suffix, 0, $maxLength);
+        }
+
+        return $string . $suffix;
+    }
 }
