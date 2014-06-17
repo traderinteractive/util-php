@@ -125,6 +125,8 @@ final class Http
     {
         $queryStrings = array();
         foreach ($parameters as $parameterName => $parameterValue) {
+            $parameterName = urlencode($parameterName);
+
             if (is_array($parameterValue)) {
                 foreach ($parameterValue as $eachValue) {
                     $eachValue = urlencode($eachValue);

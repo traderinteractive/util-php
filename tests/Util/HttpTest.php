@@ -138,7 +138,7 @@ EOT;
      */
     public function buildQueryString_complexValues()
     {
-        $this->assertSame('abc=1%242%283&abc=4%295%2A6', H::buildQueryString(array('abc' => array('1$2(3', '4)5*6'))));
+        $this->assertSame('a+b+c=1%242%283&a+b+c=4%295%2A6', H::buildQueryString(array('a b c' => array('1$2(3', '4)5*6'))));
     }
 
     /**
