@@ -104,6 +104,7 @@ final class Http
      * $parameters = array(
      *   'param1' => array('value', 'another value'),
      *   'param2' => 'a value',
+     *   'param3' => false,
      * );
      *
      * $queryString = \DominionEnterprises\HttpUtil::buildQueryString($parameters);
@@ -113,7 +114,7 @@ final class Http
      *
      * Output:
      * <pre>
-     * param1=value&param1=another+value&param2=a+value
+     * param1=value&param1=another+value&param2=a+value&param3=false
      * </pre>
      *
      * @param array $parameters An associative array containing parameter key/value(s)
@@ -129,6 +130,10 @@ final class Http
                     $eachValue = urlencode($eachValue);
                     $queryStrings[] = "{$parameterName}={$eachValue}";
                 }
+            } elseif ($parameterValue === false) {
+                $queryStrings[] = "{$parameterName}=false";
+            } elseif ($parameterValue === true) {
+                $queryStrings[] = "{$parameterName}=true";
             } else {
                 $parameterValue = urlencode($parameterValue);
                 $queryStrings[] = "{$parameterName}={$parameterValue}";

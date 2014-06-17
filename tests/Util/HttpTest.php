@@ -103,9 +103,11 @@ EOT;
             'baz' => 'boom',
             'cow' => 'milk',
             'php' => 'hypertext processor',
+            'theFalse' => false,
+            'theTrue' => true,
         );
 
-        $this->assertSame('foo=bar&baz=boom&cow=milk&php=hypertext+processor', H::buildQueryString($data));
+        $this->assertSame('foo=bar&baz=boom&cow=milk&php=hypertext+processor&theFalse=false&theTrue=true', H::buildQueryString($data));
     }
 
     /**
