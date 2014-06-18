@@ -23,7 +23,6 @@ $phpunitArguments = array(
     'enforceTimeLimit' => true,
     'disallowTodoAnnotatedTests' => true,
     'coverageHtml' => 'coverage',
-    'coverageClover' => 'clover.xml',
     'configuration' => $phpunitConfiguration,
 );
 $testRunner = new PHPUnit_TextUI_TestRunner();
@@ -32,12 +31,11 @@ if (!$result->wasSuccessful()) {
     exit(1);
 }
 
-$xml = new SimpleXMLElement(file_get_contents('clover.xml'));
-foreach ($xml->xpath('//file/metrics') as $metric) {
-    if ((int)$metric['elements'] !== (int)$metric['coveredelements']) {
-        file_put_contents('php://stderr', "Code coverage was NOT 100%\n");
-        exit(1);
-    }
+$coverageFactory = new PHP_CodeCoverage_Report_Factory();
+$coverageReport = $coverageFactory->create($result->getCodeCoverage());
+if ($coverageReport->getNumExecutedLines() !== $coverageReport->getNumExecutableLines()) {
+    file_put_contents('php://stderr', "Code coverage was NOT 100%\n");
+    exit(1);
 }
 
 echo "Code coverage was 100%\n";
