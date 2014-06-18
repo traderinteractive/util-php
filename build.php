@@ -8,13 +8,15 @@ if ($returnStatus !== 0) {
     exit(1);
 }
 
+require 'vendor/autoload.php';
+
 passthru('./vendor/bin/phpcs --standard=' . __DIR__ . '/vendor/dominionenterprises/dws-coding-standard/DWS -n src tests *.php', $returnStatus);
 if ($returnStatus !== 0) {
     exit(1);
 }
 
-passthru('./vendor/bin/phpunit --strict --coverage-html coverage --coverage-clover clover.xml tests', $returnStatus);
-if ($returnStatus !== 0) {
+$phpunit = new PHPUnit_TextUI_Command();
+if ($phpunit->run(array('--strict', '--coverage-html', 'coverage', '--coverage-clover', 'clover.xml', 'tests'), false) !== 0) {
     exit(1);
 }
 
