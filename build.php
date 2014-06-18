@@ -15,8 +15,20 @@ if ($returnStatus !== 0) {
     exit(1);
 }
 
-$phpunit = new PHPUnit_TextUI_Command();
-if ($phpunit->run(array('--strict', '--coverage-html', 'coverage', '--coverage-clover', 'clover.xml', 'tests'), false) !== 0) {
+$phpunitConfiguration = PHPUnit_Util_Configuration::getInstance(__DIR__ . '/phpunit.xml');
+$phpunitArguments = array(
+    'reportUselessTests' => true,
+    'strictCoverage' => true,
+    'disallowTestOutput' => true,
+    'enforceTimeLimit' => true,
+    'disallowTodoAnnotatedTests' => true,
+    'coverageHtml' => 'coverage',
+    'coverageClover' => 'clover.xml',
+    'configuration' => $phpunitConfiguration,
+);
+$testRunner = new PHPUnit_TextUI_TestRunner();
+$result = $testRunner->doRun($phpunitConfiguration->getTestSuiteConfiguration(), $phpunitArguments);
+if (!$result->wasSuccessful()) {
     exit(1);
 }
 
