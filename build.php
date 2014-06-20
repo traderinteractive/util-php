@@ -16,15 +16,7 @@ if ($returnStatus !== 0) {
 }
 
 $phpunitConfiguration = PHPUnit_Util_Configuration::getInstance(__DIR__ . '/phpunit.xml');
-$phpunitArguments = array(
-    'reportUselessTests' => true,
-    'strictCoverage' => true,
-    'disallowTestOutput' => true,
-    'enforceTimeLimit' => true,
-    'disallowTodoAnnotatedTests' => true,
-    'coverageHtml' => 'coverage',
-    'configuration' => $phpunitConfiguration,
-);
+$phpunitArguments = array('coverageHtml' => 'coverage', 'configuration' => $phpunitConfiguration);
 $testRunner = new PHPUnit_TextUI_TestRunner();
 $result = $testRunner->doRun($phpunitConfiguration->getTestSuiteConfiguration(), $phpunitArguments);
 if (!$result->wasSuccessful()) {
