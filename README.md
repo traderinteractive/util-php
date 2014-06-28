@@ -1,12 +1,11 @@
 # util-php
-[![Build Status](https://travis-ci.org/dominionenterprises/util-php.png)](https://travis-ci.org/dominionenterprises/util-php)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dominionenterprises/util-php/badges/quality-score.png?s=dc0ef0f4cdd53117a6dc2fae55bac8817b704b92)](https://scrutinizer-ci.com/g/dominionenterprises/util-php/)
-[![Code Coverage](https://scrutinizer-ci.com/g/dominionenterprises/util-php/badges/coverage.png?s=f9d87c7dfce01e2623760f62b8305c05cf7afb64)](https://scrutinizer-ci.com/g/dominionenterprises/util-php/)
+[![Build Status](http://img.shields.io/travis/dominionenterprises/util-php.svg?style=flat)](https://travis-ci.org/dominionenterprises/util-php)
+[![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/dominionenterprises/util-php.svg?style=flat)](https://scrutinizer-ci.com/g/dominionenterprises/util-php/)
+[![Code Coverage](http://img.shields.io/scrutinizer/coverage/g/dominionenterprises/util-php.svg?style=flat)](https://scrutinizer-ci.com/g/dominionenterprises/util-php/)
 
-[![Latest Stable Version](https://poser.pugx.org/dominionenterprises/util/v/stable.png)](https://packagist.org/packages/dominionenterprises/util)
-[![Total Downloads](https://poser.pugx.org/dominionenterprises/util/downloads.png)](https://packagist.org/packages/dominionenterprises/util)
-[![Latest Unstable Version](https://poser.pugx.org/dominionenterprises/util/v/unstable.png)](https://packagist.org/packages/dominionenterprises/util)
-[![License](https://poser.pugx.org/dominionenterprises/util/license.png)](https://packagist.org/packages/dominionenterprises/util)
+[![Latest Stable Version](http://img.shields.io/packagist/v/dominionenterprises/util.svg?style=flat)](https://packagist.org/packages/dominionenterprises/util)
+[![Total Downloads](http://img.shields.io/packagist/dt/dominionenterprises/util.svg?style=flat)](https://packagist.org/packages/dominionenterprises/util)
+[![License](http://img.shields.io/packagist/l/dominionenterprises/util.svg?style=flat)](https://packagist.org/packages/dominionenterprises/util)
 
 A collection of general utilities for making common programming tasks easier.
 
