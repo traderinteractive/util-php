@@ -523,4 +523,26 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
     {
         A::extract(array(), 'key', 'value', 'invalid');
     }
+
+    /**
+     * Verify basic behavior of getFirstSet()
+     *
+     * @test
+     * @covers ::getFirstSet
+     */
+    public function getFirstSet()
+    {
+        $this->assertSame('bar', A::getFirstSet(array('foo', null, 'bar'), array(1, 2)));
+    }
+
+    /**
+     * Verify getFirstSet() returns default value
+     *
+     * @test
+     * @covers ::getFirstSet
+     */
+    public function getFirstSet_withDefault()
+    {
+        $this->assertSame('baz', A::getFirstSet(array('foo', null, 'bar'), array(1, 4), 'baz'));
+    }
 }

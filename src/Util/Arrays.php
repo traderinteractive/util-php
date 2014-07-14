@@ -289,4 +289,24 @@ final class Arrays
 
         return $result;
     }
+
+    /**
+     * Returns the first set {@see isset()} value specified by the given array of keys.
+     *
+     * @param array $array The array containing the possible values.
+     * @param array $keys Array of keys to search for. The first set value will be returned.
+     * @param mixed $default The default value to return if no set value was found in the array.
+     *
+     * @return mixed Returns the found set value or the given default value.
+     */
+    public static function getFirstSet(array $array, array $keys, $default = null)
+    {
+        foreach ($keys as $key) {
+            if (isset($array[$key])) {
+                return $array[$key];
+            }
+        }
+
+        return $default;
+    }
 }
