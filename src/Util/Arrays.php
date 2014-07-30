@@ -62,6 +62,29 @@ final class Arrays
     }
 
     /**
+     * Sets destination array values to be the source values if the source key is set in the source array.
+     *
+     * @param array $source
+     * @param array &$dest
+     * @param array $keyMap mapping of dest keys to source keys. If $keyMap is associative, the keys will be the destination keys. If numeric
+     *                      the values will be the destination keys
+     *
+     * @return void
+     */
+    public static function copyIfSet(array $source, array &$dest, array $keyMap)
+    {
+        foreach ($keyMap as $destKey => $sourceKey) {
+            if (is_int($destKey)) {
+                $destKey = $sourceKey;
+            }
+
+            if (isset($source[$sourceKey])) {
+                $dest[$destKey] = $source[$sourceKey];
+            }
+        }
+    }
+
+    /**
      * Returns true and fills $value if $key exists in $array, otherwise fills $value with null and returns false
      *
      * @param array $array The array to pull from
