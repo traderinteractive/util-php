@@ -65,6 +65,34 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Verify basic behavior of copyIfSet()
+     *
+     * @test
+     * @covers ::copyIfSet
+     */
+    public function copyIfSet()
+    {
+        $source = array('a' => 'foo', 'b' => null, 'd' => 'baz');
+        $result = array();
+        A::copyIfSet($source, $result, array('alpha' => 'a', 'beta' => 'b', 'charlie' => 'c', 'delta' => 'd'));
+        $this->assertSame(array('alpha' => 'foo', 'delta' => 'baz'), $result);
+    }
+
+    /**
+     * Verify behavior of copyIfSet() with numeric array $keyMap
+     *
+     * @test
+     * @covers ::copyIfSet
+     */
+    public function copyIfSet_numericKeyMap()
+    {
+        $source = array('a' => 'foo', 'b' => null, 'd' => 'baz');
+        $result = array();
+        A::copyIfSet($source, $result, array('a', 'b', 'c', 'd'));
+        $this->assertSame(array('a' => 'foo', 'd' => 'baz'), $result);
+    }
+
+    /**
      * @test
      * @covers ::tryGet
      */
