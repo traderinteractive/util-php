@@ -17,7 +17,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function get()
     {
-        $array = array('a' => 'foo', 'b' => 'bar');
+        $array = ['a' => 'foo', 'b' => 'bar'];
         $this->assertSame('foo', A::get($array, 'a'));
         $this->assertSame(null, A::get($array, 'c'));
         $this->assertSame('baz', A::get($array, 'c', 'baz'));
@@ -29,7 +29,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function getIfSet()
     {
-        $array = array('a' => 'foo', 'b' => null);
+        $array = ['a' => 'foo', 'b' => null];
         $this->assertSame('foo', A::getIfSet($array, 'a'));
         $this->assertSame('bar', A::getIfSet($array, 'b', 'bar'));
         $this->assertSame(null, A::getIfSet($array, 'c'));
@@ -42,12 +42,12 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function copyIfKeysExist()
     {
-        $source = array('a' => 'foo', 'b' => 'bar');
+        $source = ['a' => 'foo', 'b' => 'bar'];
 
-        $result = array();
-        A::copyIfKeysExist($source, $result, array('foo' => 'a', 'bar' => 'b'));
+        $result = [];
+        A::copyIfKeysExist($source, $result, ['foo' => 'a', 'bar' => 'b']);
 
-        $this->assertSame(array('foo' => 'foo', 'bar' => 'bar'), $result);
+        $this->assertSame(['foo' => 'foo', 'bar' => 'bar'], $result);
     }
 
     /**
@@ -58,10 +58,10 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function copyIfKeysExist_numericKeyMap()
     {
-        $source = array('a' => 'foo', 'b' => 'bar', 'd' => 'baz');
-        $result = array();
-        A::copyIfKeysExist($source, $result, array('a', 'b', 'c'));
-        $this->assertSame(array('a' => 'foo', 'b' => 'bar'), $result);
+        $source = ['a' => 'foo', 'b' => 'bar', 'd' => 'baz'];
+        $result = [];
+        A::copyIfKeysExist($source, $result, ['a', 'b', 'c']);
+        $this->assertSame(['a' => 'foo', 'b' => 'bar'], $result);
     }
 
     /**
@@ -72,10 +72,10 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function copyIfSet()
     {
-        $source = array('a' => 'foo', 'b' => null, 'd' => 'baz');
-        $result = array();
-        A::copyIfSet($source, $result, array('alpha' => 'a', 'beta' => 'b', 'charlie' => 'c', 'delta' => 'd'));
-        $this->assertSame(array('alpha' => 'foo', 'delta' => 'baz'), $result);
+        $source = ['a' => 'foo', 'b' => null, 'd' => 'baz'];
+        $result = [];
+        A::copyIfSet($source, $result, ['alpha' => 'a', 'beta' => 'b', 'charlie' => 'c', 'delta' => 'd']);
+        $this->assertSame(['alpha' => 'foo', 'delta' => 'baz'], $result);
     }
 
     /**
@@ -86,10 +86,10 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function copyIfSet_numericKeyMap()
     {
-        $source = array('a' => 'foo', 'b' => null, 'd' => 'baz');
-        $result = array();
-        A::copyIfSet($source, $result, array('a', 'b', 'c', 'd'));
-        $this->assertSame(array('a' => 'foo', 'd' => 'baz'), $result);
+        $source = ['a' => 'foo', 'b' => null, 'd' => 'baz'];
+        $result = [];
+        A::copyIfSet($source, $result, ['a', 'b', 'c', 'd']);
+        $this->assertSame(['a' => 'foo', 'd' => 'baz'], $result);
     }
 
     /**
@@ -99,7 +99,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
     public function tryGet_nullKey()
     {
         $value = 'filler';
-        $this->assertFalse(A::tryGet(array(), null, $value));
+        $this->assertFalse(A::tryGet([], null, $value));
         $this->assertSame(null, $value);
     }
 
@@ -110,7 +110,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
     public function tryGet_classForKey()
     {
         $value = 'filler';
-        $this->assertFalse(A::tryGet(array(), new \stdClass(), $value));
+        $this->assertFalse(A::tryGet([], new \stdClass(), $value));
         $this->assertSame(null, $value);
     }
 
@@ -121,7 +121,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
     public function tryGet_valueStringKey()
     {
         $value = 'filler';
-        $this->assertTrue(A::tryGet(array('a' => 1), 'a', $value));
+        $this->assertTrue(A::tryGet(['a' => 1], 'a', $value));
         $this->assertSame(1, $value);
     }
 
@@ -132,7 +132,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
     public function tryGet_valueIntegerKey()
     {
         $value = 'filler';
-        $this->assertTrue(A::tryGet(array(1.1, 2.2), 0, $value));
+        $this->assertTrue(A::tryGet([1.1, 2.2], 0, $value));
         $this->assertSame(1.1, $value);
     }
 
@@ -142,8 +142,8 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function project_basicUse()
     {
-        $expected = array(2, 'boo' => 4);
-        $result = A::project(array(array('key1' => 1, 'key2' => 2), 'boo' => array('key1' => 3, 'key2' => 4)), 'key2');
+        $expected = [2, 'boo' => 4];
+        $result = A::project([['key1' => 1, 'key2' => 2], 'boo' => ['key1' => 3, 'key2' => 4]], 'key2');
 
         $this->assertSame($expected, $result);
     }
@@ -155,7 +155,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function project_strictKeyFail()
     {
-        A::project(array(array('key1' => 1, 'key2' => 2), array('key1' => 3)), 'key2');
+        A::project([['key1' => 1, 'key2' => 2], ['key1' => 3]], 'key2');
     }
 
     /**
@@ -164,8 +164,8 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function project_strictKeyFalse()
     {
-        $expected = array(1 => 4);
-        $result = A::project(array(array('key1' => 1), array('key1' => 3, 'key2' => 4)), 'key2', false);
+        $expected = [1 => 4];
+        $result = A::project([['key1' => 1], ['key1' => 3, 'key2' => 4]], 'key2', false);
 
         $this->assertSame($expected, $result);
     }
@@ -178,7 +178,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function project_strictKeyNotBool()
     {
-        A::project(array(), 'not under test', 1);
+        A::project([], 'not under test', 1);
     }
 
     /**
@@ -189,7 +189,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function project_inputValueNotArray()
     {
-        A::project(array(1), 'not under test');
+        A::project([1], 'not under test');
     }
 
     /**
@@ -200,14 +200,14 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function where_basicUsage()
     {
-        $people = array(
-            array('name' => 'Tom', 'score' => '0'),
-            array('name' => 'Dick', 'score' => 0),
-            array('name' => 'Jane'),
-        );
+        $people = [
+            ['name' => 'Tom', 'score' => '0'],
+            ['name' => 'Dick', 'score' => 0],
+            ['name' => 'Jane'],
+        ];
 
-        $expected = array(array('name' => 'Dick', 'score' => 0));
-        $result = A::where($people, array('score' => 0));
+        $expected = [['name' => 'Dick', 'score' => 0]];
+        $result = A::where($people, ['score' => 0]);
         $this->assertSame($expected, $result);
     }
 
@@ -219,14 +219,14 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function where_returnsEmptyArray()
     {
-        $people = array(
-            array('name' => 'Tom', 'score' => '0'),
-            array('name' => 'Dick', 'score' => 0),
-            array('name' => 'Harry', 'score' => 0.0),
-        );
+        $people = [
+            ['name' => 'Tom', 'score' => '0'],
+            ['name' => 'Dick', 'score' => 0],
+            ['name' => 'Harry', 'score' => 0.0],
+        ];
 
-        $result = A::where($people, array('score' => false));
-        $this->assertSame(array(), $result);
+        $result = A::where($people, ['score' => false]);
+        $this->assertSame([], $result);
     }
 
     /**
@@ -237,14 +237,14 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function where_withMultipleConditions()
     {
-        $people = array(
-            array('name' => 'Tom', 'score' => 1, 'extra' => 'abc'),
-            array('name' => 'Dick', 'score' => 1, 'extra' => false),
-            array('name' => 'Dick', 'score' => 0, 'extra' => 123),
-        );
+        $people = [
+            ['name' => 'Tom', 'score' => 1, 'extra' => 'abc'],
+            ['name' => 'Dick', 'score' => 1, 'extra' => false],
+            ['name' => 'Dick', 'score' => 0, 'extra' => 123],
+        ];
 
-        $expected = array(array('name' => 'Dick', 'score' => 1, 'extra' => false));
-        $result = A::where($people, array('name' => 'Dick', 'score' => 1));
+        $expected = [['name' => 'Dick', 'score' => 1, 'extra' => false]];
+        $result = A::where($people, ['name' => 'Dick', 'score' => 1]);
         $this->assertSame($expected, $result);
     }
 
@@ -256,18 +256,18 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function where_returnsMultipleResults()
     {
-        $array = array(
-            array('key 1' => 'a', 'key 2' => 'b'),
-            array('key 1' => 'c', 'key 2' => 'd'),
-            array('key 1' => 'a', 'key 2' => 'c'),
-        );
+        $array = [
+            ['key 1' => 'a', 'key 2' => 'b'],
+            ['key 1' => 'c', 'key 2' => 'd'],
+            ['key 1' => 'a', 'key 2' => 'c'],
+        ];
 
-        $expected = array(
-            array('key 1' => 'a', 'key 2' => 'b'),
-            array('key 1' => 'a', 'key 2' => 'c'),
-        );
+        $expected = [
+            ['key 1' => 'a', 'key 2' => 'b'],
+            ['key 1' => 'a', 'key 2' => 'c'],
+        ];
 
-        $result = A::where($array, array('key 1' => 'a'));
+        $result = A::where($array, ['key 1' => 'a']);
         $this->assertSame($expected, $result);
     }
 
@@ -279,7 +279,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function where_inputValueNotArray()
     {
-        A::where(array(1), array());
+        A::where([1], []);
     }
 
     /**
@@ -291,14 +291,14 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
     public function embedInto_basicUse()
     {
         $this->assertSame(
-            array(
-                array('request' => array('image' => 'foo'), 'result' => array('exception' => 'exception 1')),
-                array('request' => array('image' => 'bar'), 'result' => array('exception' => 'exception 2')),
-            ),
+            [
+                ['request' => ['image' => 'foo'], 'result' => ['exception' => 'exception 1']],
+                ['request' => ['image' => 'bar'], 'result' => ['exception' => 'exception 2']],
+            ],
             A::embedInto(
-                array(array('exception' => 'exception 1'), array('exception' => 'exception 2')),
+                [['exception' => 'exception 1'], ['exception' => 'exception 2']],
                 'result',
-                array(array('request' => array('image' => 'foo')), array('request' => array('image' => 'bar')))
+                [['request' => ['image' => 'foo']], ['request' => ['image' => 'bar']]]
             )
         );
     }
@@ -312,8 +312,8 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
     public function embedInto_emptyDestination()
     {
         $this->assertSame(
-            array(array('request' => array('image' => 'foo')), array('request' => array('image' => 'bar'))),
-            A::embedInto(array(array('image' => 'foo'), array('image' => 'bar')), 'request')
+            [['request' => ['image' => 'foo']], ['request' => ['image' => 'bar']]],
+            A::embedInto([['image' => 'foo'], ['image' => 'bar']], 'request')
         );
     }
 
@@ -327,7 +327,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function embedInto_numericFieldName()
     {
-        A::embedInto(array(), 5);
+        A::embedInto([], 5);
     }
 
     /**
@@ -340,7 +340,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function embedInto_nonArrayDestinationItems()
     {
-        A::embedInto(array('one' => 0), 'result', array('one' => 0));
+        A::embedInto(['one' => 0], 'result', ['one' => 0]);
     }
 
     /**
@@ -352,7 +352,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function embedInto_existingFieldName()
     {
-        A::embedInto(array('new'), 'result', array(array('result' => 'old')));
+        A::embedInto(['new'], 'result', [['result' => 'old']]);
     }
 
     /**
@@ -363,7 +363,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function embedInto_noItems()
     {
-        $this->assertSame(array(array('result' => 'foo')), A::embedInto(array(), 'result', array(array('result' => 'foo'))));
+        $this->assertSame([['result' => 'foo']], A::embedInto([], 'result', [['result' => 'foo']]));
     }
 
     /**
@@ -372,7 +372,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function embedInto_overwrite()
     {
-        $this->assertSame(array(array('key' => true)), A::embedInto(array(true), 'key', array(array('key' => false)), true));
+        $this->assertSame([['key' => true]], A::embedInto([true], 'key', [['key' => false]], true));
     }
 
     /**
@@ -383,7 +383,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function embedInto_overwriteNotBool()
     {
-        A::embedInto(array(), 'key', array(), 1);
+        A::embedInto([], 'key', [], 1);
     }
 
     /**
@@ -394,23 +394,11 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function fillIfKeysExist()
     {
-        $template = array(
-            'a' => null,
-            'b' => null,
-            'c' => null,
-            'd' => null,
-            'e' => null,
-        );
+        $template = ['a' => null, 'b' => null, 'c' => null, 'd' => null, 'e' => null];
 
-        $actual = A::fillIfKeysExist($template, array('a' => 1, 'c' => 1, 'e' => 1));
+        $actual = A::fillIfKeysExist($template, ['a' => 1, 'c' => 1, 'e' => 1]);
 
-        $expected = array(
-            'a' => 1,
-            'b' => null,
-            'c' => 1,
-            'd' => null,
-            'e' => 1,
-        );
+        $expected = ['a' => 1, 'b' => null, 'c' => 1, 'd' => null, 'e' => 1];
 
         $this->assertSame($expected, $actual);
     }
@@ -424,15 +412,15 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function extract()
     {
-        $input = array(
-            array('key' => 'foo', 'value' => 'bar', 'extra' => 'abc'),
-            array('extra' => 123, 'key' => 'baz', 'value' => 'fez'),
-            array('value' => 'duplicate1', 'extra' => true, 'key' => 'boo'),
-            array('extra' => true, 'key' => 'noValue'),
-            array('value' => 'duplicate2', 'extra' => true, 'key' => 'boo'),
-        );
+        $input = [
+            ['key' => 'foo', 'value' => 'bar', 'extra' => 'abc'],
+            ['extra' => 123, 'key' => 'baz', 'value' => 'fez'],
+            ['value' => 'duplicate1', 'extra' => true, 'key' => 'boo'],
+            ['extra' => true, 'key' => 'noValue'],
+            ['value' => 'duplicate2', 'extra' => true, 'key' => 'boo'],
+        ];
 
-        $expected = array('foo' => 'bar', 'baz' => 'fez', 'boo' => 'duplicate2', 'noValue' => null);
+        $expected = ['foo' => 'bar', 'baz' => 'fez', 'boo' => 'duplicate2', 'noValue' => null];
 
         $this->assertSame($expected, A::extract($input, 'key', 'value'));
     }
@@ -446,15 +434,15 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function extract_takeFirst()
     {
-        $input = array(
-            array('key' => 'foo', 'value' => 'bar', 'extra' => 'abc'),
-            array('extra' => 123, 'key' => 'baz', 'value' => 'fez'),
-            array('value' => 'duplicate1', 'extra' => true, 'key' => 'boo'),
-            array('extra' => true, 'key' => 'noValue'),
-            array('value' => 'duplicate2', 'extra' => true, 'key' => 'boo'),
-        );
+        $input = [
+            ['key' => 'foo', 'value' => 'bar', 'extra' => 'abc'],
+            ['extra' => 123, 'key' => 'baz', 'value' => 'fez'],
+            ['value' => 'duplicate1', 'extra' => true, 'key' => 'boo'],
+            ['extra' => true, 'key' => 'noValue'],
+            ['value' => 'duplicate2', 'extra' => true, 'key' => 'boo'],
+        ];
 
-        $expected = array('foo' => 'bar', 'baz' => 'fez', 'boo' => 'duplicate1', 'noValue' => null);
+        $expected = ['foo' => 'bar', 'baz' => 'fez', 'boo' => 'duplicate1', 'noValue' => null];
 
         $this->assertSame($expected, A::extract($input, 'key', 'value', 'takeFirst'));
     }
@@ -470,13 +458,13 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function extract_throwOnDuplicate()
     {
-        $input = array(
-            array('key' => 'foo', 'value' => 'bar', 'extra' => 'abc'),
-            array('extra' => 123, 'key' => 'baz', 'value' => 'fez'),
-            array('value' => 'duplicate1', 'extra' => true, 'key' => 'boo'),
-            array('extra' => true, 'key' => 'noValue'),
-            array('value' => 'duplicate2', 'extra' => true, 'key' => 'boo'),
-        );
+        $input = [
+            ['key' => 'foo', 'value' => 'bar', 'extra' => 'abc'],
+            ['extra' => 123, 'key' => 'baz', 'value' => 'fez'],
+            ['value' => 'duplicate1', 'extra' => true, 'key' => 'boo'],
+            ['extra' => true, 'key' => 'noValue'],
+            ['value' => 'duplicate2', 'extra' => true, 'key' => 'boo'],
+        ];
 
         A::extract($input, 'key', 'value', 'throw');
     }
@@ -491,7 +479,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function extract_withSingleDimensionalArray()
     {
-        A::extract(array('key' => 'foo', 'value' => 'bar', 'extra' => 'abc'), 'key', 'value');
+        A::extract(['key' => 'foo', 'value' => 'bar', 'extra' => 'abc'], 'key', 'value');
     }
 
     /**
@@ -505,10 +493,10 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function extract_withInvalidKeyValue()
     {
-        $input = array(
-            array('key' => 'foo', 'value' => 'bar', 'extra' => 'abc'),
-            array('extra' => 123, 'key' => array(), 'value' => 'fez'),
-        );
+        $input = [
+            ['key' => 'foo', 'value' => 'bar', 'extra' => 'abc'],
+            ['extra' => 123, 'key' => [], 'value' => 'fez'],
+        ];
 
         A::extract($input, 'key', 'value', 'throw');
     }
@@ -523,7 +511,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function extract_withInvalidKeyIndex()
     {
-        A::extract(array(), true, 'value');
+        A::extract([], true, 'value');
     }
 
     /**
@@ -536,7 +524,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function extract_withInvalidValueIndex()
     {
-        A::extract(array(), 'key', array());
+        A::extract([], 'key', []);
     }
 
     /**
@@ -549,7 +537,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function extract_withInvalidDuplicateBehavior()
     {
-        A::extract(array(), 'key', 'value', 'invalid');
+        A::extract([], 'key', 'value', 'invalid');
     }
 
     /**
@@ -560,7 +548,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function getFirstSet()
     {
-        $this->assertSame('bar', A::getFirstSet(array('foo', null, 'bar'), array(1, 2)));
+        $this->assertSame('bar', A::getFirstSet(['foo', null, 'bar'], [1, 2]));
     }
 
     /**
@@ -571,6 +559,6 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      */
     public function getFirstSet_withDefault()
     {
-        $this->assertSame('baz', A::getFirstSet(array('foo', null, 'bar'), array(1, 4), 'baz'));
+        $this->assertSame('baz', A::getFirstSet(['foo', null, 'bar'], [1, 4], 'baz'));
     }
 }

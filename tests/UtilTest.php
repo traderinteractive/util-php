@@ -22,14 +22,14 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(strpos($result['trace'], 'getExceptionInfo') !== false);
 
-        $expected = array(
+        $expected = [
             'type' => 'Exception',
             'message' => 'a message',
             'code' => 42,
             'file' => __FILE__,
             'line' => $expectedLine,
             'trace' => $result['trace'],
-        );
+        ];
         $this->assertSame($expected, $result);
     }
 
@@ -84,7 +84,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfNotType_basicSuccess()
     {
-        U::throwIfNotType(array('string' => array('string1', 'string2'), 'integer' => array(1, 2), 'int' => 3, 'null' => null));
+        U::throwIfNotType(['string' => ['string1', 'string2'], 'integer' => [1, 2], 'int' => 3, 'null' => null]);
         //Added for strict tests. throwIfNotType() throws on failure
         $this->assertTrue(true);
     }
@@ -96,7 +96,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfNotType_stringFailure()
     {
-        U::throwIfNotType(array('string' => 2));
+        U::throwIfNotType(['string' => 2]);
     }
 
     /**
@@ -106,7 +106,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfNotType_boolFailure()
     {
-        U::throwIfNotType(array('bool' => 2));
+        U::throwIfNotType(['bool' => 2]);
     }
 
     /**
@@ -116,7 +116,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfNotType_nullFailure()
     {
-        U::throwIfNotType(array('null' => 2));
+        U::throwIfNotType(['null' => 2]);
     }
 
     /**
@@ -126,7 +126,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfNotType_intFailure()
     {
-        U::throwIfNotType(array('int' => array(1, 'not an int')));
+        U::throwIfNotType(['int' => [1, 'not an int']]);
     }
 
     /**
@@ -136,7 +136,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfNotType_notStringTypeArg()
     {
-        U::throwIfNotType(array(1));
+        U::throwIfNotType([1]);
     }
 
     /**
@@ -146,7 +146,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfNotType_notBoolAllowNullsArg()
     {
-        U::throwIfNotType(array(), false, 'BAD');
+        U::throwIfNotType([], false, 'BAD');
     }
 
     /**
@@ -156,7 +156,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfNotType_notBoolFailOnWhitespaceArg()
     {
-        U::throwIfNotType(array(), 'BAD');
+        U::throwIfNotType([], 'BAD');
     }
 
     /**
@@ -166,7 +166,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfNotType_badFunctionName()
     {
-        U::throwIfNotType(array('FUNCTHATDOESNTEXIST' => 2));
+        U::throwIfNotType(['FUNCTHATDOESNTEXIST' => 2]);
     }
 
     /**
@@ -175,7 +175,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfNotType_allowNullsSuccess()
     {
-        U::throwIfNotType(array('int' => array(1, null), 'string' => null, 'bool' => null), false, true);
+        U::throwIfNotType(['int' => [1, null], 'string' => null, 'bool' => null], false, true);
         //Added for strict tests. throwIfNotType() throws on failure
         $this->assertTrue(true);
     }
@@ -187,7 +187,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfNotType_whitespaceFailure()
     {
-        U::throwIfNotType(array('int' => 1, 'string' => '   '), true);
+        U::throwIfNotType(['int' => 1, 'string' => '   '], true);
     }
 
     /**
@@ -238,7 +238,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function ensureNot_dynamicException()
     {
-        U::ensureNot(false, is_string(1), 'Exception', array('bah'));
+        U::ensureNot(false, is_string(1), 'Exception', ['bah']);
     }
 
     /**
@@ -251,7 +251,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function ensureNot_dynamicExceptionWithAlias()
     {
-        U::ensureNot(false, is_string(1), 'http', array('bah', 404, 404));
+        U::ensureNot(false, is_string(1), 'http', ['bah', 404, 404]);
     }
 
     /**
@@ -314,7 +314,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function ensure_dynamicException()
     {
-        U::ensure(true, is_string(1), 'Exception', array('bah'));
+        U::ensure(true, is_string(1), 'Exception', ['bah']);
     }
 
     /**
@@ -327,7 +327,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function ensure_dynamicExceptionWithAlias()
     {
-        U::ensure(true, is_string(1), 'http', array('bah', 404, 404));
+        U::ensure(true, is_string(1), 'http', ['bah', 404, 404]);
     }
 
     /**
@@ -349,7 +349,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function setExceptionAliases_getSet()
     {
-        $exceptionAliases = array('shortNameOne' => 'fullNameOne', 'shortNameTwo' => 'fullNameTwo');
+        $exceptionAliases = ['shortNameOne' => 'fullNameOne', 'shortNameTwo' => 'fullNameTwo'];
         U::setExceptionAliases($exceptionAliases);
         $this->assertSame($exceptionAliases, U::getExceptionAliases());
     }
@@ -360,7 +360,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function callStatic_private()
     {
-        $this->assertSame('testPrivateBoo', U::callStatic('\DominionEnterprises\CallStaticTest::testPrivate', array('Boo')));
+        $this->assertSame('testPrivateBoo', U::callStatic('\DominionEnterprises\CallStaticTest::testPrivate', ['Boo']));
     }
 
     /**
@@ -369,7 +369,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function callStatic_protected()
     {
-        $this->assertSame('testProtectedBoo', U::callStatic('\DominionEnterprises\CallStaticTest::testProtected', array('Boo')));
+        $this->assertSame('testProtectedBoo', U::callStatic('\DominionEnterprises\CallStaticTest::testProtected', ['Boo']));
     }
 
     /**
@@ -378,7 +378,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      */
     public function callStatic_public()
     {
-        $this->assertSame('testPublicBoo', U::callStatic('\DominionEnterprises\CallStaticTest::testPublic', array('Boo')));
+        $this->assertSame('testPublicBoo', U::callStatic('\DominionEnterprises\CallStaticTest::testPublic', ['Boo']));
     }
 
     /**

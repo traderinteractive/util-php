@@ -25,7 +25,7 @@ final class Arrays
     }
 
     /**
-     * Simply returns an array value if the key isset, $default if it is not
+     * Simply returns an array value if the key isset,4 $default if it is not
      *
      * @param array $array the array to be searched
      * @param string|integer $key the key to search for
@@ -107,15 +107,15 @@ final class Arrays
     /**
      * Projects values of a key into an array.
      *
-     * if $input = array(
-     *     array('key 1' => 'item 1 value 1', 'key 2' => 'item 1 value 2'),
-     *     array('key 1' => 'item 2 value 1', 'key 2' => 'item 2 value 2'),
-     *     array('key 1' => 'item 3 value 1'),
-     * )
+     * if $input = [
+     *     ['key 1' => 'item 1 value 1', 'key 2' => 'item 1 value 2'],
+     *     ['key 1' => 'item 2 value 1', 'key 2' => 'item 2 value 2'],
+     *     ['key 1' => 'item 3 value 1'],
+     * ]
      * and $key = 'key 2'
      * and $strictKeyCheck = false
      *
-     * then return array('item 1 value 2', 'item 2 value 2')
+     * then return ['item 1 value 2', 'item 2 value 2']
      *
      * but if $strictKeyCheck = true then an InvalidArgumentException occurs since 'key 2' wasnt in item 3
      *
@@ -135,7 +135,7 @@ final class Arrays
             throw new \InvalidArgumentException('$strictKeyCheck was not a bool');
         }
 
-        $projection = array();
+        $projection = [];
 
         foreach ($input as $itemKey => $item) {
             if (!is_array($item)) {
@@ -164,7 +164,7 @@ final class Arrays
      */
     public static function where(array $array, array $conditions)
     {
-        $result = array();
+        $result = [];
         foreach ($array as $item) {
             if (!is_array($item)) {
                 throw new \InvalidArgumentException('a value in $array was not an array');
@@ -203,7 +203,7 @@ final class Arrays
      * @throws \InvalidArgumentException if a value in $destination was not an array
      * @throws \Exception if $fieldName key already exists in a $destination array
      */
-    public static function embedInto(array $items, $fieldName, array $destination = array(), $overwrite = false)
+    public static function embedInto(array $items, $fieldName, array $destination = [], $overwrite = false)
     {
         if (!is_string($fieldName)) {
             throw new \InvalidArgumentException('$fieldName was not a string');
@@ -225,7 +225,7 @@ final class Arrays
 
                 $destination[$key][$fieldName] = $item;
             } else {
-                $destination[$key] = array($fieldName => $item);
+                $destination[$key] = [$fieldName => $item];
             }
         }
 
@@ -272,7 +272,7 @@ final class Arrays
      */
     public static function extract(array $input, $keyIndex, $valueIndex, $duplicateBehavior = 'takeLast')
     {
-        if (!in_array($duplicateBehavior, array('takeFirst', 'takeLast', 'throw'))) {
+        if (!in_array($duplicateBehavior, ['takeFirst', 'takeLast', 'throw'])) {
             throw new \InvalidArgumentException("\$duplicateBehavior was not 'takeFirst', 'takeLast', or 'throw'");
         }
 
@@ -284,7 +284,7 @@ final class Arrays
             throw new \InvalidArgumentException('$valueIndex was not a string or integer');
         }
 
-        $result = array();
+        $result = [];
         foreach ($input as $index => $array) {
             if (!is_array($array)) {
                 throw new \InvalidArgumentException('$arrays was not a multi-dimensional array');
