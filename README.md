@@ -40,4 +40,11 @@ With a checkout of the code get [Composer](http://getcomposer.org) in your PATH 
 ./build.php
 ```
 
+There is also a [docker](http://www.docker.com/)-based
+[fig](http://www.fig.sh/) configuration that will execute the build inside a
+docker container.  This is an easy way to build the application:
+```sh
+fig run build
+```
+
 For more information on our build process, read through out our [Contribution Guidelines](CONTRIBUTING.md).
