@@ -23,7 +23,7 @@ final class HttpTest extends \PHPUnit_Framework_TestCase
     {
         $headers = 'Content-Type: text/json';
         $result = H::parseHeaders($headers);
-        $this->assertSame(array('Content-Type' => 'text/json'), $result);
+        $this->assertSame(['Content-Type' => 'text/json'], $result);
     }
 
     /**
@@ -63,13 +63,13 @@ Set-Cookie: foo=bar\r\n
 Set-Cookie: baz=quux\r\n
 Set-Cookie: key=value\r\n
 EOT;
-        $expected = array(
+        $expected = [
             'Response Code' => 200,
             'Response Status' => 'OK',
             'Content-Type' => 'text/html; charset=UTF-8',
             'Server' => 'Funky/1.0',
-            'Set-Cookie' => array('foo=bar', 'baz=quux', 'key=value'),
-        );
+            'Set-Cookie' => ['foo=bar', 'baz=quux', 'key=value'],
+        ];
         $result = H::parseHeaders($headers);
         $this->assertSame($expected, $result);
     }
@@ -90,12 +90,7 @@ GET /file.xml HTTP/1.1\r\n
 Host: www.example.com\r\n
 Accept: */*\r\n
 EOT;
-        $expected = array(
-            'Request Method' => 'GET',
-            'Request Url' => '/file.xml',
-            'Host' => 'www.example.com',
-            'Accept' => '*/*',
-        );
+        $expected = ['Request Method' => 'GET', 'Request Url' => '/file.xml', 'Host' => 'www.example.com', 'Accept' => '*/*'];
         $result = H::parseHeaders($headers);
         $this->assertSame($expected, $result);
     }
@@ -106,14 +101,7 @@ EOT;
      */
     public function buildQueryString_basicUse()
     {
-        $data = array(
-            'foo' => 'bar',
-            'baz' => 'boom',
-            'cow' => 'milk',
-            'php' => 'hypertext processor',
-            'theFalse' => false,
-            'theTrue' => true,
-        );
+        $data = ['foo' => 'bar', 'baz' => 'boom', 'cow' => 'milk', 'php' => 'hypertext processor', 'theFalse' => false, 'theTrue' => true];
 
         $this->assertSame('foo=bar&baz=boom&cow=milk&php=hypertext+processor&theFalse=false&theTrue=true', H::buildQueryString($data));
     }
@@ -124,10 +112,7 @@ EOT;
      */
     public function buildQueryString_multiValue()
     {
-        $data = array(
-            'param1' => array('value', 'another value'),
-            'param2' => 'a value',
-        );
+        $data = ['param1' => ['value', 'another value'], 'param2' => 'a value'];
 
         $this->assertSame('param1=value&param1=another+value&param2=a+value', H::buildQueryString($data));
     }
@@ -138,7 +123,7 @@ EOT;
      */
     public function buildQueryString_complexValues()
     {
-        $this->assertSame('a+b+c=1%242%283&a+b+c=4%295%2A6', H::buildQueryString(array('a b c' => array('1$2(3', '4)5*6'))));
+        $this->assertSame('a+b+c=1%242%283&a+b+c=4%295%2A6', H::buildQueryString(['a b c' => ['1$2(3', '4)5*6']]));
     }
 
     /**
@@ -151,18 +136,11 @@ EOT;
     public function getQueryParams_normal()
     {
         $url = 'http://foo.com/bar/?otherStuff=green&stuff=yeah&moreStuff=rock&moreStuff=jazz&otherStuff=blue&otherStuff=black';
-        $expected = array(
-            'otherStuff' => array(
-                'green',
-                'blue',
-                'black',
-            ),
-            'stuff' => array('yeah'),
-            'moreStuff' => array(
-                'rock',
-                'jazz',
-            ),
-        );
+        $expected = [
+            'otherStuff' => ['green', 'blue', 'black'],
+            'stuff' => ['yeah'],
+            'moreStuff' => ['rock', 'jazz'],
+        ];
         $result = H::getQueryParams($url);
         $this->assertSame($expected, $result);
     }
@@ -177,14 +155,11 @@ EOT;
     public function getQueryParams_emptyParameter()
     {
         $url = 'http://foo.com/bar/?stuff=yeah&moreStuff=&moreStuff=jazz&otherStuff';
-        $expected = array(
-            'stuff' => array('yeah'),
-            'moreStuff' => array(
-                '',
-                'jazz',
-            ),
-            'otherStuff' => array(''),
-        );
+        $expected = [
+            'stuff' => ['yeah'],
+            'moreStuff' => ['', 'jazz'],
+            'otherStuff' => [''],
+        ];
         $result = H::getQueryParams($url);
         $this->assertSame($expected, $result);
     }
@@ -198,7 +173,7 @@ EOT;
      */
     public function getQueryParams_garbage()
     {
-        $this->assertSame(array(), H::getQueryParams('GARBAGE'));
+        $this->assertSame([], H::getQueryParams('GARBAGE'));
     }
 
     /**
@@ -219,8 +194,8 @@ EOT;
      */
     public function getQueryParams_collapsed()
     {
-        $result = H::getQueryParams('http://foo.com/bar/?stuff=yeah&moreStuff=mhmm', array('stuff', 'notThere'));
-        $this->assertSame(array('stuff' => 'yeah', 'moreStuff' => array('mhmm')), $result);
+        $result = H::getQueryParams('http://foo.com/bar/?stuff=yeah&moreStuff=mhmm', ['stuff', 'notThere']);
+        $this->assertSame(['stuff' => 'yeah', 'moreStuff' => ['mhmm']], $result);
     }
 
     /**
@@ -231,7 +206,7 @@ EOT;
      */
     public function getQueryParams_collapsedMoreThanOneValue()
     {
-        H::getQueryParams('http://foo.com/bar/?stuff=yeah&stuff=boy&moreStuff=mhmm', array('stuff'));
+        H::getQueryParams('http://foo.com/bar/?stuff=yeah&stuff=boy&moreStuff=mhmm', ['stuff']);
     }
 
     /**
@@ -241,8 +216,8 @@ EOT;
     public function getQueryParamsCollapsed()
     {
         $url = 'http://foo.com/bar/?boo=1&foo=bar&boo=2';
-        $actual = H::getQueryParamsCollapsed($url, array('boo'));
-        $this->assertSame(array('boo' => array('1', '2'), 'foo' => 'bar'), $actual);
+        $actual = H::getQueryParamsCollapsed($url, ['boo']);
+        $this->assertSame(['boo' => ['1', '2'], 'foo' => 'bar'], $actual);
     }
 
     /**
@@ -276,7 +251,7 @@ EOT;
      */
     public function getQueryParamsCollasped_garbage()
     {
-        $this->assertSame(array(), H::getQueryParamsCollapsed('GARBAGE'));
+        $this->assertSame([], H::getQueryParamsCollapsed('GARBAGE'));
     }
 
     /**
@@ -288,7 +263,7 @@ EOT;
     public function getQueryParamsCollapsed_emptyParameter()
     {
         $url = 'http://foo.com/bar/?stuff=yeah&moreStuff=&moreStuff=jazz&otherStuff';
-        $expected = array('stuff' => 'yeah', 'moreStuff' => array('', 'jazz'), 'otherStuff' => '');
-        $this->assertSame($expected, H::getQueryParamsCollapsed($url, array('moreStuff')));
+        $expected = ['stuff' => 'yeah', 'moreStuff' => ['', 'jazz'], 'otherStuff' => ''];
+        $this->assertSame($expected, H::getQueryParamsCollapsed($url, ['moreStuff']));
     }
 }

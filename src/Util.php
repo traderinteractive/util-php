@@ -10,7 +10,7 @@ namespace DominionEnterprises;
  */
 final class Util
 {
-    private static $_exceptionAliases = array('http' => '\DominionEnterprises\HttpException');
+    private static $_exceptionAliases = ['http' => '\DominionEnterprises\HttpException'];
 
     /**
      * Returns exception info in array.
@@ -19,26 +19,26 @@ final class Util
      *
      * @return array like:
      * <pre>
-     * array(
+     * [
      *     'type' => 'Exception',
      *     'message' => 'a message',
      *     'code' => 0,
      *     'file' => '/somePath',
      *     'line' => 434,
      *     'trace' => 'a stack trace',
-     * )
+     * ]
      * </pre>
      */
     public static function getExceptionInfo(\Exception $e)
     {
-        return array(
+        return [
             'type' => get_class($e),
             'message' => $e->getMessage(),
             'code' => $e->getCode(),
             'file' => $e->getFile(),
             'line' => $e->getLine(),
             'trace' => $e->getTraceAsString(),
-        );
+        ];
     }
 
     /**
@@ -46,7 +46,7 @@ final class Util
      *
      * Can be used like: $result = ensure(true, is_string('boo'))
      * Or like: $result = ensure(true, is_string('boo'), 'the message')
-     * Or like: $result = ensure(true, is_string('boo'), 'MyException', array('the message', 2))
+     * Or like: $result = ensure(true, is_string('boo'), 'MyException', ['the message', 2])
      * Or like: $result = ensure(true, is_string('boo'), new MyException('the message', 2))
      *
      * @param mixed $valueToEnsure the value to throw on if $valueToCheck equals it
@@ -96,7 +96,7 @@ final class Util
      *
      * Can be used like: $curl = ensureNot(false, curl_init('boo'))
      * Or like: $curl = ensureNot(false, curl_init('boo'), 'bad message')
-     * Or like: $curl = ensureNot(false, curl_init('boo'), 'MyException', array('bad message', 2))
+     * Or like: $curl = ensureNot(false, curl_init('boo'), 'MyException', ['bad message', 2])
      * Or like: $curl = ensureNot(false, curl_init('boo'), new MyException('bad message', 2))
      *
      * @param mixed $valueToThrowOn the value to throw on if $valueToCheck equals it
@@ -161,8 +161,8 @@ final class Util
     /**
      * Throws an exception if specified variables are not of given types.
      *
-     * @param array $typesToVariables like array('string' => array($var1, $var2), 'int' => array($var1, $var2))
-     *     or array('string' => $var1, 'integer' => array(1, $var2)). Supported types are the suffixes of the is_* functions such as string
+     * @param array $typesToVariables like ['string' => [$var1, $var2], 'int' => [$var1, $var2]]
+     *     or ['string' => $var1, 'integer' => [1, $var2]]. Supported types are the suffixes of the is_* functions such as string
      *     for is_string and int for is_int
      * @param bool $failOnWhitespace whether to fail strings if they are whitespace
      * @param bool $allowNulls whether to allow null values to pass through
@@ -187,7 +187,7 @@ final class Util
         }
 
         foreach ($typesToVariables as $type => $variablesOrVariable) {
-            $variables = array($variablesOrVariable);
+            $variables = [$variablesOrVariable];
             if (is_array($variablesOrVariable)) {
                 $variables = $variablesOrVariable;
             }
@@ -292,7 +292,7 @@ final class Util
      * @throws \InvalidArgumentException if $method was not a string
      * @throws \InvalidArgumentException if $method was not static
      */
-    public static function callStatic($method, array $args = array())
+    public static function callStatic($method, array $args = [])
     {
         if (!is_string($method)) {
             throw new \InvalidArgumentException('$method was not a string');

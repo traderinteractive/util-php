@@ -65,7 +65,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      */
     public function format_nonStringFormat()
     {
-        S::format(array(), 'C', 'B', 'A');
+        S::format([], 'C', 'B', 'A');
     }
 
     /**

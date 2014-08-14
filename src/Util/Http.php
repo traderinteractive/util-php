@@ -49,11 +49,11 @@ final class Http
      */
     public static function parseHeaders($rawHeaders)
     {
-        Util::throwIfNotType(array('string' => $rawHeaders), true);
+        Util::throwIfNotType(['string' => $rawHeaders], true);
 
         set_error_handler('\DominionEnterprises\Util::raiseException');
         try {
-            $headers = array();
+            $headers = [];
             $rawHeaders = preg_replace("/\r\n[\t ]+/", ' ', trim($rawHeaders));
             $fields = explode("\r\n", $rawHeaders);
             foreach ($fields as $field) {
@@ -73,7 +73,7 @@ final class Http
                     }
 
                     if (!is_array($headers[$key])) {
-                        $headers[$key] = array($headers[$key]);
+                        $headers[$key] = [$headers[$key]];
                     }
 
                     $headers[$key][] = $value;
@@ -101,11 +101,11 @@ final class Http
      *
      * Example:
      * <code>
-     * $parameters = array(
-     *   'param1' => array('value', 'another value'),
+     * $parameters = [
+     *   'param1' => ['value', 'another value'],
      *   'param2' => 'a value',
      *   'param3' => false,
-     * );
+     * ];
      *
      * $queryString = \DominionEnterprises\HttpUtil::buildQueryString($parameters);
      *
@@ -123,7 +123,7 @@ final class Http
      */
     public static function buildQueryString(array $parameters)
     {
-        $queryStrings = array();
+        $queryStrings = [];
         foreach ($parameters as $parameterName => $parameterValue) {
             $parameterName = urlencode($parameterName);
 
@@ -156,7 +156,7 @@ final class Http
      * @throws \InvalidArgumentException if $url was not a string
      * @throws \Exception if more than one value in a $collapsedParams param
      */
-    public static function getQueryParams($url, array $collapsedParams = array())
+    public static function getQueryParams($url, array $collapsedParams = [])
     {
         if (!is_string($url)) {
             throw new \InvalidArgumentException('$url was not a string');
@@ -164,12 +164,12 @@ final class Http
 
         $queryString = parse_url($url, PHP_URL_QUERY);
         if (!is_string($queryString)) {
-            return array();
+            return [];
         }
 
         $collapsedParams = array_flip($collapsedParams);
 
-        $result = array();
+        $result = [];
         foreach (explode('&', $queryString) as $arg) {
             $name = $arg;
             $value = '';
@@ -188,7 +188,7 @@ final class Http
                     continue;
                 }
 
-                $result[$name] = array();
+                $result[$name] = [];
             }
 
             if ($collapsed) {
@@ -212,7 +212,7 @@ final class Http
      * @throws \InvalidArgumentException if $url was not a string
      * @throws \Exception if a parameter is given as array but not included in the expected array argument
      */
-    public static function getQueryParamsCollapsed($url, array $expectedArrayParams = array())
+    public static function getQueryParamsCollapsed($url, array $expectedArrayParams = [])
     {
         if (!is_string($url)) {
             throw new \InvalidArgumentException('$url was not a string');
@@ -220,10 +220,10 @@ final class Http
 
         $queryString = parse_url($url, PHP_URL_QUERY);
         if (!is_string($queryString)) {
-            return array();
+            return [];
         }
 
-        $result = array();
+        $result = [];
         foreach (explode('&', $queryString) as $arg) {
             $name = $arg;
             $value = '';
@@ -245,7 +245,7 @@ final class Http
             }
 
             if (!is_array($result[$name])) {
-                $result[$name] = array($result[$name]);
+                $result[$name] = [$result[$name]];
             }
 
             $result[$name][] = $value;
