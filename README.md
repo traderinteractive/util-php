@@ -11,7 +11,7 @@ A collection of general utilities for making common programming tasks easier.
 
 ## Requirements
 
-util-php requires PHP 5.3.2 (or later).
+util-php requires PHP 5.4 (or later).
 
 ##Composer
 To add the library as a local, per-project dependency use [Composer](http://getcomposer.org)! Simply add a dependency on
