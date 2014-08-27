@@ -561,4 +561,150 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame('baz', A::getFirstSet(['foo', null, 'bar'], [1, 4], 'baz'));
     }
+
+    /**
+     * Verifiy basic behavior of partition()
+     *
+     * @test
+     * @covers ::partition
+     */
+    public function partition()
+    {
+        $this->assertSame([['a'], ['b'], ['c']], A::partition(['a', 'b', 'c'], 3));
+    }
+
+    /**
+     * Verify partition() behavior when $input array contains less items than than $partitionCount.
+     *
+     * @test
+     * @covers ::partition
+     */
+    public function partition_inputLessThanPartitionCount()
+    {
+        $this->assertSame([['a'], ['b'], ['c']], A::partition(['a', 'b', 'c'], 4));
+    }
+
+    /**
+     * Verify remainder of $input array is front-loaded in partition().
+     *
+     * @test
+     * @covers ::partition
+     */
+    public function partition_withRemainder()
+    {
+        $this->assertSame([['a', 'b'], ['c'], ['d']], A::partition(['a', 'b', 'c', 'd'], 3));
+    }
+
+    /**
+     * Verify remainder of $input array is front-loaded in partition().
+     *
+     * @test
+     * @covers ::partition
+     */
+    public function partition_withMultipleRemainder()
+    {
+        $this->assertSame([['a', 'b'], ['c', 'd'], ['e']], A::partition(['a', 'b', 'c', 'd', 'e'], 3));
+    }
+
+    /**
+     * Verify partition() handles empty $input array.
+     *
+     * @test
+     * @covers ::partition
+     */
+    public function partition_emptyInput()
+    {
+        $this->assertSame([], A::partition([], 2));
+    }
+
+    /**
+     * Verifiy behavior of partition() with $partitionCount of 1.
+     *
+     * @test
+     * @covers ::partition
+     */
+    public function partition_onePartition()
+    {
+        $this->assertSame([['a', 'b', 'c']], A::partition(['a', 'b', 'c'], 1));
+    }
+
+    /**
+     * Verifiy partition() throws with negative $partitionCount.
+     *
+     * @test
+     * @covers ::partition
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $partitionCount must be a positive integer
+     */
+    public function partition_negativePartitionCount()
+    {
+        A::partition(['a', 'b', 'c'], -1);
+    }
+
+    /**
+     * Verifiy partition() throws with 0 $partitionCount.
+     *
+     * @test
+     * @covers ::partition
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $partitionCount must be a positive integer
+     */
+    public function partition_zeroPartitionCount()
+    {
+        A::partition(['a', 'b', 'c'], 0);
+    }
+
+    /**
+     * Verifiy partition() throws with non-integer $partitionCount.
+     *
+     * @test
+     * @covers ::partition
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $partitionCount must be a positive integer
+     */
+    public function partition_nonIntegerPartitionCount()
+    {
+        A::partition(['a', 'b', 'c'], 'not an int');
+    }
+
+    /**
+     * Verifiy partition() preserves numeric keys.
+     *
+     * @test
+     * @covers ::partition
+     */
+    public function partition_preserveNumericKeys()
+    {
+        $this->assertSame(
+            [[0 => 'a', 1 => 'b'], [2 => 'c', 3 => 'd'], [4 => 'e']],
+            A::partition(['a', 'b', 'c', 'd', 'e'], 3, true)
+        );
+    }
+
+    /**
+     * Verifiy partition() preserves associative keys.
+     *
+     * @test
+     * @covers ::partition
+     */
+    public function partition_preserveAssociativeKeys()
+    {
+        $this->assertSame(
+            [['a' => 0, 'b' => 1], ['c' => 2, 'd' => 3], ['e' => 4]],
+            A::partition(['a' => 0, 'b' => 1, 'c' => 2, 'd' => 3, 'e' => 4], 3)
+        );
+    }
+
+    /**
+     * Verifiy partition() throws with non-boolean $preserveKeys.
+     *
+     * @test
+     * @covers ::partition
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $preserveKeys must be a boolean value
+     */
+    public function partition_nonBoolPreserveKeys()
+    {
+        A::partition(['a', 'b', 'c'], 3, 'not a bool');
+    }
 }

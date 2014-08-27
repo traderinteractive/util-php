@@ -332,4 +332,43 @@ final class Arrays
 
         return $default;
     }
+
+    /**
+     * Partitions the given $input array into an array of $partitionCount sub arrays.
+     *
+     * This is a slight modification of the function suggested on http://php.net/manual/en/function.array-chunk.php#75022.
+     * This method does not pad with empty partitions and ensures positive partition count.
+     *
+     * @param array $input The array to partition.
+     * @param int $partitionCount The maximum number of partitions to create.
+     * @param bool $preserveKeys Flag to preserve numeric array indexes. Associative indexes are preserved by default.
+     *
+     * @return array A multi-dimensional array containing $partitionCount sub arrays.
+     *
+     * @throws \InvalidArgumentException Thrown if $partitionCount is not a positive integer.
+     * @throws \InvalidArgumentException Thrown if $preserveKeys is not a boolean value.
+     */
+    public static function partition(array $input, $partitionCount, $preserveKeys = false)
+    {
+        if (!is_int($partitionCount) || $partitionCount < 1) {
+            throw new \InvalidArgumentException('$partitionCount must be a positive integer');
+        }
+
+        if ($preserveKeys !== false && $preserveKeys !== true) {
+            throw new \InvalidArgumentException('$preserveKeys must be a boolean value');
+        }
+
+        $inputLength = count($input);
+        $partitionLength = floor($inputLength / $partitionCount);
+        $partitionRemainder = $inputLength % $partitionCount;
+        $partitions = [];
+        $sliceOffset = 0;
+        for ($partitionIndex = 0; $partitionIndex < $partitionCount && $sliceOffset < $inputLength; $partitionIndex++) {
+            $sliceLength = ($partitionIndex < $partitionRemainder) ? $partitionLength + 1 : $partitionLength;
+            $partitions[$partitionIndex] = array_slice($input, $sliceOffset, $sliceLength, $preserveKeys);
+            $sliceOffset += $sliceLength;
+        }
+
+        return $partitions;
+    }
 }
