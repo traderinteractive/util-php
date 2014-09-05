@@ -6,3 +6,4 @@ php:
 before_script:
   - composer self-update || true
 script: ./build.php
+after_script: ./vendor/bin/coveralls -v
