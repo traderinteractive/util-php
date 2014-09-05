@@ -25,6 +25,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
+        "satooshi/php-coveralls": "~0.6.1",
         "squizlabs/php_codesniffer": "~1.5",
         "dominionenterprises/dws-coding-standard": "~1.1"
     },
