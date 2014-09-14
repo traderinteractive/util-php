@@ -707,4 +707,59 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
     {
         A::partition(['a', 'b', 'c'], 3, 'not a bool');
     }
+
+    /**
+     * Verify basic behavior of unsetAll().
+     *
+     * @test
+     * @covers ::unsetAll
+     */
+    public function unsetAll()
+    {
+        $array = ['a', 'b', 'c'];
+        A::unsetAll($array, [0, 2]);
+        $this->assertSame([1 => 'b'], $array);
+    }
+
+    /**
+     * Verify behavior of unsetAll() with empty array.
+     *
+     * @test
+     * @covers ::unsetAll
+     */
+    public function unsetAll_emptyArray()
+    {
+        $array = [];
+        A::unsetAll($array, [0, 2]);
+        // array unchanged
+        $this->assertSame([], $array);
+    }
+
+    /**
+     * Verify behavior of unsetAll() with empty keys.
+     *
+     * @test
+     * @covers ::unsetAll
+     */
+    public function unsetAll_emptyKeys()
+    {
+        $array = ['a', 'b', 'c'];
+        A::unsetAll($array, []);
+        // array unchanged
+        $this->assertSame(['a', 'b', 'c'], $array);
+    }
+
+    /**
+     * Verify behavior of unsetAll() with keys that don't exist
+     *
+     * @test
+     * @covers ::unsetAll
+     */
+    public function unsetAll_keyNotFound()
+    {
+        $array = ['a', 'b', 'c'];
+        A::unsetAll($array, [3, 4]);
+        // array unchanged
+        $this->assertSame(['a', 'b', 'c'], $array);
+    }
 }

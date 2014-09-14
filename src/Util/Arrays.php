@@ -371,4 +371,19 @@ final class Arrays
 
         return $partitions;
     }
+
+    /**
+     * Unsets all elements in the given $array specified by $keys
+     *
+     * @param array &$array The array containing the elements to unset.
+     * @param array $keys Array of keys to unset.
+     *
+     * @return void
+     */
+    public static function unsetAll(array &$array, array $keys)
+    {
+        foreach ($keys as $key) {
+            unset($array[$key]);
+        }
+    }
 }
