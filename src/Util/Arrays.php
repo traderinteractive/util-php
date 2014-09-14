@@ -386,4 +386,20 @@ final class Arrays
             unset($array[$key]);
         }
     }
+
+    /**
+     * Convert all empty strings or strings that contain only whitespace to null in the given array
+     *
+     * @param array &$array The array containing empty strings
+     *
+     * @return void
+     */
+    public static function nullifyEmptyStrings(array &$array)
+    {
+        foreach ($array as &$value) {
+            if (is_string($value) && trim($value) === '') {
+                $value = null;
+            }
+        }
+    }
 }

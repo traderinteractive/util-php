@@ -762,4 +762,28 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
         // array unchanged
         $this->assertSame(['a', 'b', 'c'], $array);
     }
+
+    /**
+     * Verify basic behavior of nullifyEmptyStrings().
+     * @test
+     * @covers ::nullifyEmptyStrings
+     */
+    public function nullifyEmptyStrings()
+    {
+        $array = ['a' => '', 'b' => true, 'c' => "\n\t", 'd' => "\tstring with whitespace\n"];
+        A::nullifyEmptyStrings($array);
+        $this->assertSame(['a' => null, 'b' => true, 'c' => null, 'd' => "\tstring with whitespace\n"], $array);
+    }
+
+    /**
+     * Verify behavior of nullifyEmptyStrings() with empty input.
+     * @test
+     * @covers ::nullifyEmptyStrings
+     */
+    public function nullifyEmptyStrings_emptyArray()
+    {
+        $array = [];
+        A::nullifyEmptyStrings($array);
+        $this->assertSame([], $array);
+    }
 }
