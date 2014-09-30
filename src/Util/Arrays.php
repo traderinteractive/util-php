@@ -371,4 +371,35 @@ final class Arrays
 
         return $partitions;
     }
+
+    /**
+     * Unsets all elements in the given $array specified by $keys
+     *
+     * @param array &$array The array containing the elements to unset.
+     * @param array $keys Array of keys to unset.
+     *
+     * @return void
+     */
+    public static function unsetAll(array &$array, array $keys)
+    {
+        foreach ($keys as $key) {
+            unset($array[$key]);
+        }
+    }
+
+    /**
+     * Convert all empty strings or strings that contain only whitespace to null in the given array
+     *
+     * @param array &$array The array containing empty strings
+     *
+     * @return void
+     */
+    public static function nullifyEmptyStrings(array &$array)
+    {
+        foreach ($array as &$value) {
+            if (is_string($value) && trim($value) === '') {
+                $value = null;
+            }
+        }
+    }
 }
