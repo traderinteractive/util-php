@@ -103,7 +103,7 @@ EOT;
     {
         $data = ['foo' => 'bar', 'baz' => 'boom', 'cow' => 'milk', 'php' => 'hypertext processor', 'theFalse' => false, 'theTrue' => true];
 
-        $this->assertSame('foo=bar&baz=boom&cow=milk&php=hypertext+processor&theFalse=false&theTrue=true', H::buildQueryString($data));
+        $this->assertSame('foo=bar&baz=boom&cow=milk&php=hypertext%20processor&theFalse=false&theTrue=true', H::buildQueryString($data));
     }
 
     /**
@@ -114,7 +114,7 @@ EOT;
     {
         $data = ['param1' => ['value', 'another value'], 'param2' => 'a value'];
 
-        $this->assertSame('param1=value&param1=another+value&param2=a+value', H::buildQueryString($data));
+        $this->assertSame('param1=value&param1=another%20value&param2=a%20value', H::buildQueryString($data));
     }
 
     /**
@@ -123,7 +123,7 @@ EOT;
      */
     public function buildQueryString_complexValues()
     {
-        $this->assertSame('a+b+c=1%242%283&a+b+c=4%295%2A6', H::buildQueryString(['a b c' => ['1$2(3', '4)5*6']]));
+        $this->assertSame('a%20b%20c=1%242%283&a%20b%20c=4%295%2A6', H::buildQueryString(['a b c' => ['1$2(3', '4)5*6']]));
     }
 
     /**

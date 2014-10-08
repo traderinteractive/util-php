@@ -125,11 +125,11 @@ final class Http
     {
         $queryStrings = [];
         foreach ($parameters as $parameterName => $parameterValue) {
-            $parameterName = urlencode($parameterName);
+            $parameterName = rawurlencode($parameterName);
 
             if (is_array($parameterValue)) {
                 foreach ($parameterValue as $eachValue) {
-                    $eachValue = urlencode($eachValue);
+                    $eachValue = rawurlencode($eachValue);
                     $queryStrings[] = "{$parameterName}={$eachValue}";
                 }
             } elseif ($parameterValue === false) {
@@ -137,7 +137,7 @@ final class Http
             } elseif ($parameterValue === true) {
                 $queryStrings[] = "{$parameterName}=true";
             } else {
-                $parameterValue = urlencode($parameterValue);
+                $parameterValue = rawurlencode($parameterValue);
                 $queryStrings[] = "{$parameterName}={$parameterValue}";
             }
         }
@@ -178,8 +178,8 @@ final class Http
                 list($name, $value) = $nameAndValue;
             }
 
-            $name = urldecode($name);
-            $value = urldecode($value);
+            $name = rawurldecode($name);
+            $value = rawurldecode($value);
             $collapsed = isset($collapsedParams[$name]);
 
             if (!array_key_exists($name, $result)) {
@@ -232,8 +232,8 @@ final class Http
                 list($name, $value) = $nameAndValue;
             }
 
-            $name = urldecode($name);
-            $value = urldecode($value);
+            $name = rawurldecode($name);
+            $value = rawurldecode($value);
 
             if (!array_key_exists($name, $result)) {
                 $result[$name] = $value;
