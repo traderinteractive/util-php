@@ -202,6 +202,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensureNot
+     * @covers ::throwProvidedException
      * @expectedException \InvalidArgumentException
      */
     public function ensureNot_badArg()
@@ -212,6 +213,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensureNot
+     * @covers ::throwProvidedException
      * @expectedException \Exception
      */
     public function ensureNot_baseException()
@@ -222,6 +224,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensureNot
+     * @covers ::throwProvidedException
      * @expectedException \Exception
      * @expectedExceptionMessage bah
      */
@@ -233,6 +236,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensureNot
+     * @covers ::throwProvidedException
      * @expectedException \Exception
      * @expectedExceptionMessage bah
      */
@@ -244,6 +248,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensureNot
+     * @covers ::throwProvidedException
      * @uses \DominionEnterprises\HttpException
      * @expectedException \DominionEnterprises\HttpException
      * @expectedExceptionMessage bah
@@ -257,6 +262,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensureNot
+     * @covers ::throwProvidedException
      * @expectedException \Exception
      * @expectedExceptionMessage foo
      * @expectedExceptionCode 2
@@ -278,6 +284,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensure
+     * @covers ::throwProvidedException
      * @expectedException \InvalidArgumentException
      */
     public function ensure_badArg()
@@ -288,6 +295,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensure
+     * @covers ::throwProvidedException
      * @expectedException \Exception
      */
     public function ensure_baseException()
@@ -298,6 +306,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensure
+     * @covers ::throwProvidedException
      * @expectedException \Exception
      * @expectedExceptionMessage bah
      */
@@ -309,6 +318,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensure
+     * @covers ::throwProvidedException
      * @expectedException \Exception
      * @expectedExceptionMessage bah
      */
@@ -320,6 +330,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensure
+     * @covers ::throwProvidedException
      * @uses \DominionEnterprises\HttpException
      * @expectedException \DominionEnterprises\HttpException
      * @expectedExceptionMessage bah
@@ -333,6 +344,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::ensure
+     * @covers ::throwProvidedException
      * @expectedException \Exception
      * @expectedExceptionMessage foo
      * @expectedExceptionCode 2
@@ -340,6 +352,30 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     public function ensure_exception()
     {
         U::ensure(true, false, new \Exception('foo', 2));
+    }
+
+    /**
+     * @test
+     * @covers ::throwProvidedException
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $exception is of an invalid type
+     * @expectedExceptionCode 0
+     */
+    public function throwProvidedException_invalid()
+    {
+        U::throwProvidedException('\RidiculousException', [2]);
+    }
+
+    /**
+     * @test
+     * @covers ::throwProvidedException
+     * @expectedException \Exception
+     * @expectedExceptionMessage This is an exception
+     * @expectedExceptionCode 0
+     */
+    public function throwProvidedException_nullException()
+    {
+        U::throwProvidedException(null, [2], 'This is an exception');
     }
 
     /**
@@ -384,12 +420,32 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::callStatic
+     */
+    public function callStatic_callable()
+    {
+        $this->assertSame('testPrivateBoo', U::callStatic(['\DominionEnterprises\CallStaticTest', 'testPrivate'], ['Boo']));
+    }
+
+    /**
+     * @test
+     * @covers ::callStatic
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage $method was not a string
+     * @expectedExceptionMessage $method was not a callable
      */
     public function callStatic_notStringMethod()
     {
         U::callStatic(true);
+    }
+
+    /**
+     * @test
+     * @covers ::callStatic
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $method was not a callable
+     */
+    public function callStatic_notCallableArrayMethod()
+    {
+        U::callStatic(['\DominionEnterprises\CallStaticTest', 2]);
     }
 
     /**

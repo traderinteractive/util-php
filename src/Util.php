@@ -59,7 +59,7 @@ final class Util
      * @return mixed returns $valueToCheck
      *
      * @throws \Exception if $valueToEnsure !== $valueToCheck
-     * @throws \InvalidArgumentException if $exception was not null, a string, or an Exception
+     * @see throwProvidedException
      */
     public static function ensure($valueToEnsure, $valueToCheck, $exception = null, array $exceptionArgs = null)
     {
@@ -67,28 +67,8 @@ final class Util
             return $valueToCheck;
         }
 
-        if ($exception === null) {
-            throw new \Exception("'{$valueToEnsure}' did not equal '{$valueToCheck}'");
-        }
-
-        if (is_string($exception)) {
-            if ($exceptionArgs === null) {
-                throw new \Exception($exception);
-            }
-
-            if (array_key_exists($exception, self::$_exceptionAliases)) {
-                $exception = self::$_exceptionAliases[$exception];
-            }
-
-            $reflectionClass = new \ReflectionClass($exception);
-            throw $reflectionClass->newInstanceArgs($exceptionArgs);
-        }
-
-        if ($exception instanceof \Exception) {
-            throw $exception;
-        }
-
-        throw new \InvalidArgumentException('$exception was not null, a string, or an Exception');
+        $message = sprintf('\'%s\' did not equal \'%s\'', $valueToEnsure, $valueToCheck);
+        return self::throwProvidedException($exception, $exceptionArgs, $message);
     }
 
     /**
@@ -109,7 +89,7 @@ final class Util
      * @return mixed returns $valueToCheck
      *
      * @throws \Exception if $valueToThrowOn === $valueToCheck
-     * @throws \InvalidArgumentException if $exception was not null, a string, or an Exception
+     * @see throwProvidedException
      */
     public static function ensureNot($valueToThrowOn, $valueToCheck, $exception = null, array $exceptionArgs = null)
     {
@@ -117,8 +97,25 @@ final class Util
             return $valueToCheck;
         }
 
+        $message = sprintf('\'%s\' equals \'%s\'', $valueToThrowOn, $valueToCheck);
+        return self::throwProvidedException($exception, $exceptionArgs, $message);
+    }
+
+    /**
+     * Throws the provided exception.
+     *
+     * @param null|string|\Exception $exception null, a fully qualified exception class name, string for an Exception message, or an Exception.
+     *     The fully qualified exception class name could also be an alias in getExceptionAliases()
+     * @param array|null $exceptionArgs arguments to pass to a new instance of $exception. If using this parameter make sure these arguments
+     *     match the constructor for an exception of type $exception.
+     * @param string $message message to be thrown if the first parameter is null
+     * @throws \InvalidArgumentException if $exception was not null, a string, or an Exception
+     * @throws \Exception
+     */
+    public static function throwProvidedException($exception = null, array $exceptionArgs = null, $message = '')
+    {
         if ($exception === null) {
-            throw new \Exception("'{$valueToThrowOn}' equals '{$valueToCheck}'");
+            throw new \Exception($message);
         }
 
         if (is_string($exception)) {
@@ -130,8 +127,15 @@ final class Util
                 $exception = self::$_exceptionAliases[$exception];
             }
 
-            $reflectionClass = new \ReflectionClass($exception);
-            throw $reflectionClass->newInstanceArgs($exceptionArgs);
+            try {
+                $reflectionClass = new \ReflectionClass($exception);
+            } catch (\ReflectionException $ex) {
+                throw new \InvalidArgumentException('$exception is of an invalid type');
+            }
+
+            /** @var $newException \Exception */
+            $newException = $reflectionClass->newInstanceArgs($exceptionArgs);
+            throw $newException;
         }
 
         if ($exception instanceof \Exception) {
@@ -145,9 +149,12 @@ final class Util
      * Throws a new ErrorException based on the error information provided. To be
      * used as a callback for @see set_error_handler()
      *
-     * @return bool false
-     *
+     * @param int $level level of the error raised
+     * @param string $message error message
+     * @param null|string $file filename the error was raised in
+     * @param null|int $line line number the error was raised at
      * @throws \ErrorException
+     * @return mixed false|null
      */
     public static function raiseException($level, $message, $file = null, $line = null)
     {
@@ -178,11 +185,11 @@ final class Util
      */
     public static function throwIfNotType(array $typesToVariables, $failOnWhitespace = false, $allowNulls = false)
     {
-        if ($allowNulls !== false && $allowNulls !== true) {
+        if (!is_bool($allowNulls)) {
             throw new \InvalidArgumentException('$allowNulls was not a bool');
         }
 
-        if ($failOnWhitespace !== false && $failOnWhitespace !== true) {
+        if (!is_bool($failOnWhitespace)) {
             throw new \InvalidArgumentException('$failOnWhitespace was not a bool');
         }
 
@@ -284,7 +291,7 @@ final class Util
      * Call a static (possibly non public) method through reflection. Intended for use in testing, but should only use on methods as one would
      * use a package level method in another language, since php does not have the feature.
      *
-     * @param string fully qualified method name
+     * @param string|array callable to be called
      * @param array $args arguments to pass to the reflected method
      *
      * @return mixed result of the reflected method call
@@ -294,11 +301,16 @@ final class Util
      */
     public static function callStatic($method, array $args = [])
     {
-        if (!is_string($method)) {
-            throw new \InvalidArgumentException('$method was not a string');
+        if (!is_callable($method, true)) {
+            throw new \InvalidArgumentException('$method was not a callable');
         }
 
-        $method = new \ReflectionMethod($method);
+        if (is_array($method)) {
+            $method = new \ReflectionMethod($method[0], $method[1]);
+        } else {
+            $method = new \ReflectionMethod($method);
+        }
+
         if (!$method->isStatic()) {
             throw new \InvalidArgumentException('$method was not static');
         }
