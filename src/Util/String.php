@@ -190,4 +190,29 @@ final class String
             $string
         );
     }
+
+    /**
+     * Strip whitespace (or other characters) from the beginning and end of a string. If the resulting string is empty, null is returned
+     *
+     * @param string $input The string that will be trimmed.
+     * @param string $characters The characters to be trimmed.
+     *
+     * @return string|null
+     *
+     * @throws \InvalidArgumentException if $input is not a string
+     * @throws \InvalidArgumentException if $characters is not a string
+     */
+    public static function trimOrNull($input, $characters = " \t\n\r\0\x0B")
+    {
+        if (!is_string($input)) {
+            throw new \InvalidArgumentException('$input is not a string');
+        }
+
+        if (!is_string($characters)) {
+            throw new \InvalidArgumentException('$characters is not a string');
+        }
+
+        $result = trim($input, $characters);
+        return $result === '' ? null : $result;
+    }
 }

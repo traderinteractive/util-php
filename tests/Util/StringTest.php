@@ -286,6 +286,38 @@ final class StringTest extends \PHPUnit_Framework_TestCase
     {
         S::ucwords('test', null);
     }
+
+    /**
+     * @test
+     * @covers ::trimOrNull
+     */
+    public function trimOrNull()
+    {
+        $this->assertSame('test', S::trimOrNull("\ntest\t"));
+        $this->assertSame(null, S::trimOrNull("\n \t"));
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage $input is not a string
+     * @covers ::trimOrNull
+     */
+    public function trimOrNull_badTypeInput()
+    {
+        S::trimOrNull(true);
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage $characters is not a string
+     * @covers ::trimOrNull
+     */
+    public function trimOrNull_badTypeCharacters()
+    {
+        S::trimOrNull("\n test\t", true);
+    }
 }
 
 class TestObjectWithToString
