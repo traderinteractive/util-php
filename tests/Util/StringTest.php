@@ -1,6 +1,7 @@
 <?php
 
 namespace DominionEnterprises\Util;
+
 use DominionEnterprises\Util\String as S;
 
 /**
@@ -14,7 +15,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage StringUtil::format() takes at least 2 arguments
      * @covers ::format
      */
-    public function format_onlyOneArgumentn()
+    public function formatOnlyOneArgumentn()
     {
         S::format('{0} and {1}');
     }
@@ -25,7 +26,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @covers ::format
      * @uses \DominionEnterprises\Util::raiseException
      */
-    public function format_nonStringCastableObject()
+    public function formatNonStringCastableObject()
     {
         S::format('{0} and {1}', new \StdClass(), 'Jill');
     }
@@ -34,16 +35,20 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::format
      */
-    public function format_stringCastableObject()
+    public function formatStringCastableObject()
     {
-        $this->assertSame('Jack and Jill', S::format('{0} and {1}', new TestObjectWithToString(), 'Jill'));
+        $e = new \Exception();
+        $this->assertSame(
+            "Exception {$e} was thrown",
+            S::format('Exception {0} was thrown', $e)
+        );
     }
 
     /**
      * @test
      * @covers ::format
      */
-    public function format_keysAreRepeatable()
+    public function formatKeysAreRepeatable()
     {
         $this->assertSame('AAA', S::format('{0}{0}{0}', 'A'));
     }
@@ -52,7 +57,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::format
      */
-    public function format_keyOrderDoesNotMatter()
+    public function formatKeyOrderDoesNotMatter()
     {
         $this->assertSame('ABC', S::format('{2}{1}{0}', 'C', 'B', 'A'));
     }
@@ -63,7 +68,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage $format is not a string
      * @covers ::format
      */
-    public function format_nonStringFormat()
+    public function formatNonStringFormat()
     {
         S::format([], 'C', 'B', 'A');
     }
@@ -72,7 +77,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::endsWith
      */
-    public function endsWith_matches()
+    public function endsWithMatches()
     {
         $nonSuffix = null;
         $this->assertTrue(S::endsWith('bah', 'h', $nonSuffix));
@@ -83,7 +88,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::endsWith
      */
-    public function endsWith_noMatches()
+    public function endsWithNoMatches()
     {
         $nonSuffix = null;
         $this->assertFalse(S::endsWith('bah', 'z', $nonSuffix));
@@ -96,7 +101,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage $string is not a string
      * @covers ::endsWith
      */
-    public function endsWith_badTypeForSubject()
+    public function endsWithBadTypeForSubject()
     {
         S::endsWith(true, '');
     }
@@ -107,7 +112,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage $suffix is not a string
      * @covers ::endsWith
      */
-    public function endsWith_badTypeForSuffix()
+    public function endsWithBadTypeForSuffix()
     {
         S::endsWith('', true);
     }
@@ -116,7 +121,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::endsWith
      */
-    public function endsWith_emptyBoth()
+    public function endsWithEmptyBoth()
     {
         $nonSuffix = null;
         $this->assertTrue(S::endsWith('', '', $nonSuffix));
@@ -127,7 +132,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::endsWith
      */
-    public function endsWith_emptySuffix()
+    public function endsWithEmptySuffix()
     {
         $nonSuffix = null;
         $this->assertTrue(S::endsWith('a', '', $nonSuffix));
@@ -138,7 +143,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::endsWith
      */
-    public function endsWith_emptySubject()
+    public function endsWithEmptySubject()
     {
         $nonSuffix = null;
         $this->assertFalse(S::endsWith('', 'b', $nonSuffix));
@@ -170,7 +175,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $maxLength is negative
      */
-    public function ellipsize_negativeMaxLength()
+    public function ellipsizeNegativeMaxLength()
     {
         S::ellipsize('foo', -1);
     }
@@ -181,7 +186,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::ellipsize
      */
-    public function ellipsize_customSuffix()
+    public function ellipsizeCustomSuffix()
     {
         $this->assertSame('Test!', S::ellipsize('Testing', 5, '!'));
     }
@@ -194,7 +199,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage $string is not a string
      * @covers ::ellipsize
      */
-    public function ellipsize_integerInsteadOfString()
+    public function ellipsizeIntegerInsteadOfString()
     {
         S::ellipsize(null, 10);
     }
@@ -207,7 +212,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage $maxLength is not an integer
      * @covers ::ellipsize
      */
-    public function ellipsize_stringMaxLength()
+    public function ellipsizeStringMaxLength()
     {
         S::ellipsize('test', 'a');
     }
@@ -220,7 +225,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage $suffix is not a string
      * @covers ::ellipsize
      */
-    public function ellipsize_integerSuffix()
+    public function ellipsizeIntegerSuffix()
     {
         S::ellipsize('test', 10, 0);
     }
@@ -239,7 +244,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::ucwords
      */
-    public function ucwords_optionalDelimiters()
+    public function ucwordsOptionalDelimiters()
     {
         $input = 'break-down o\'boy up_town you+me here now,this:place';
         $this->assertSame('Break-Down O\'boy Up_town You+me Here Now,this:place', S::ucwords($input, '- '));
@@ -249,7 +254,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::ucwords
      */
-    public function ucwords_noDelimiters()
+    public function ucwordsNoDelimiters()
     {
         $input = 'Mary had a little-lamb';
         $this->assertSame($input, S::ucwords($input, ''));
@@ -259,7 +264,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::ucwords
      */
-    public function ucwords_singleDelimiter()
+    public function ucwordsSingleDelimiter()
     {
         $input = 'Mary had a little-lamb';
         $this->assertSame('MaRy haD a little-laMb', S::ucwords($input, 'a'));
@@ -271,7 +276,7 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage $string is not a string
      * @covers ::ucwords
      */
-    public function ucwords_badTypeString()
+    public function ucwordsBadTypeString()
     {
         S::ucwords(null);
     }
@@ -282,16 +287,8 @@ final class StringTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage $delimiters is not a string
      * @covers ::ucwords
      */
-    public function ucwords_badTypeDelimiters()
+    public function ucwordsBadTypeDelimiters()
     {
         S::ucwords('test', null);
-    }
-}
-
-class TestObjectWithToString
-{
-    public function __toString()
-    {
-        return 'Jack';
     }
 }

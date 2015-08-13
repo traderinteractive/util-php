@@ -4,6 +4,7 @@
  */
 
 namespace DominionEnterprises;
+
 use DominionEnterprises\Util as U;
 
 /**
@@ -39,7 +40,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @expectedException \ErrorException
      * @covers \DominionEnterprises\Util::raiseException
      */
-    public function raiseException_throwsErrorException()
+    public function raiseExceptionThrowsErrorException()
     {
         set_error_handler('\DominionEnterprises\Util::raiseException');
         trigger_error('test');
@@ -51,7 +52,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::raiseException
      * @covers \DominionEnterprises\Util::raiseException
      */
-    public function raiseException_setsExceptionPropertiesCorrectly()
+    public function raiseExceptionSetsExceptionPropertiesCorrectly()
     {
         set_error_handler('\DominionEnterprises\Util::raiseException');
         try {
@@ -71,7 +72,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::raiseException
      */
-    public function raiseException_returnsFalseIfErrorReportingDisabled()
+    public function raiseExceptionReturnsFalseIfErrorReportingDisabled()
     {
         $restoreLevel = error_reporting(0);
         $this->assertFalse(U::raiseException(E_USER_NOTICE, 'test', __FILE__, __LINE__));
@@ -82,7 +83,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::throwIfNotType
      */
-    public function throwIfNotType_basicSuccess()
+    public function throwIfNotTypeBasicSuccess()
     {
         U::throwIfNotType(['string' => ['string1', 'string2'], 'integer' => [1, 2], 'int' => 3, 'null' => null]);
         //Added for strict tests. throwIfNotType() throws on failure
@@ -94,7 +95,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
-    public function throwIfNotType_stringFailure()
+    public function throwIfNotTypeStringFailure()
     {
         U::throwIfNotType(['string' => 2]);
     }
@@ -104,7 +105,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
-    public function throwIfNotType_boolFailure()
+    public function throwIfNotTypeBoolFailure()
     {
         U::throwIfNotType(['bool' => 2]);
     }
@@ -114,7 +115,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
-    public function throwIfNotType_nullFailure()
+    public function throwIfNotTypeNullFailure()
     {
         U::throwIfNotType(['null' => 2]);
     }
@@ -124,7 +125,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
-    public function throwIfNotType_intFailure()
+    public function throwIfNotTypeIntFailure()
     {
         U::throwIfNotType(['int' => [1, 'not an int']]);
     }
@@ -134,7 +135,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
-    public function throwIfNotType_notStringTypeArg()
+    public function throwIfNotTypeNotStringTypeArg()
     {
         U::throwIfNotType([1]);
     }
@@ -144,7 +145,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
-    public function throwIfNotType_notBoolAllowNullsArg()
+    public function throwIfNotTypeNotBoolAllowNullsArg()
     {
         U::throwIfNotType([], false, 'BAD');
     }
@@ -154,7 +155,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
-    public function throwIfNotType_notBoolFailOnWhitespaceArg()
+    public function throwIfNotTypeNotBoolFailOnWhitespaceArg()
     {
         U::throwIfNotType([], 'BAD');
     }
@@ -164,7 +165,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
-    public function throwIfNotType_badFunctionName()
+    public function throwIfNotTypeBadFunctionName()
     {
         U::throwIfNotType(['FUNCTHATDOESNTEXIST' => 2]);
     }
@@ -173,7 +174,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::throwIfNotType
      */
-    public function throwIfNotType_allowNullsSuccess()
+    public function throwIfNotTypeAllowNullsSuccess()
     {
         U::throwIfNotType(['int' => [1, null], 'string' => null, 'bool' => null], false, true);
         //Added for strict tests. throwIfNotType() throws on failure
@@ -185,7 +186,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::throwIfNotType
      * @expectedException \InvalidArgumentException
      */
-    public function throwIfNotType_whitespaceFailure()
+    public function throwIfNotTypeWhitespaceFailure()
     {
         U::throwIfNotType(['int' => 1, 'string' => '   '], true);
     }
@@ -194,7 +195,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::ensureNot
      */
-    public function ensureNot_success()
+    public function ensureNotSuccess()
     {
         $this->assertTrue(U::ensureNot(false, is_string('boo')));
     }
@@ -204,7 +205,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::ensureNot
      * @expectedException \InvalidArgumentException
      */
-    public function ensureNot_badArg()
+    public function ensureNotBadArg()
     {
         U::ensureNot(false, false, 1);
     }
@@ -214,7 +215,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::ensureNot
      * @expectedException \Exception
      */
-    public function ensureNot_baseException()
+    public function ensureNotBaseException()
     {
         U::ensureNot(false, is_string(1));
     }
@@ -225,7 +226,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @expectedException \Exception
      * @expectedExceptionMessage bah
      */
-    public function ensureNot_userMessage()
+    public function ensureNotUserMessage()
     {
         U::ensureNot(false, is_string(1), 'bah');
     }
@@ -236,7 +237,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @expectedException \Exception
      * @expectedExceptionMessage bah
      */
-    public function ensureNot_dynamicException()
+    public function ensureNotDynamicException()
     {
         U::ensureNot(false, is_string(1), 'Exception', ['bah']);
     }
@@ -249,7 +250,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage bah
      * @expectedExceptionCode 404
      */
-    public function ensureNot_dynamicExceptionWithAlias()
+    public function ensureNotDynamicExceptionWithAlias()
     {
         U::ensureNot(false, is_string(1), 'http', ['bah', 404, 404]);
     }
@@ -261,7 +262,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage foo
      * @expectedExceptionCode 2
      */
-    public function ensureNot_exception()
+    public function ensureNotException()
     {
         U::ensureNot(false, false, new \Exception('foo', 2));
     }
@@ -270,7 +271,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::ensure
      */
-    public function ensure_success()
+    public function ensureSuccess()
     {
         $this->assertTrue(U::ensure(true, is_string('boo')));
     }
@@ -280,7 +281,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::ensure
      * @expectedException \InvalidArgumentException
      */
-    public function ensure_badArg()
+    public function ensureBadArg()
     {
         U::ensure(false, true, 1);
     }
@@ -290,7 +291,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::ensure
      * @expectedException \Exception
      */
-    public function ensure_baseException()
+    public function ensureBaseException()
     {
         U::ensure(true, is_string(1));
     }
@@ -301,7 +302,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @expectedException \Exception
      * @expectedExceptionMessage bah
      */
-    public function ensure_userMessage()
+    public function ensureUserMessage()
     {
         U::ensure(true, is_string(1), 'bah');
     }
@@ -312,7 +313,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @expectedException \Exception
      * @expectedExceptionMessage bah
      */
-    public function ensure_dynamicException()
+    public function ensureDynamicException()
     {
         U::ensure(true, is_string(1), 'Exception', ['bah']);
     }
@@ -325,7 +326,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage bah
      * @expectedExceptionCode 404
      */
-    public function ensure_dynamicExceptionWithAlias()
+    public function ensureDynamicExceptionWithAlias()
     {
         U::ensure(true, is_string(1), 'http', ['bah', 404, 404]);
     }
@@ -337,7 +338,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage foo
      * @expectedExceptionCode 2
      */
-    public function ensure_exception()
+    public function ensureException()
     {
         U::ensure(true, false, new \Exception('foo', 2));
     }
@@ -347,7 +348,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @covers ::setExceptionAliases
      * @covers ::getExceptionAliases
      */
-    public function setExceptionAliases_getSet()
+    public function setExceptionAliasesGetSet()
     {
         $exceptionAliases = ['shortNameOne' => 'fullNameOne', 'shortNameTwo' => 'fullNameTwo'];
         U::setExceptionAliases($exceptionAliases);
@@ -358,27 +359,27 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::callStatic
      */
-    public function callStatic_private()
+    public function callStaticPrivate()
     {
-        $this->assertSame('testPrivateBoo', U::callStatic('\DominionEnterprises\CallStaticTest::testPrivate', ['Boo']));
+        $this->assertSame('privateTestBoo', U::callStatic(__CLASS__ . '::privateTest', ['Boo']));
     }
 
     /**
      * @test
      * @covers ::callStatic
      */
-    public function callStatic_protected()
+    public function callStaticProtected()
     {
-        $this->assertSame('testProtectedBoo', U::callStatic('\DominionEnterprises\CallStaticTest::testProtected', ['Boo']));
+        $this->assertSame('protectedTestBoo', U::callStatic(__CLASS__ . '::protectedTest', ['Boo']));
     }
 
     /**
      * @test
      * @covers ::callStatic
      */
-    public function callStatic_public()
+    public function callStaticPublic()
     {
-        $this->assertSame('testPublicBoo', U::callStatic('\DominionEnterprises\CallStaticTest::testPublic', ['Boo']));
+        $this->assertSame('publicTestBoo', U::callStatic(__CLASS__ . '::publicTest', ['Boo']));
     }
 
     /**
@@ -387,7 +388,7 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $method was not a string
      */
-    public function callStatic_notStringMethod()
+    public function callStaticNotStringMethod()
     {
         U::callStatic(true);
     }
@@ -398,27 +399,24 @@ final class UtilTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $method was not static
      */
-    public function callStatic_notStaticMethod()
+    public function callStaticNotStaticMethod()
     {
-        U::callStatic('\DominionEnterprises\CallStaticTest::notStatic');
-    }
-}
-
-final class CallStaticTest
-{
-    private static function testPrivate($arg)
-    {
-        return 'testPrivate' . $arg;
+        U::callStatic(__CLASS__ . '::notStatic');
     }
 
-    protected static function testProtected($arg)
+    private static function privateTest($arg)
     {
-        return 'testProtected' . $arg;
+        return 'privateTest' . $arg;
     }
 
-    public static function testPublic($arg)
+    protected static function protectedTest($arg)
     {
-        return 'testPublic' . $arg;
+        return 'protectedTest' . $arg;
+    }
+
+    public static function publicTest($arg)
+    {
+        return 'publicTest' . $arg;
     }
 
     private function notStatic()

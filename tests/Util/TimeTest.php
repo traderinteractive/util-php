@@ -4,6 +4,7 @@
  */
 
 namespace DominionEnterprises\Util;
+
 use DominionEnterprises\Util\Time as T;
 
 /**
@@ -15,7 +16,7 @@ final class TimeTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::getAnsiSqlTimestamp
      */
-    public function getAnsiSqlTimestamp_basic()
+    public function getAnsiSqlTimestampBasic()
     {
         date_default_timezone_set('America/New_York');
         $this->assertSame("(TIMESTAMP'2013-05-02 10:57:08')", T::getAnsiSqlTimestamp(1367506628));
@@ -27,7 +28,7 @@ final class TimeTest extends \PHPUnit_Framework_TestCase
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $unixTimestamp was not an int
      */
-    public function getAnsiSqlTimestamp_nonInt()
+    public function getAnsiSqlTimestampNonInt()
     {
         T::getAnsiSqlTimestamp('1367506628');
     }

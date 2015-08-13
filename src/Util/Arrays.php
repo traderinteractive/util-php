@@ -29,7 +29,8 @@ final class Arrays
      *
      * @param array $array the array to be searched
      * @param string|integer $key the key to search for
-     * @param mixed $default the value to return if the $key is not found in $array or if the value of $key element is null
+     * @param mixed $default the value to return if the $key is not found in $array or if the value of $key element is
+     *                       null
      *
      * @return mixed array value or given default value
      */
@@ -43,8 +44,8 @@ final class Arrays
      *
      * @param array $source
      * @param array &$dest
-     * @param array $keyMap mapping of dest keys to source keys. If $keyMap is associative, the keys will be the destination keys. If numeric
-     *                      the values will be the destination keys
+     * @param array $keyMap mapping of dest keys to source keys. If $keyMap is associative, the keys will be the
+     *                      destination keys. If numeric the values will be the destination keys
      *
      * @return void
      */
@@ -66,8 +67,8 @@ final class Arrays
      *
      * @param array $source
      * @param array &$dest
-     * @param array $keyMap mapping of dest keys to source keys. If $keyMap is associative, the keys will be the destination keys. If numeric
-     *                      the values will be the destination keys
+     * @param array $keyMap mapping of dest keys to source keys. If $keyMap is associative, the keys will be the
+     *                      destination keys. If numeric the values will be the destination keys
      *
      * @return void
      */
@@ -185,19 +186,23 @@ final class Arrays
     /**
      * Takes each item and embeds it into the destination array, returning the result.
      *
-     * Each item's key is used as the key in the destination array so that keys are preserved.  Each resulting item in the destination will be
-     * embedded into a field named by $fieldName.  Any items that don't have an entry in destination already will be added, not skipped.
+     * Each item's key is used as the key in the destination array so that keys are preserved.  Each resulting item in
+     * the destination will be embedded into a field named by $fieldName.  Any items that don't have an entry in
+     * destination already will be added, not skipped.
      *
-     * For example, embedInto(['Joe', 'Sue'], 'lastName', [['firstName' => 'Billy'], ['firstName' => 'Bobby']]) will return
-     * [['firstName' => 'Billy', 'lastName' => 'Joe'], ['firstName' => 'Bobby', 'lastName' => 'Sue']]
+     * For example, embedInto(['Joe', 'Sue'], 'lastName', [['firstName' => 'Billy'], ['firstName' => 'Bobby']]) will
+     * return [['firstName' => 'Billy', 'lastName' => 'Joe'], ['firstName' => 'Bobby', 'lastName' => 'Sue']]
      *
      * @param array $items The items to embed into the result.
-     * @param string $fieldName The name of the field to embed the items into.  This field must not exist in the destination items already.
-     * @param array $destination An optional array of arrays to embed the items into.  If this is not provided then empty records are assumed
-     *     and the new record will be created only containing $fieldName.
+     * @param string $fieldName The name of the field to embed the items into.  This field must not exist in the
+     *                          destination items already.
+     * @param array $destination An optional array of arrays to embed the items into.  If this is not provided then
+     *                           empty records are assumed and the new record will be created only containing
+     *                           $fieldName.
      * @param bool $overwrite whether to overwrite $fieldName in $destination array
      *
-     * @return array $destination, with all items in $items added using their keys, but underneath a nested $fieldName key.
+     * @return array $destination, with all items in $items added using their keys, but underneath a nested $fieldName
+     *               key.
      *
      * @throws \InvalidArgumentException if $fieldName was not a string
      * @throws \InvalidArgumentException if a value in $destination was not an array
@@ -259,7 +264,8 @@ final class Arrays
      * @param string|int $keyIndex The index to be used as the key of the resulting single dimensional result array.
      * @param string|int $valueIndex The index to be used as the value of the resulting single dimensional result array.
      *                               If a sub array does not contain this element null will be used as the value.
-     * @param string $duplicateBehavior Instruct how to handle duplicate resulting values, 'takeFirst', 'takeLast', 'throw'
+     * @param string $duplicateBehavior Instruct how to handle duplicate resulting values, 'takeFirst', 'takeLast',
+     *                                  'throw'
      *
      * @return array an associative array
      *
@@ -292,7 +298,9 @@ final class Arrays
 
             $key = self::get($array, $keyIndex);
             if (!is_string($key) && !is_int($key)) {
-                throw new \UnexpectedValueException("Value for \$arrays[{$index}][{$keyIndex}] was not a string or integer");
+                throw new \UnexpectedValueException(
+                    "Value for \$arrays[{$index}][{$keyIndex}] was not a string or integer"
+                );
             }
 
             $value = self::get($array, $valueIndex);
@@ -336,8 +344,9 @@ final class Arrays
     /**
      * Partitions the given $input array into an array of $partitionCount sub arrays.
      *
-     * This is a slight modification of the function suggested on http://php.net/manual/en/function.array-chunk.php#75022.
-     * This method does not pad with empty partitions and ensures positive partition count.
+     * This is a slight modification of the function suggested on
+     * http://php.net/manual/en/function.array-chunk.php#75022. This method does not pad with empty partitions and
+     * ensures positive partition count.
      *
      * @param array $input The array to partition.
      * @param int $partitionCount The maximum number of partitions to create.

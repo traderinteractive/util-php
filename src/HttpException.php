@@ -12,8 +12,8 @@ namespace DominionEnterprises;
  */
 final class HttpException extends \Exception
 {
-    private $_httpStatusCode;
-    private $_userMessage;
+    private $httpStatusCode;
+    private $userMessage;
 
     /**
      * Constructs
@@ -35,8 +35,7 @@ final class HttpException extends \Exception
         $code = 0,
         \Exception $previous = null,
         $userMessage = null
-    )
-    {
+    ) {
         if (!is_string($message)) {
             throw new \InvalidArgumentException('$message was not a string');
         }
@@ -55,12 +54,12 @@ final class HttpException extends \Exception
 
         parent::__construct($message, $code, $previous);
 
-        $this->_httpStatusCode = $httpStatusCode;
+        $this->httpStatusCode = $httpStatusCode;
 
         if ($userMessage !== null) {
-            $this->_userMessage = $userMessage;
+            $this->userMessage = $userMessage;
         } else {
-            $this->_userMessage = $message;
+            $this->userMessage = $message;
         }
     }
 
@@ -71,7 +70,7 @@ final class HttpException extends \Exception
      */
     public function getHttpStatusCode()
     {
-        return $this->_httpStatusCode;
+        return $this->httpStatusCode;
     }
 
     /**
@@ -81,6 +80,6 @@ final class HttpException extends \Exception
      */
     public function getUserMessage()
     {
-        return $this->_userMessage;
+        return $this->userMessage;
     }
 }
