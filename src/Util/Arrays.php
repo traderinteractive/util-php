@@ -219,19 +219,20 @@ final class Arrays
         }
 
         foreach ($items as $key => $item) {
-            if (array_key_exists($key, $destination)) {
-                if (!is_array($destination[$key])) {
-                    throw new \InvalidArgumentException('a value in $destination was not an array');
-                }
-
-                if (!$overwrite && array_key_exists($fieldName, $destination[$key])) {
-                    throw new \Exception('$fieldName key already exists in a $destination array');
-                }
-
-                $destination[$key][$fieldName] = $item;
-            } else {
+            if (!array_key_exists($key, $destination)) {
                 $destination[$key] = [$fieldName => $item];
+                continue;
             }
+
+            if (!is_array($destination[$key])) {
+                throw new \InvalidArgumentException('a value in $destination was not an array');
+            }
+
+            if (!$overwrite && array_key_exists($fieldName, $destination[$key])) {
+                throw new \Exception('$fieldName key already exists in a $destination array');
+            }
+
+            $destination[$key][$fieldName] = $item;
         }
 
         return $destination;
