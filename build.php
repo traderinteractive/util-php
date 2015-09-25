@@ -12,9 +12,8 @@ require 'vendor/autoload.php';
 
 $phpcsCLI = new PHP_CodeSniffer_CLI();
 $phpcsArguments = [
-    'standard' => [__DIR__ . '/vendor/dominionenterprises/dws-coding-standard/DWS'],
+    'standard' => ['PSR2'],
     'files' => ['src', 'tests', 'build.php'],
-    'warningSeverity' => 0,
 ];
 $phpcsViolations = $phpcsCLI->process($phpcsArguments);
 if ($phpcsViolations > 0) {

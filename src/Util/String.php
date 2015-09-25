@@ -100,7 +100,8 @@ final class String
      * Truncates the string to the given length, with an ellipsis at the end.
      *
      * @param string $string The string to shorten.
-     * @param int $maxLength The length to truncate the string to.  The result will not be longer than this, but may be shorter.
+     * @param int $maxLength The length to truncate the string to.  The result will not be longer than this, but may be
+     *                       shorter.
      * @param string $suffix The string to append when truncating.  Typically this will be an ellipsis.
      *
      * @return string The truncated string with the ellipsis included if truncation occured.
@@ -184,7 +185,7 @@ final class String
 
         return preg_replace_callback(
             '/[^' . preg_quote($delimiters, '/') . ']+/',
-            function($matches) {
+            function ($matches) {
                 return ucfirst($matches[0]);
             },
             $string

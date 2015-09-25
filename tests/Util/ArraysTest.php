@@ -4,6 +4,7 @@
  */
 
 namespace DominionEnterprises\Util;
+
 use DominionEnterprises\Util\Arrays as A;
 
 /**
@@ -56,7 +57,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::copyIfKeysExist
      */
-    public function copyIfKeysExist_numericKeyMap()
+    public function copyIfKeysExistNumericKeyMap()
     {
         $source = ['a' => 'foo', 'b' => 'bar', 'd' => 'baz'];
         $result = [];
@@ -84,7 +85,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::copyIfSet
      */
-    public function copyIfSet_numericKeyMap()
+    public function copyIfSetNumericKeyMap()
     {
         $source = ['a' => 'foo', 'b' => null, 'd' => 'baz'];
         $result = [];
@@ -96,7 +97,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::tryGet
      */
-    public function tryGet_nullKey()
+    public function tryGetNullKey()
     {
         $value = 'filler';
         $this->assertFalse(A::tryGet([], null, $value));
@@ -107,7 +108,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::tryGet
      */
-    public function tryGet_classForKey()
+    public function tryGetClassForKey()
     {
         $value = 'filler';
         $this->assertFalse(A::tryGet([], new \stdClass(), $value));
@@ -118,7 +119,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::tryGet
      */
-    public function tryGet_valueStringKey()
+    public function tryGetValueStringKey()
     {
         $value = 'filler';
         $this->assertTrue(A::tryGet(['a' => 1], 'a', $value));
@@ -129,7 +130,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::tryGet
      */
-    public function tryGet_valueIntegerKey()
+    public function tryGetValueIntegerKey()
     {
         $value = 'filler';
         $this->assertTrue(A::tryGet([1.1, 2.2], 0, $value));
@@ -140,7 +141,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::project
      */
-    public function project_basicUse()
+    public function projectBasicUse()
     {
         $expected = [2, 'boo' => 4];
         $result = A::project([['key1' => 1, 'key2' => 2], 'boo' => ['key1' => 3, 'key2' => 4]], 'key2');
@@ -153,7 +154,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @covers ::project
      * @expectedException \InvalidArgumentException
      */
-    public function project_strictKeyFail()
+    public function projectStrictKeyFail()
     {
         A::project([['key1' => 1, 'key2' => 2], ['key1' => 3]], 'key2');
     }
@@ -162,7 +163,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::project
      */
-    public function project_strictKeyFalse()
+    public function projectStrictKeyFalse()
     {
         $expected = [1 => 4];
         $result = A::project([['key1' => 1], ['key1' => 3, 'key2' => 4]], 'key2', false);
@@ -176,7 +177,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $strictKeyCheck was not a bool
      */
-    public function project_strictKeyNotBool()
+    public function projectStrictKeyNotBool()
     {
         A::project([], 'not under test', 1);
     }
@@ -187,7 +188,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage a value in $input was not an array
      */
-    public function project_inputValueNotArray()
+    public function projectInputValueNotArray()
     {
         A::project([1], 'not under test');
     }
@@ -198,7 +199,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::where
      */
-    public function where_basicUsage()
+    public function whereBasicUsage()
     {
         $people = [
             ['name' => 'Tom', 'score' => '0'],
@@ -217,7 +218,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::where
      */
-    public function where_returnsEmptyArray()
+    public function whereReturnsEmptyArray()
     {
         $people = [
             ['name' => 'Tom', 'score' => '0'],
@@ -235,7 +236,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::where
      */
-    public function where_withMultipleConditions()
+    public function whereWithMultipleConditions()
     {
         $people = [
             ['name' => 'Tom', 'score' => 1, 'extra' => 'abc'],
@@ -254,7 +255,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::where
      */
-    public function where_returnsMultipleResults()
+    public function whereReturnsMultipleResults()
     {
         $array = [
             ['key 1' => 'a', 'key 2' => 'b'],
@@ -277,7 +278,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage a value in $array was not an array
      */
-    public function where_inputValueNotArray()
+    public function whereInputValueNotArray()
     {
         A::where([1], []);
     }
@@ -288,7 +289,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::embedInto
      */
-    public function embedInto_basicUse()
+    public function embedIntoBasicUse()
     {
         $this->assertSame(
             [
@@ -309,7 +310,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::embedInto
      */
-    public function embedInto_emptyDestination()
+    public function embedIntoEmptyDestination()
     {
         $this->assertSame(
             [['request' => ['image' => 'foo']], ['request' => ['image' => 'bar']]],
@@ -325,7 +326,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage $fieldName was not a string
      */
-    public function embedInto_numericFieldName()
+    public function embedIntoNumericFieldName()
     {
         A::embedInto([], 5);
     }
@@ -338,7 +339,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage a value in $destination was not an array
      */
-    public function embedInto_nonArrayDestinationItems()
+    public function embedIntoNonArrayDestinationItems()
     {
         A::embedInto(['one' => 0], 'result', ['one' => 0]);
     }
@@ -350,7 +351,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @covers ::embedInto
      * @expectedException Exception
      */
-    public function embedInto_existingFieldName()
+    public function embedIntoExistingFieldName()
     {
         A::embedInto(['new'], 'result', [['result' => 'old']]);
     }
@@ -361,7 +362,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::embedInto
      */
-    public function embedInto_noItems()
+    public function embedIntoNoItems()
     {
         $this->assertSame([['result' => 'foo']], A::embedInto([], 'result', [['result' => 'foo']]));
     }
@@ -370,7 +371,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::embedInto
      */
-    public function embedInto_overwrite()
+    public function embedIntoOverwrite()
     {
         $this->assertSame([['key' => true]], A::embedInto([true], 'key', [['key' => false]], true));
     }
@@ -381,7 +382,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $overwrite was not a bool
      */
-    public function embedInto_overwriteNotBool()
+    public function embedIntoOverwriteNotBool()
     {
         A::embedInto([], 'key', [], 1);
     }
@@ -432,7 +433,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @covers ::extract
      * @uses \DominionEnterprises\Util\Arrays::get
      */
-    public function extract_takeFirst()
+    public function extractTakeFirst()
     {
         $input = [
             ['key' => 'foo', 'value' => 'bar', 'extra' => 'abc'],
@@ -456,7 +457,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \Exception
      * @expectedExceptionMessage Duplicate entry for 'boo' found.
      */
-    public function extract_throwOnDuplicate()
+    public function extractThrowOnDuplicate()
     {
         $input = [
             ['key' => 'foo', 'value' => 'bar', 'extra' => 'abc'],
@@ -477,7 +478,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $arrays was not a multi-dimensional array
      */
-    public function extract_withSingleDimensionalArray()
+    public function extractWithSingleDimensionalArray()
     {
         A::extract(['key' => 'foo', 'value' => 'bar', 'extra' => 'abc'], 'key', 'value');
     }
@@ -491,7 +492,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \UnexpectedValueException
      * @expectedExceptionMessage Value for $arrays[1][key] was not a string or integer
      */
-    public function extract_withInvalidKeyValue()
+    public function extractWithInvalidKeyValue()
     {
         $input = [
             ['key' => 'foo', 'value' => 'bar', 'extra' => 'abc'],
@@ -509,7 +510,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $keyIndex was not a string or integer
      */
-    public function extract_withInvalidKeyIndex()
+    public function extractWithInvalidKeyIndex()
     {
         A::extract([], true, 'value');
     }
@@ -522,7 +523,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $valueIndex was not a string or integer
      */
-    public function extract_withInvalidValueIndex()
+    public function extractWithInvalidValueIndex()
     {
         A::extract([], 'key', []);
     }
@@ -535,7 +536,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $duplicateBehavior was not 'takeFirst', 'takeLast', or 'throw'
      */
-    public function extract_withInvalidDuplicateBehavior()
+    public function extractWithInvalidDuplicateBehavior()
     {
         A::extract([], 'key', 'value', 'invalid');
     }
@@ -557,7 +558,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::getFirstSet
      */
-    public function getFirstSet_withDefault()
+    public function getFirstSetWithDefault()
     {
         $this->assertSame('baz', A::getFirstSet(['foo', null, 'bar'], [1, 4], 'baz'));
     }
@@ -579,7 +580,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::partition
      */
-    public function partition_inputLessThanPartitionCount()
+    public function partitionInputLessThanPartitionCount()
     {
         $this->assertSame([['a'], ['b'], ['c']], A::partition(['a', 'b', 'c'], 4));
     }
@@ -590,7 +591,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::partition
      */
-    public function partition_withRemainder()
+    public function partitionWithRemainder()
     {
         $this->assertSame([['a', 'b'], ['c'], ['d']], A::partition(['a', 'b', 'c', 'd'], 3));
     }
@@ -601,7 +602,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::partition
      */
-    public function partition_withMultipleRemainder()
+    public function partitionWithMultipleRemainder()
     {
         $this->assertSame([['a', 'b'], ['c', 'd'], ['e']], A::partition(['a', 'b', 'c', 'd', 'e'], 3));
     }
@@ -612,7 +613,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::partition
      */
-    public function partition_emptyInput()
+    public function partitionEmptyInput()
     {
         $this->assertSame([], A::partition([], 2));
     }
@@ -623,7 +624,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::partition
      */
-    public function partition_onePartition()
+    public function partitionOnePartition()
     {
         $this->assertSame([['a', 'b', 'c']], A::partition(['a', 'b', 'c'], 1));
     }
@@ -636,7 +637,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $partitionCount must be a positive integer
      */
-    public function partition_negativePartitionCount()
+    public function partitionNegativePartitionCount()
     {
         A::partition(['a', 'b', 'c'], -1);
     }
@@ -649,7 +650,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $partitionCount must be a positive integer
      */
-    public function partition_zeroPartitionCount()
+    public function partitionZeroPartitionCount()
     {
         A::partition(['a', 'b', 'c'], 0);
     }
@@ -662,7 +663,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $partitionCount must be a positive integer
      */
-    public function partition_nonIntegerPartitionCount()
+    public function partitionNonIntegerPartitionCount()
     {
         A::partition(['a', 'b', 'c'], 'not an int');
     }
@@ -673,7 +674,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::partition
      */
-    public function partition_preserveNumericKeys()
+    public function partitionPreserveNumericKeys()
     {
         $this->assertSame(
             [[0 => 'a', 1 => 'b'], [2 => 'c', 3 => 'd'], [4 => 'e']],
@@ -687,7 +688,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::partition
      */
-    public function partition_preserveAssociativeKeys()
+    public function partitionPreserveAssociativeKeys()
     {
         $this->assertSame(
             [['a' => 0, 'b' => 1], ['c' => 2, 'd' => 3], ['e' => 4]],
@@ -703,7 +704,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $preserveKeys must be a boolean value
      */
-    public function partition_nonBoolPreserveKeys()
+    public function partitionNonBoolPreserveKeys()
     {
         A::partition(['a', 'b', 'c'], 3, 'not a bool');
     }
@@ -727,7 +728,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::unsetAll
      */
-    public function unsetAll_emptyArray()
+    public function unsetAllEmptyArray()
     {
         $array = [];
         A::unsetAll($array, [0, 2]);
@@ -741,7 +742,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::unsetAll
      */
-    public function unsetAll_emptyKeys()
+    public function unsetAllEmptyKeys()
     {
         $array = ['a', 'b', 'c'];
         A::unsetAll($array, []);
@@ -755,7 +756,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::unsetAll
      */
-    public function unsetAll_keyNotFound()
+    public function unsetAllKeyNotFound()
     {
         $array = ['a', 'b', 'c'];
         A::unsetAll($array, [3, 4]);
@@ -780,7 +781,7 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers ::nullifyEmptyStrings
      */
-    public function nullifyEmptyStrings_emptyArray()
+    public function nullifyEmptyStringsEmptyArray()
     {
         $array = [];
         A::nullifyEmptyStrings($array);

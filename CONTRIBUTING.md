@@ -8,7 +8,7 @@ We recommend including details of your particular usecase(s) with any issues or 
 and we can get things merged in quicker when we understand its expected usage.
 
 ## Building
-Our [build](build.php) runs the code through our [coding standard](https://github.com/dominionenterprises/dws-coding-standard) and through our
+Our [build](build.php) runs the code through our [coding standard](http://www.php-fig.org/psr/psr-2/) and through our
 test suite.  Failures in either will keep us from merging the pull request.  The test suite MUST have 100% code coverage in the report.
 
 ## Travis CI

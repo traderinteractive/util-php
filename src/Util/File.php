@@ -4,6 +4,7 @@
  */
 
 namespace DominionEnterprises\Util;
+
 use DominionEnterprises\Util;
 
 /**

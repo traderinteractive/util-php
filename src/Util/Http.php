@@ -4,6 +4,7 @@
  */
 
 namespace DominionEnterprises\Util;
+
 use DominionEnterprises\Util;
 
 /**
@@ -149,7 +150,8 @@ final class Http
      * Get an array of all url parameters.
      *
      * @param string $url The url to parse such as http://foo.com/bar/?id=boo&another=wee&another=boo
-     * @param array $collapsedParams Parameters to collapse. ex. 'id' => ['boo'] to just 'id' => 'boo'. Exception thrown if more than 1 value
+     * @param array $collapsedParams Parameters to collapse. ex. 'id' => ['boo'] to just 'id' => 'boo'. Exception thrown
+     *                               if more than 1 value
      *
      * @return array such as ['id' => ['boo'], 'another' => ['wee', 'boo']]
      *

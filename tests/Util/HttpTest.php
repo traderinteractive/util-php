@@ -4,6 +4,7 @@
  */
 
 namespace DominionEnterprises\Util;
+
 use DominionEnterprises\Util\Http as H;
 
 /**
@@ -19,7 +20,7 @@ final class HttpTest extends \PHPUnit_Framework_TestCase
      * @uses \DominionEnterprises\Util::throwIfNotType
      * @uses \DominionEnterprises\Util::raiseException
      */
-    public function parseHeaders_basicUsage()
+    public function parseHeadersBasicUsage()
     {
         $headers = 'Content-Type: text/json';
         $result = H::parseHeaders($headers);
@@ -33,7 +34,7 @@ final class HttpTest extends \PHPUnit_Framework_TestCase
      * @uses \DominionEnterprises\Util::throwIfNotType
      * @uses \DominionEnterprises\Util::raiseException
      */
-    public function parseHeaders_malformed()
+    public function parseHeadersMalformed()
     {
         try {
             $headers = "&some\r\nbad+headers";
@@ -53,7 +54,7 @@ final class HttpTest extends \PHPUnit_Framework_TestCase
      * @uses \DominionEnterprises\Util::throwIfNotType
      * @uses \DominionEnterprises\Util::raiseException
      */
-    public function parseHeaders_peclHttpFunctionality()
+    public function parseHeadersPeclHttpFunctionality()
     {
         $headers = <<<EOT
 HTTP/1.1 200 OK\r\n
@@ -83,14 +84,19 @@ EOT;
      * @uses \DominionEnterprises\Util::throwIfNotType
      * @uses \DominionEnterprises\Util::raiseException
      */
-    public function parseHeaders_methodAndUrlSet()
+    public function parseHeadersMethodAndUrlSet()
     {
         $headers = <<<EOT
 GET /file.xml HTTP/1.1\r\n
 Host: www.example.com\r\n
 Accept: */*\r\n
 EOT;
-        $expected = ['Request Method' => 'GET', 'Request Url' => '/file.xml', 'Host' => 'www.example.com', 'Accept' => '*/*'];
+        $expected = [
+            'Request Method' => 'GET',
+            'Request Url' => '/file.xml',
+            'Host' => 'www.example.com',
+            'Accept' => '*/*'
+        ];
         $result = H::parseHeaders($headers);
         $this->assertSame($expected, $result);
     }
@@ -99,18 +105,28 @@ EOT;
      * @test
      * @covers ::buildQueryString
      */
-    public function buildQueryString_basicUse()
+    public function buildQueryStringBasicUse()
     {
-        $data = ['foo' => 'bar', 'baz' => 'boom', 'cow' => 'milk', 'php' => 'hypertext processor', 'theFalse' => false, 'theTrue' => true];
+        $data = [
+            'foo' => 'bar',
+            'baz' => 'boom',
+            'cow' => 'milk',
+            'php' => 'hypertext processor',
+            'theFalse' => false,
+            'theTrue' => true
+        ];
 
-        $this->assertSame('foo=bar&baz=boom&cow=milk&php=hypertext%20processor&theFalse=false&theTrue=true', H::buildQueryString($data));
+        $this->assertSame(
+            'foo=bar&baz=boom&cow=milk&php=hypertext%20processor&theFalse=false&theTrue=true',
+            H::buildQueryString($data)
+        );
     }
 
     /**
      * @test
      * @covers ::buildQueryString
      */
-    public function buildQueryString_multiValue()
+    public function buildQueryStringMultiValue()
     {
         $data = ['param1' => ['value', 'another value'], 'param2' => 'a value'];
 
@@ -121,9 +137,12 @@ EOT;
      * @test
      * @covers ::buildQueryString
      */
-    public function buildQueryString_complexValues()
+    public function buildQueryStringComplexValues()
     {
-        $this->assertSame('a%20b%20c=1%242%283&a%20b%20c=4%295%2A6', H::buildQueryString(['a b c' => ['1$2(3', '4)5*6']]));
+        $this->assertSame(
+            'a%20b%20c=1%242%283&a%20b%20c=4%295%2A6',
+            H::buildQueryString(['a b c' => ['1$2(3', '4)5*6']])
+        );
     }
 
     /**
@@ -133,9 +152,10 @@ EOT;
      * @group unit
      * @covers ::getQueryParams
      */
-    public function getQueryParams_normal()
+    public function getQueryParamsNormal()
     {
-        $url = 'http://foo.com/bar/?otherStuff=green&stuff=yeah&moreStuff=rock&moreStuff=jazz&otherStuff=blue&otherStuff=black';
+        $url = 'http://foo.com/bar/?otherStuff=green&stuff=yeah&moreStuff=rock&moreStuff=jazz&otherStuff=blue&'
+             . 'otherStuff=black';
         $expected = [
             'otherStuff' => ['green', 'blue', 'black'],
             'stuff' => ['yeah'],
@@ -152,7 +172,7 @@ EOT;
      * @group unit
      * @covers ::getQueryParams
      */
-    public function getQueryParams_emptyParameter()
+    public function getQueryParamsEmptyParameter()
     {
         $url = 'http://foo.com/bar/?stuff=yeah&moreStuff=&moreStuff=jazz&otherStuff';
         $expected = [
@@ -171,7 +191,7 @@ EOT;
      * @group unit
      * @covers ::getQueryParams
      */
-    public function getQueryParams_garbage()
+    public function getQueryParamsGarbage()
     {
         $this->assertSame([], H::getQueryParams('GARBAGE'));
     }
@@ -183,7 +203,7 @@ EOT;
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $url was not a string
      */
-    public function getQueryParams_urlNotString()
+    public function getQueryParamsUrlNotString()
     {
         H::getQueryParams(1);
     }
@@ -192,7 +212,7 @@ EOT;
      * @test
      * @covers ::getQueryParams
      */
-    public function getQueryParams_collapsed()
+    public function getQueryParamsWithCollapsed()
     {
         $result = H::getQueryParams('http://foo.com/bar/?stuff=yeah&moreStuff=mhmm', ['stuff', 'notThere']);
         $this->assertSame(['stuff' => 'yeah', 'moreStuff' => ['mhmm']], $result);
@@ -204,7 +224,7 @@ EOT;
      * @expectedException \Exception
      * @expectedExceptionMessage Parameter 'stuff' had more than one value but in $collapsedParams
      */
-    public function getQueryParams_collapsedMoreThanOneValue()
+    public function getQueryParamsCollapsedMoreThanOneValue()
     {
         H::getQueryParams('http://foo.com/bar/?stuff=yeah&stuff=boy&moreStuff=mhmm', ['stuff']);
     }
@@ -226,7 +246,7 @@ EOT;
      * @expectedException \Exception
      * @expectedExceptionMessage Parameter 'boo' is not expected to be an array, but array given
      */
-    public function getQueryParamsCollapsed_unexpectedArray()
+    public function getQueryParamsCollapsedUnexpectedArray()
     {
         $url = 'http://foo.com/bar/?boo=1&foo=bar&boo=2';
         H::getQueryParamsCollapsed($url);
@@ -238,7 +258,7 @@ EOT;
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage $url was not a string
      */
-    public function getQueryParamsCollapsed_urlNotString()
+    public function getQueryParamsCollapsedUrlNotString()
     {
         H::getQueryParamsCollapsed(1);
     }
@@ -249,7 +269,7 @@ EOT;
      * @test
      * @covers ::getQueryParamsCollapsed
      */
-    public function getQueryParamsCollasped_garbage()
+    public function getQueryParamsCollaspedGarbage()
     {
         $this->assertSame([], H::getQueryParamsCollapsed('GARBAGE'));
     }
@@ -260,7 +280,7 @@ EOT;
      * @test
      * @covers ::getQueryParamsCollapsed
      */
-    public function getQueryParamsCollapsed_emptyParameter()
+    public function getQueryParamsCollapsedEmptyParameter()
     {
         $url = 'http://foo.com/bar/?stuff=yeah&moreStuff=&moreStuff=jazz&otherStuff';
         $expected = ['stuff' => 'yeah', 'moreStuff' => ['', 'jazz'], 'otherStuff' => ''];

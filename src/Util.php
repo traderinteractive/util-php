@@ -10,7 +10,7 @@ namespace DominionEnterprises;
  */
 final class Util
 {
-    private static $_exceptionAliases = ['http' => '\DominionEnterprises\HttpException'];
+    private static $exceptionAliases = ['http' => '\DominionEnterprises\HttpException'];
 
     /**
      * Returns exception info in array.
@@ -51,10 +51,11 @@ final class Util
      *
      * @param mixed $valueToEnsure the value to throw on if $valueToCheck equals it
      * @param mixed $valueToCheck the value to check against $valueToEnsure
-     * @param null|string|\Exception $exception null, a fully qualified exception class name, string for an Exception message, or an Exception.
-     *     The fully qualified exception class name could also be an alias in getExceptionAliases()
-     * @param array|null $exceptionArgs arguments to pass to a new instance of $exception. If using this parameter make sure these arguments
-     *     match the constructor for an exception of type $exception.
+     * @param null|string|\Exception $exception null, a fully qualified exception class name, string for an Exception
+     *                                          message, or an Exception.  The fully qualified exception class name
+     *                                          could also be an alias in getExceptionAliases()
+     * @param array|null $exceptionArgs arguments to pass to a new instance of $exception. If using this parameter make
+     *                                  sure these arguments match the constructor for an exception of type $exception.
      *
      * @return mixed returns $valueToCheck
      *
@@ -76,8 +77,8 @@ final class Util
                 throw new \Exception($exception);
             }
 
-            if (array_key_exists($exception, self::$_exceptionAliases)) {
-                $exception = self::$_exceptionAliases[$exception];
+            if (array_key_exists($exception, self::$exceptionAliases)) {
+                $exception = self::$exceptionAliases[$exception];
             }
 
             $reflectionClass = new \ReflectionClass($exception);
@@ -101,10 +102,11 @@ final class Util
      *
      * @param mixed $valueToThrowOn the value to throw on if $valueToCheck equals it
      * @param mixed $valueToCheck the value to check against $valueToThrowOn
-     * @param null|string|\Exception $exception null, a fully qualified exception class name, string for an Exception message, or an Exception.
-     *     The fully qualified exception class name could also be an alias in getExceptionAliases()
-     * @param array|null $exceptionArgs arguments to pass to a new instance of $exception. If using this parameter make sure these arguments
-     *     match the constructor for an exception of type $exception.
+     * @param null|string|\Exception $exception null, a fully qualified exception class name, string for an Exception
+     *                                          message, or an Exception.  The fully qualified exception class name
+     *                                          could also be an alias in getExceptionAliases()
+     * @param array|null $exceptionArgs arguments to pass to a new instance of $exception. If using this parameter make
+     *                                  sure these arguments match the constructor for an exception of type $exception.
      *
      * @return mixed returns $valueToCheck
      *
@@ -126,8 +128,8 @@ final class Util
                 throw new \Exception($exception);
             }
 
-            if (array_key_exists($exception, self::$_exceptionAliases)) {
-                $exception = self::$_exceptionAliases[$exception];
+            if (array_key_exists($exception, self::$exceptionAliases)) {
+                $exception = self::$exceptionAliases[$exception];
             }
 
             $reflectionClass = new \ReflectionClass($exception);
@@ -161,9 +163,9 @@ final class Util
     /**
      * Throws an exception if specified variables are not of given types.
      *
-     * @param array $typesToVariables like ['string' => [$var1, $var2], 'int' => [$var1, $var2]]
-     *     or ['string' => $var1, 'integer' => [1, $var2]]. Supported types are the suffixes of the is_* functions such as string
-     *     for is_string and int for is_int
+     * @param array $typesToVariables like ['string' => [$var1, $var2], 'int' => [$var1, $var2]] or
+     *                                ['string' => $var1, 'integer' => [1, $var2]]. Supported types are the suffixes
+     *                                of the is_* functions such as string for is_string and int for is_int
      * @param bool $failOnWhitespace whether to fail strings if they are whitespace
      * @param bool $allowNulls whether to allow null values to pass through
      *
@@ -267,22 +269,23 @@ final class Util
      */
     public static function getExceptionAliases()
     {
-        return self::$_exceptionAliases;
+        return self::$exceptionAliases;
     }
 
     /**
      * Set the exception aliases.
      *
-     * @param array $aliases array where keys are aliases and values are strings to a fully qualified exception class names.
+     * @param array $aliases array where keys are aliases and values are strings to a fully qualified exception class
+     *                       names.
      */
     public static function setExceptionAliases(array $aliases)
     {
-        self::$_exceptionAliases = $aliases;
+        self::$exceptionAliases = $aliases;
     }
 
     /**
-     * Call a static (possibly non public) method through reflection. Intended for use in testing, but should only use on methods as one would
-     * use a package level method in another language, since php does not have the feature.
+     * Call a static (possibly non public) method through reflection. Intended for use in testing, but should only use
+     * on methods as one would use a package level method in another language, since php does not have the feature.
      *
      * @param string fully qualified method name
      * @param array $args arguments to pass to the reflected method
