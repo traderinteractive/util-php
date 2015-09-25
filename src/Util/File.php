@@ -30,27 +30,18 @@ final class File
             throw new \InvalidArgumentException('$directoryPath is not a string');
         }
 
-        $paths = scandir($directoryPath);
-        if ($paths === false) {
-            throw new \Exception("cannot list directory '{$directoryPath}'");
-        }
+        foreach (new \FileSystemIterator($directoryPath) as $path => $fileInfo) {
+            if ($fileInfo->isDir()) {
+                self::deleteDirectoryContents($path);//RECURSIVE CALL
+                if (!rmdir($path)) {
+                    throw new \Exception("cannot delete '{$fullPath}'", 1);
+                }
 
-        foreach ($paths as $path) {
-            if ($path === '.' || $path === '..') {
                 continue;
             }
 
-            $fullPath = "{$directoryPath}/{$path}";
-
-            if (is_dir($fullPath)) {
-                self::deleteDirectoryContents($fullPath);//RECURSIVE CALL
-                if (!rmdir($fullPath)) {
-                    throw new \Exception("cannot delete '{$fullPath}'", 1);
-                }
-            } else {
-                if (!unlink($fullPath)) {
-                    throw new \Exception("cannot delete '{$fullPath}'", 2);
-                }
+            if (!unlink($path)) {
+                throw new \Exception("cannot delete '{$path}'", 2);
             }
         }
     }

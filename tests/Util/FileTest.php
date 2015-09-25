@@ -77,8 +77,7 @@ final class FileTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers ::deleteDirectoryContents
-     * @expectedException \Exception
-     * @expectedExceptionMessage cannot list directory '/some/where/that/doesnt/exist'
+     * @expectedException \UnexpectedValueException
      */
     public function deleteDirectoryContentsNonExistentPath()
     {
