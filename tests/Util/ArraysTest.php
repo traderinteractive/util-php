@@ -787,4 +787,72 @@ final class ArraysTest extends \PHPUnit_Framework_TestCase
         A::nullifyEmptyStrings($array);
         $this->assertSame([], $array);
     }
+
+    /**
+     * Verify functionality of changeKeyCase().
+     *
+     * @test
+     * @covers ::changeKeyCase
+     * @dataProvider changeKeyCaseData
+     *
+     * @return void
+     */
+    public function changeKeyCase($input, $case, $expected)
+    {
+        $this->assertSame($expected, A::changeKeyCase($input, $case));
+    }
+
+    /**
+     * Dataprovider for changeKeyCase test.
+     *
+     * @return array
+     */
+    public function changeKeyCaseData()
+    {
+        $lowerUnderscore = [
+            'first_and_last_name' => 'John Doe',
+            'email_address' => 'john@example.com',
+            'age' => 35,
+        ];
+
+        $upperUnderscore = [
+            'FIRST_AND_LAST_NAME' => 'John Doe',
+            'EMAIL_ADDRESS' => 'john@example.com',
+            'AGE' => 35,
+        ];
+
+        $camelCaps = [
+            'firstAndLastName' => 'John Doe',
+            'emailAddress' => 'john@example.com',
+            'age' => 35,
+        ];
+
+        $underscore = [
+            'first_And_Last_Name' => 'John Doe',
+            'email_Address' => 'john@example.com',
+            'age' => 35,
+        ];
+
+        $lower = [
+            'firstandlastname' => 'John Doe',
+            'emailaddress' => 'john@example.com',
+            'age' => 35,
+        ];
+
+        $upper = [
+            'FIRSTANDLASTNAME' => 'John Doe',
+            'EMAILADDRESS' => 'john@example.com',
+            'AGE' => 35,
+        ];
+
+        return [
+            'upper to lower' => [$upper, A::CASE_LOWER, $lower],
+            'lower to upper' => [$lower, A::CASE_UPPER, $upper],
+            'underscore to camel' => [$lowerUnderscore, A::CASE_CAMEL_CAPS, $camelCaps],
+            'camel to underscore' => [$camelCaps, A::CASE_UNDERSCORE, $underscore],
+            'camel to upper underscore' => [$camelCaps, A::CASE_UNDERSCORE | A::CASE_UPPER, $upperUnderscore],
+            'camel to lower underscore' => [$camelCaps, A::CASE_UNDERSCORE | A::CASE_LOWER, $lowerUnderscore],
+            'lower underscore to upper camel' => [$lowerUnderscore, A::CASE_CAMEL_CAPS | A::CASE_UPPER, $upper],
+        ];
+    }
 }

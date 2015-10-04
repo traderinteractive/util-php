@@ -10,6 +10,11 @@ namespace DominionEnterprises\Util;
  */
 final class Arrays
 {
+    const CASE_LOWER = 1;
+    const CASE_UPPER = 2;
+    const CASE_CAMEL_CAPS = 4;
+    const CASE_UNDERSCORE = 8;
+
     /**
      * Simply returns an array value if the key exist or null if it does not.
      *
@@ -410,5 +415,49 @@ final class Arrays
                 $value = null;
             }
         }
+    }
+
+    /**
+     * Changes the case of all keys in an array.
+     *
+     * @param array   $input The array to work on.
+     * @param integer $case  The case to which the keys should be set.
+     *
+     * @return array Returns an array with its keys case changed.
+     */
+    public static function changeKeyCase(array $input, $case = self::CASE_LOWER)
+    {
+        if ($case & self::CASE_UNDERSCORE) {
+            $copy = [];
+            array_walk(
+                $input,
+                function ($value, $key) use (&$copy) {
+                    $copy[preg_replace("/([a-z])([A-Z0-9])/", '$1_$2', $key)] = $value;
+                }
+            );
+            $input = $copy;
+        }
+
+        if ($case & self::CASE_CAMEL_CAPS) {
+            $copy = [];
+            array_walk(
+                $input,
+                function ($value, $key) use (&$copy) {
+                    $key = lcfirst(str_replace(' ', '', ucwords(strtolower(str_replace('_', ' ', $key)))));
+                    $copy[$key] = $value;
+                }
+            );
+            $input = $copy;
+        }
+
+        if ($case & self::CASE_UPPER) {
+            $input = array_change_key_case($input, \CASE_UPPER);
+        }
+
+        if ($case & self::CASE_LOWER) {
+            $input = array_change_key_case($input, \CASE_LOWER);
+        }
+
+        return $input;
     }
 }
