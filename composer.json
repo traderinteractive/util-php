@@ -22,6 +22,7 @@
     "license": "MIT",
     "require": {
         "php": "~5.4",
+        "dominionenterprises/util-arrays": "~1.8",
         "dominionenterprises/util-file": "~1.8",
         "dominionenterprises/util-http": "~1.8",
         "dominionenterprises/util-time": "~1.8",

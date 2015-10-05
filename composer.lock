@@ -4,9 +4,65 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a885e9fd3c3151e163e2c6e89d100cdd",
-    "content-hash": "b7b4b458b5466eb327ecfd482652ae4a",
+    "hash": "ca0105308b656907353a4a244cebcb3e",
+    "content-hash": "e932211f45b1b676bc9614d1888a2a91",
     "packages": [
+        {
+            "name": "dominionenterprises/util-arrays",
+            "version": "v1.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dominionenterprises/util-arrays-php.git",
+                "reference": "1db93735c0a58f806df4247e0513449c67623d62"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dominionenterprises/util-arrays-php/zipball/1db93735c0a58f806df4247e0513449c67623d62",
+                "reference": "1db93735c0a58f806df4247e0513449c67623d62",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.4 || ~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6.1",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DominionEnterprises\\Util\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Spencer Rinehart",
+                    "email": "anubis@overthemonkey.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Jonathan Gaillard",
+                    "email": "jonathan.gaillard@dominionenterprises.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Chad Gray",
+                    "email": "chadwickgray@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A collection of array utilities.",
+            "keywords": [
+                "array",
+                "utility"
+            ],
+            "time": "2015-10-05 00:58:38"
+        },
         {
             "name": "dominionenterprises/util-file",
             "version": "v1.8.2",
