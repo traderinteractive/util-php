@@ -9,6 +9,7 @@ use DominionEnterprises\Util as U;
 
 /**
  * @coversDefaultClass \DominionEnterprises\Util
+ * @covers ::<private>
  */
 final class UtilTest extends \PHPUnit_Framework_TestCase
 {
