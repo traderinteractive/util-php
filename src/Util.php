@@ -64,32 +64,14 @@ final class Util
      */
     public static function ensure($valueToEnsure, $valueToCheck, $exception = null, array $exceptionArgs = null)
     {
-        if ($valueToEnsure === $valueToCheck) {
-            return $valueToCheck;
+        if ($valueToEnsure !== $valueToCheck) {
+            throw self::buildException(
+                $exception ?: "'{$valueToEnsure}' did not equal '{$valueToCheck}'",
+                $exceptionArgs
+            );
         }
 
-        if ($exception === null) {
-            throw new \Exception("'{$valueToEnsure}' did not equal '{$valueToCheck}'");
-        }
-
-        if (is_string($exception)) {
-            if ($exceptionArgs === null) {
-                throw new \Exception($exception);
-            }
-
-            if (array_key_exists($exception, self::$exceptionAliases)) {
-                $exception = self::$exceptionAliases[$exception];
-            }
-
-            $reflectionClass = new \ReflectionClass($exception);
-            throw $reflectionClass->newInstanceArgs($exceptionArgs);
-        }
-
-        if ($exception instanceof \Exception) {
-            throw $exception;
-        }
-
-        throw new \InvalidArgumentException('$exception was not null, a string, or an Exception');
+        return $valueToCheck;
     }
 
     /**
@@ -115,32 +97,44 @@ final class Util
      */
     public static function ensureNot($valueToThrowOn, $valueToCheck, $exception = null, array $exceptionArgs = null)
     {
-        if ($valueToThrowOn !== $valueToCheck) {
-            return $valueToCheck;
+        if ($valueToThrowOn === $valueToCheck) {
+            throw self::buildException($exception ?: "'{$valueToThrowOn}' equals '{$valueToCheck}'", $exceptionArgs);
         }
 
-        if ($exception === null) {
-            throw new \Exception("'{$valueToThrowOn}' equals '{$valueToCheck}'");
-        }
+        return $valueToCheck;
+    }
 
-        if (is_string($exception)) {
-            if ($exceptionArgs === null) {
-                throw new \Exception($exception);
-            }
-
-            if (array_key_exists($exception, self::$exceptionAliases)) {
-                $exception = self::$exceptionAliases[$exception];
-            }
-
-            $reflectionClass = new \ReflectionClass($exception);
-            throw $reflectionClass->newInstanceArgs($exceptionArgs);
-        }
-
+    /**
+     * Helper method to return exception created from ensure[Not] call inpu.
+     *
+     * @param mixed      $exception     Null, a fully qualified exception class name, string for an Exception message,
+     *                                  or an Exception.  The fully qualified exception class name could also be an
+     *                                  alias in getExceptionAliases()
+     * @param array|null $exceptionArgs Arguments to pass to a new instance of $exception. If using this parameter make
+     *                                  sure these arguments match the constructor for an exception of type $exception.
+     *
+     * @throws \InvalidArgumentException if $exception was not null, a string, or an Exception
+     */
+    private static function buildException($exception, array $exceptionArgs = null)
+    {
         if ($exception instanceof \Exception) {
-            throw $exception;
+            return $exception;
         }
 
-        throw new \InvalidArgumentException('$exception was not null, a string, or an Exception');
+        if (!is_string($exception)) {
+            throw new \InvalidArgumentException('$exception was not null, a string, or an Exception');
+        }
+
+        if ($exceptionArgs === null) {
+            return new \Exception($exception);
+        }
+
+        if (array_key_exists($exception, self::$exceptionAliases)) {
+            $exception = self::$exceptionAliases[$exception];
+        }
+
+        $reflectionClass = new \ReflectionClass($exception);
+        return $reflectionClass->newInstanceArgs($exceptionArgs);
     }
 
     /**
