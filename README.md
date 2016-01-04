@@ -24,6 +24,16 @@ To add the library as a local, per-project dependency use [Composer](http://getc
     }
 }
 ```
+## Components
+
+This package is a partial metapackage aggregating the following components:
+
+* [dominionenterprises/util-arrays](https://github.com/dominionenterprises/util-arrays-php)
+* [dominionenterprises/util-file](https://github.com/dominionenterprises/util-file-php)
+* [dominionenterprises/util-http](https://github.com/dominionenterprises/util-http-php)
+* [dominionenterprises/util-time](https://github.com/dominionenterprises/util-time-php)
+* [dominionenterprises/util-string](https://github.com/dominionenterprises/util-string-php)
+
 ##Documentation
 Found in the [source](src) itself, take a look!
 
