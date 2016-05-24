@@ -4,28 +4,28 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "23a42cbe228d0482894e445b9acafc61",
-    "content-hash": "cce7c2845c0368b67b3ca09dcf999706",
+    "hash": "1d2a2b3f34e12f4414986922fc5874b6",
+    "content-hash": "6b15bd02561b65386b8aaa20680888fb",
     "packages": [
         {
             "name": "dominionenterprises/util-arrays",
-            "version": "v1.9.0",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dominionenterprises/util-arrays-php.git",
-                "reference": "bd9114b3ca1e38d7c3b10dd5fd324092ed8f6f0b"
+                "reference": "d69cadea3698b01d35fe2bd8ef9d974d115894e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dominionenterprises/util-arrays-php/zipball/bd9114b3ca1e38d7c3b10dd5fd324092ed8f6f0b",
-                "reference": "bd9114b3ca1e38d7c3b10dd5fd324092ed8f6f0b",
+                "url": "https://api.github.com/repos/dominionenterprises/util-arrays-php/zipball/d69cadea3698b01d35fe2bd8ef9d974d115894e9",
+                "reference": "d69cadea3698b01d35fe2bd8ef9d974d115894e9",
                 "shasum": ""
             },
             "require": {
-                "php": "~5.4 || ~7.0"
+                "php": "~5.6 || ~7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0",
+                "phpunit/phpunit": "~5.0",
                 "satooshi/php-coveralls": "~0.6.1",
                 "squizlabs/php_codesniffer": "~2.0"
             },
@@ -61,27 +61,27 @@
                 "array",
                 "utility"
             ],
-            "time": "2016-03-31 23:26:55"
+            "time": "2016-05-24 18:15:26"
         },
         {
             "name": "dominionenterprises/util-file",
-            "version": "v1.8.2",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dominionenterprises/util-file-php.git",
-                "reference": "c73a83cc0d7f843a2db4bf38662e80e7616a4f49"
+                "reference": "e00a72d1978af15c1d049edd10ff2e9add4913bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dominionenterprises/util-file-php/zipball/c73a83cc0d7f843a2db4bf38662e80e7616a4f49",
-                "reference": "c73a83cc0d7f843a2db4bf38662e80e7616a4f49",
+                "url": "https://api.github.com/repos/dominionenterprises/util-file-php/zipball/e00a72d1978af15c1d049edd10ff2e9add4913bf",
+                "reference": "e00a72d1978af15c1d049edd10ff2e9add4913bf",
                 "shasum": ""
             },
             "require": {
-                "php": "~5.4 || ~7.0"
+                "php": "~5.6 || ~7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0",
+                "phpunit/phpunit": "~5.0",
                 "satooshi/php-coveralls": "~0.6.1",
                 "squizlabs/php_codesniffer": "~2.0"
             },
@@ -118,27 +118,27 @@
                 "file",
                 "utility"
             ],
-            "time": "2015-10-04 20:24:36"
+            "time": "2016-05-24 18:59:20"
         },
         {
             "name": "dominionenterprises/util-http",
-            "version": "v1.8.2",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dominionenterprises/util-http-php.git",
-                "reference": "0363a75b870a23d2d91613da324deb1b8c808caf"
+                "reference": "a2233b80a89886029448ea1d2f281f3da98aad1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dominionenterprises/util-http-php/zipball/0363a75b870a23d2d91613da324deb1b8c808caf",
-                "reference": "0363a75b870a23d2d91613da324deb1b8c808caf",
+                "url": "https://api.github.com/repos/dominionenterprises/util-http-php/zipball/a2233b80a89886029448ea1d2f281f3da98aad1a",
+                "reference": "a2233b80a89886029448ea1d2f281f3da98aad1a",
                 "shasum": ""
             },
             "require": {
-                "php": "~5.4 || ~7.0"
+                "php": "~5.6 || ~7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0",
+                "phpunit/phpunit": "~5.0",
                 "satooshi/php-coveralls": "~0.6.1",
                 "squizlabs/php_codesniffer": "~2.0"
             },
@@ -174,7 +174,7 @@
                 "http",
                 "utility"
             ],
-            "time": "2015-10-04 18:52:41"
+            "time": "2016-05-24 18:17:20"
         },
         {
             "name": "dominionenterprises/util-string",
@@ -234,23 +234,23 @@
         },
         {
             "name": "dominionenterprises/util-time",
-            "version": "v1.8.2",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dominionenterprises/util-time-php.git",
-                "reference": "ae6bf07e4d38bfcf9d6efdd62b0932facaa52670"
+                "reference": "177cbbbc693b0453036e649b9c0e74bd09d34622"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dominionenterprises/util-time-php/zipball/ae6bf07e4d38bfcf9d6efdd62b0932facaa52670",
-                "reference": "ae6bf07e4d38bfcf9d6efdd62b0932facaa52670",
+                "url": "https://api.github.com/repos/dominionenterprises/util-time-php/zipball/177cbbbc693b0453036e649b9c0e74bd09d34622",
+                "reference": "177cbbbc693b0453036e649b9c0e74bd09d34622",
                 "shasum": ""
             },
             "require": {
-                "php": "~5.4 || ~7.0"
+                "php": "~5.6 || ~7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0",
+                "phpunit/phpunit": "~5.0",
                 "satooshi/php-coveralls": "~0.6.1",
                 "squizlabs/php_codesniffer": "~2.0"
             },
@@ -286,7 +286,7 @@
                 "time",
                 "utility"
             ],
-            "time": "2015-10-05 00:22:04"
+            "time": "2016-05-24 19:04:00"
         }
     ],
     "packages-dev": [
