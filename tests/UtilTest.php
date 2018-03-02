@@ -2,6 +2,7 @@
 
 namespace TraderInteractive;
 
+use Throwable;
 use TraderInteractive\Util as Utility;
 use ErrorException;
 use Exception;
@@ -57,7 +58,7 @@ final class UtilTest extends TestCase
         set_error_handler('\TraderInteractive\Util::raiseException');
         try {
             trigger_error('test', E_USER_NOTICE);
-        } catch (ErrorException $e) {
+        } catch (Throwable $e) {
             $this->assertSame('test', $e->getMessage());
             $this->assertSame(0, $e->getCode());
             $this->assertSame(E_USER_NOTICE, $e->getSeverity());

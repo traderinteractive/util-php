@@ -186,76 +186,7 @@ final class Util
         bool $allowNulls = false
     ) {
         foreach ($typesToVariables as $type => $variablesOrVariable) {
-            $variables = [$variablesOrVariable];
-            if (is_array($variablesOrVariable)) {
-                $variables = $variablesOrVariable;
-            }
-
-            //cast ok since an integer won't match any of the cases.
-            //the similar code in the cases is an optimization for those type where faster checks can be made.
-            switch ((string)$type) {
-                case 'bool':
-                    foreach ($variables as $i => $variable) {
-                        //using the continue here not negative checks to make use of short cutting optimization.
-                        if ($variable === false || $variable === true || ($allowNulls && $variable === null)) {
-                            continue;
-                        }
-
-                        throw new InvalidArgumentException("variable at position '{$i}' was not a boolean");
-                    }
-
-                    break;
-                case 'null':
-                    foreach ($variables as $i => $variable) {
-                        if ($variable !== null) {
-                            throw new InvalidArgumentException("variable at position '{$i}' was not null");
-                        }
-                    }
-
-                    break;
-                case 'string':
-                    foreach ($variables as $i => $variable) {
-                        if (is_string($variable)) {
-                            if ($failOnWhitespace && trim($variable) === '') {
-                                throw new InvalidArgumentException("variable at position '{$i}' was whitespace");
-                            }
-
-                            continue;
-                        }
-
-                        if ($allowNulls && $variable === null) {
-                            continue;
-                        }
-
-                        throw new InvalidArgumentException("variable at position '{$i}' was not a '{$type}'");
-                    }
-
-                    break;
-                case 'array':
-                case 'callable':
-                case 'double':
-                case 'float':
-                case 'int':
-                case 'integer':
-                case 'long':
-                case 'numeric':
-                case 'object':
-                case 'real':
-                case 'resource':
-                case 'scalar':
-                    $isFunction = "is_{$type}";
-                    foreach ($variables as $i => $variable) {
-                        if ($isFunction($variable) || ($allowNulls && $variable === null)) {
-                            continue;
-                        }
-
-                        throw new InvalidArgumentException("variable at position '{$i}' was not a '{$type}'");
-                    }
-
-                    break;
-                default:
-                    throw new InvalidArgumentException('a type was not one of the is_ functions');
-            }
+            self::handleTypesToVariables($failOnWhitespace, $allowNulls, $variablesOrVariable, $type);
         }
     }
 
@@ -278,5 +209,108 @@ final class Util
     public static function setExceptionAliases(array $aliases)
     {
         self::$exceptionAliases = $aliases;
+    }
+
+    private static function handleBoolCase(bool $allowNulls, array $variables)
+    {
+        foreach ($variables as $i => $variable) {
+            //using the continue here not negative checks to make use of short cutting optimization.
+            if ($variable === false || $variable === true || ($allowNulls && $variable === null)) {
+                continue;
+            }
+
+            throw new InvalidArgumentException("variable at position '{$i}' was not a boolean");
+        }
+    }
+
+    private static function handleNullCase(array $variables)
+    {
+        foreach ($variables as $i => $variable) {
+            if ($variable !== null) {
+                throw new InvalidArgumentException("variable at position '{$i}' was not null");
+            }
+        }
+    }
+
+    private static function handleStringCase(bool $failOnWhitespace, bool $allowNulls, array $variables, string $type)
+    {
+        foreach ($variables as $i => $variable) {
+            if (is_string($variable)) {
+                if ($failOnWhitespace && trim($variable) === '') {
+                    throw new InvalidArgumentException("variable at position '{$i}' was whitespace");
+                }
+
+                continue;
+            }
+
+            if ($allowNulls && $variable === null) {
+                continue;
+            }
+
+            throw new InvalidArgumentException("variable at position '{$i}' was not a '{$type}'");
+        }
+    }
+
+    private static function handleDefaultCase(bool $allowNulls, string $type, array $variables)
+    {
+        $isFunction = "is_{$type}";
+        foreach ($variables as $i => $variable) {
+            if ($isFunction($variable) || ($allowNulls && $variable === null)) {
+                continue;
+            }
+
+            throw new InvalidArgumentException("variable at position '{$i}' was not a '{$type}'");
+        }
+    }
+
+    private static function handleTypesToVariables(
+        bool $failOnWhitespace,
+        bool $allowNulls,
+        $variablesOrVariable,
+        $type
+    ) {
+        $variables = [$variablesOrVariable];
+        if (is_array($variablesOrVariable)) {
+            $variables = $variablesOrVariable;
+        }
+
+        //cast ok since an integer won't match any of the cases.
+        //the similar code in the cases is an optimization for those type where faster checks can be made.
+        $typeString = (string)$type;
+        if ($typeString === 'bool') {
+            self::handleBoolCase($allowNulls, $variables);
+            return;
+        }
+
+        if ($typeString === 'null') {
+            self::handleNullCase($variables);
+            return;
+        }
+
+        if ($typeString === 'string') {
+            self::handleStringCase($failOnWhitespace, $allowNulls, $variables, $type);
+            return;
+        }
+
+        $defaults = [
+            'array',
+            'callable',
+            'double',
+            'float',
+            'int',
+            'integer',
+            'long',
+            'numeric',
+            'object',
+            'real',
+            'resource',
+            'scalar',
+        ];
+        if (in_array($typeString, $defaults)) {
+            self::handleDefaultCase($allowNulls, $type, $variables);
+            return;
+        }
+
+        throw new InvalidArgumentException('a type was not one of the is_ functions');
     }
 }
