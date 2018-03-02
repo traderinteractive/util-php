@@ -2,3 +2,4 @@
 /vendor/
 /clover.xml
 composer.lock
+phpunit.xml

@@ -6,12 +6,13 @@
 namespace DominionEnterprises;
 
 use DominionEnterprises\Util as U;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \DominionEnterprises\Util
  * @covers ::<private>
  */
-final class UtilTest extends \PHPUnit_Framework_TestCase
+final class UtilTest extends TestCase
 {
     /**
      * @test
