@@ -1,6 +1,6 @@
 <?php
 
-namespace DominionEnterprises;
+namespace TraderInteractive;
 
 use ErrorException;
 use Exception;

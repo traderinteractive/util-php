@@ -37,6 +37,6 @@
         "squizlabs/php_codesniffer": "^3.2"
     },
     "autoload": {
-        "psr-4": { "DominionEnterprises\\": "src" }
+        "psr-4": { "TraderInteractive\\": "src" }
     }
 }

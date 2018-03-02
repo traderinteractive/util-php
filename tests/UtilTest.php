@@ -1,15 +1,15 @@
 <?php
 
-namespace DominionEnterprises;
+namespace TraderInteractive;
 
-use DominionEnterprises\Util as Utility;
+use TraderInteractive\Util as Utility;
 use ErrorException;
 use Exception;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \DominionEnterprises\Util
+ * @coversDefaultClass \TraderInteractive\Util
  * @covers ::<private>
  */
 final class UtilTest extends TestCase
@@ -43,7 +43,7 @@ final class UtilTest extends TestCase
      */
     public function raiseExceptionThrowsErrorException()
     {
-        set_error_handler('\DominionEnterprises\Util::raiseException');
+        set_error_handler('\TraderInteractive\Util::raiseException');
         trigger_error('test');
         restore_error_handler();
     }
@@ -54,7 +54,7 @@ final class UtilTest extends TestCase
      */
     public function raiseExceptionSetsExceptionPropertiesCorrectly()
     {
-        set_error_handler('\DominionEnterprises\Util::raiseException');
+        set_error_handler('\TraderInteractive\Util::raiseException');
         try {
             trigger_error('test', E_USER_NOTICE);
         } catch (ErrorException $e) {
