@@ -32,7 +32,7 @@ final class Util
      * ]
      * </pre>
      */
-    public static function getExceptionInfo(Exception $e)
+    public static function getExceptionInfo(Exception $e) : array
     {
         return [
             'type' => get_class($e),
@@ -155,7 +155,7 @@ final class Util
      *
      * @throws ErrorException
      */
-    public static function raiseException(int $level, string $message, string $file = null, string $line = null)
+    public static function raiseException(int $level, string $message, string $file = null, string $line = null) : bool
     {
         if (error_reporting() === 0) {
             return false;
@@ -264,7 +264,7 @@ final class Util
      *
      * @return array array where keys are aliases and values are strings to a fully qualified exception class names.
      */
-    public static function getExceptionAliases()
+    public static function getExceptionAliases() : array
     {
         return self::$exceptionAliases;
     }
