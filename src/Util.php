@@ -1,9 +1,12 @@
 <?php
-/**
- * Defines the \DominionEnterprises\Util class.
- */
 
 namespace DominionEnterprises;
+
+use ErrorException;
+use Exception;
+use InvalidArgumentException;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Static class with various application functions.
@@ -15,7 +18,7 @@ final class Util
     /**
      * Returns exception info in array.
      *
-     * @param \Exception $e the exception to return info on
+     * @param Exception $e the exception to return info on
      *
      * @return array like:
      * <pre>
@@ -29,7 +32,7 @@ final class Util
      * ]
      * </pre>
      */
-    public static function getExceptionInfo(\Exception $e)
+    public static function getExceptionInfo(Exception $e)
     {
         return [
             'type' => get_class($e),
@@ -49,18 +52,19 @@ final class Util
      * Or like: $result = ensure(true, is_string('boo'), 'MyException', ['the message', 2])
      * Or like: $result = ensure(true, is_string('boo'), new MyException('the message', 2))
      *
-     * @param mixed $valueToEnsure the value to throw on if $valueToCheck equals it
-     * @param mixed $valueToCheck the value to check against $valueToEnsure
-     * @param null|string|\Exception $exception null, a fully qualified exception class name, string for an Exception
-     *                                          message, or an Exception.  The fully qualified exception class name
-     *                                          could also be an alias in getExceptionAliases()
-     * @param array|null $exceptionArgs arguments to pass to a new instance of $exception. If using this parameter make
-     *                                  sure these arguments match the constructor for an exception of type $exception.
+     * @param mixed                 $valueToEnsure the value to throw on if $valueToCheck equals it
+     * @param mixed                 $valueToCheck  the value to check against $valueToEnsure
+     * @param null|string|Exception $exception     null, a fully qualified exception class name, string for an Exception
+     *                                             message, or an Exception.  The fully qualified exception class name
+     *                                             could also be an alias in getExceptionAliases()
+     * @param array|null            $exceptionArgs arguments to pass to a new instance of $exception. If using this
+     *                                             parameter make sure these arguments match the constructor for an
+     *                                             exception of type $exception.
      *
      * @return mixed returns $valueToCheck
      *
-     * @throws \Exception if $valueToEnsure !== $valueToCheck
-     * @throws \InvalidArgumentException if $exception was not null, a string, or an Exception
+     * @throws Exception if $valueToEnsure !== $valueToCheck
+     * @throws InvalidArgumentException if $exception was not null, a string, or an Exception
      */
     public static function ensure($valueToEnsure, $valueToCheck, $exception = null, array $exceptionArgs = null)
     {
@@ -82,18 +86,19 @@ final class Util
      * Or like: $curl = ensureNot(false, curl_init('boo'), 'MyException', ['bad message', 2])
      * Or like: $curl = ensureNot(false, curl_init('boo'), new MyException('bad message', 2))
      *
-     * @param mixed $valueToThrowOn the value to throw on if $valueToCheck equals it
-     * @param mixed $valueToCheck the value to check against $valueToThrowOn
-     * @param null|string|\Exception $exception null, a fully qualified exception class name, string for an Exception
-     *                                          message, or an Exception.  The fully qualified exception class name
-     *                                          could also be an alias in getExceptionAliases()
-     * @param array|null $exceptionArgs arguments to pass to a new instance of $exception. If using this parameter make
-     *                                  sure these arguments match the constructor for an exception of type $exception.
+     * @param mixed                 $valueToThrowOn the value to throw on if $valueToCheck equals it
+     * @param mixed                 $valueToCheck   the value to check against $valueToThrowOn
+     * @param null|string|Exception $exception      null, a fully qualified exception class name, string for an
+     *                                              Exception message, or an Exception.  The fully qualified exception
+     *                                              class name could also be an alias in getExceptionAliases()
+     * @param array|null            $exceptionArgs  arguments to pass to a new instance of $exception. If using this
+     *                                              parameter make sure these arguments match the constructor for an
+     *                                              exception of type $exception.
      *
      * @return mixed returns $valueToCheck
      *
-     * @throws \Exception if $valueToThrowOn === $valueToCheck
-     * @throws \InvalidArgumentException if $exception was not null, a string, or an Exception
+     * @throws Exception if $valueToThrowOn === $valueToCheck
+     * @throws InvalidArgumentException if $exception was not null, a string, or an Exception
      */
     public static function ensureNot($valueToThrowOn, $valueToCheck, $exception = null, array $exceptionArgs = null)
     {
@@ -105,7 +110,7 @@ final class Util
     }
 
     /**
-     * Helper method to return exception created from ensure[Not] call inpu.
+     * Helper method to return exception created from ensure[Not] call input.
      *
      * @param mixed      $exception     Null, a fully qualified exception class name, string for an Exception message,
      *                                  or an Exception.  The fully qualified exception class name could also be an
@@ -113,45 +118,50 @@ final class Util
      * @param array|null $exceptionArgs Arguments to pass to a new instance of $exception. If using this parameter make
      *                                  sure these arguments match the constructor for an exception of type $exception.
      *
-     * @throws \InvalidArgumentException if $exception was not null, a string, or an Exception
+     * @return Exception|mixed|object
+     * @throws ReflectionException
      */
     private static function buildException($exception, array $exceptionArgs = null)
     {
-        if ($exception instanceof \Exception) {
+        if ($exception instanceof Exception) {
             return $exception;
         }
 
         if (!is_string($exception)) {
-            throw new \InvalidArgumentException('$exception was not null, a string, or an Exception');
+            throw new InvalidArgumentException('$exception was not null, a string, or an Exception');
         }
 
-        if ($exceptionArgs === null) {
-            return new \Exception($exception);
+        if (empty($exceptionArgs)) {
+            return new Exception($exception);
         }
 
         if (array_key_exists($exception, self::$exceptionAliases)) {
             $exception = self::$exceptionAliases[$exception];
         }
 
-        $reflectionClass = new \ReflectionClass($exception);
-        return $reflectionClass->newInstanceArgs($exceptionArgs);
+        return (new ReflectionClass($exception))->newInstanceArgs($exceptionArgs);
     }
 
     /**
      * Throws a new ErrorException based on the error information provided. To be
      * used as a callback for @see set_error_handler()
      *
+     * @param int    $level   The level of the exception.
+     * @param string $message The message the exception will give.
+     * @param string $file    The file that the error occurred in.
+     * @param string $line    The line that the exception occurred upon.
+     *
      * @return bool false
      *
-     * @throws \ErrorException
+     * @throws ErrorException
      */
-    public static function raiseException($level, $message, $file = null, $line = null)
+    public static function raiseException(int $level, string $message, string $file = null, string $line = null)
     {
         if (error_reporting() === 0) {
             return false;
         }
 
-        throw new \ErrorException($message, 0, $level, $file, $line);
+        throw new ErrorException($message, 0, $level, $file, $line);
     }
 
     /**
@@ -160,28 +170,21 @@ final class Util
      * @param array $typesToVariables like ['string' => [$var1, $var2], 'int' => [$var1, $var2]] or
      *                                ['string' => $var1, 'integer' => [1, $var2]]. Supported types are the suffixes
      *                                of the is_* functions such as string for is_string and int for is_int
-     * @param bool $failOnWhitespace whether to fail strings if they are whitespace
-     * @param bool $allowNulls whether to allow null values to pass through
+     * @param bool  $failOnWhitespace whether to fail strings if they are whitespace
+     * @param bool  $allowNulls       whether to allow null values to pass through
      *
      * @return void
      *
-     * @throws \InvalidArgumentException if a key in $typesToVariables was not a string
-     * @throws \InvalidArgumentException if a key in $typesToVariables did not have an is_ function
-     * @throws \InvalidArgumentException if a variable is not of correct type
-     * @throws \InvalidArgumentException if a variable is whitespace and $failOnWhitespace is set
-     * @throws \InvalidArgumentException if $failOnWhitespace was not a bool
-     * @throws \InvalidArgumentException if $allowNulls was not a bool
+     * @throws InvalidArgumentException if a key in $typesToVariables was not a string
+     * @throws InvalidArgumentException if a key in $typesToVariables did not have an is_ function
+     * @throws InvalidArgumentException if a variable is not of correct type
+     * @throws InvalidArgumentException if a variable is whitespace and $failOnWhitespace is set
      */
-    public static function throwIfNotType(array $typesToVariables, $failOnWhitespace = false, $allowNulls = false)
-    {
-        if ($allowNulls !== false && $allowNulls !== true) {
-            throw new \InvalidArgumentException('$allowNulls was not a bool');
-        }
-
-        if ($failOnWhitespace !== false && $failOnWhitespace !== true) {
-            throw new \InvalidArgumentException('$failOnWhitespace was not a bool');
-        }
-
+    public static function throwIfNotType(
+        array $typesToVariables,
+        bool $failOnWhitespace = false,
+        bool $allowNulls = false
+    ) {
         foreach ($typesToVariables as $type => $variablesOrVariable) {
             $variables = [$variablesOrVariable];
             if (is_array($variablesOrVariable)) {
@@ -198,14 +201,14 @@ final class Util
                             continue;
                         }
 
-                        throw new \InvalidArgumentException("variable at position '{$i}' was not a boolean");
+                        throw new InvalidArgumentException("variable at position '{$i}' was not a boolean");
                     }
 
                     break;
                 case 'null':
                     foreach ($variables as $i => $variable) {
                         if ($variable !== null) {
-                            throw new \InvalidArgumentException("variable at position '{$i}' was not null");
+                            throw new InvalidArgumentException("variable at position '{$i}' was not null");
                         }
                     }
 
@@ -214,7 +217,7 @@ final class Util
                     foreach ($variables as $i => $variable) {
                         if (is_string($variable)) {
                             if ($failOnWhitespace && trim($variable) === '') {
-                                throw new \InvalidArgumentException("variable at position '{$i}' was whitespace");
+                                throw new InvalidArgumentException("variable at position '{$i}' was whitespace");
                             }
 
                             continue;
@@ -224,7 +227,7 @@ final class Util
                             continue;
                         }
 
-                        throw new \InvalidArgumentException("variable at position '{$i}' was not a '{$type}'");
+                        throw new InvalidArgumentException("variable at position '{$i}' was not a '{$type}'");
                     }
 
                     break;
@@ -246,12 +249,12 @@ final class Util
                             continue;
                         }
 
-                        throw new \InvalidArgumentException("variable at position '{$i}' was not a '{$type}'");
+                        throw new InvalidArgumentException("variable at position '{$i}' was not a '{$type}'");
                     }
 
                     break;
                 default:
-                    throw new \InvalidArgumentException('a type was not one of the is_ functions');
+                    throw new InvalidArgumentException('a type was not one of the is_ functions');
             }
         }
     }
@@ -275,32 +278,5 @@ final class Util
     public static function setExceptionAliases(array $aliases)
     {
         self::$exceptionAliases = $aliases;
-    }
-
-    /**
-     * Call a static (possibly non public) method through reflection. Intended for use in testing, but should only use
-     * on methods as one would use a package level method in another language, since php does not have the feature.
-     *
-     * @param string fully qualified method name
-     * @param array $args arguments to pass to the reflected method
-     *
-     * @return mixed result of the reflected method call
-     *
-     * @throws \InvalidArgumentException if $method was not a string
-     * @throws \InvalidArgumentException if $method was not static
-     */
-    public static function callStatic($method, array $args = [])
-    {
-        if (!is_string($method)) {
-            throw new \InvalidArgumentException('$method was not a string');
-        }
-
-        $method = new \ReflectionMethod($method);
-        if (!$method->isStatic()) {
-            throw new \InvalidArgumentException('$method was not static');
-        }
-
-        $method->setAccessible(true);
-        return $method->invokeArgs(null, $args);
     }
 }
