@@ -7,6 +7,7 @@ use Exception;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
+use Throwable;
 
 /**
  * Static class with various application functions.
@@ -18,7 +19,7 @@ final class Util
     /**
      * Returns exception info in array.
      *
-     * @param Exception $e the exception to return info on
+     * @param Throwable $t the exception to return info on
      *
      * @return array like:
      * <pre>
@@ -32,15 +33,15 @@ final class Util
      * ]
      * </pre>
      */
-    public static function getExceptionInfo(Exception $e) : array
+    public static function getExceptionInfo(Throwable $t) : array
     {
         return [
-            'type' => get_class($e),
-            'message' => $e->getMessage(),
-            'code' => $e->getCode(),
-            'file' => $e->getFile(),
-            'line' => $e->getLine(),
-            'trace' => $e->getTraceAsString(),
+            'type' => get_class($t),
+            'message' => $t->getMessage(),
+            'code' => $t->getCode(),
+            'file' => $t->getFile(),
+            'line' => $t->getLine(),
+            'trace' => $t->getTraceAsString(),
         ];
     }
 
@@ -118,10 +119,11 @@ final class Util
      * @param array|null $exceptionArgs Arguments to pass to a new instance of $exception. If using this parameter make
      *                                  sure these arguments match the constructor for an exception of type $exception.
      *
-     * @return Exception|mixed|object
+     * @return Throwable
+     *
      * @throws ReflectionException
      */
-    private static function buildException($exception, array $exceptionArgs = null)
+    private static function buildException($exception, array $exceptionArgs = null) : Throwable
     {
         if ($exception instanceof Exception) {
             return $exception;
