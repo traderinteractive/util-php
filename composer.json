@@ -25,11 +25,11 @@
     },
     "require": {
         "php": "^7.0",
-        "dominionenterprises/util-arrays": "^2.0",
-        "dominionenterprises/util-file": "^2.0",
-        "dominionenterprises/util-http": "^2.0",
-        "dominionenterprises/util-time": "^2.0",
-        "dominionenterprises/util-string": "^2.0"
+        "traderinteractive/util-arrays": "^3.0",
+        "traderinteractive/util-file": "^3.0",
+        "traderinteractive/util-http": "^3.0",
+        "traderinteractive/util-time": "^3.0",
+        "traderinteractive/util-string": "^3.0"
     },
     "require-dev": {
         "php-coveralls/php-coveralls": "^1.0",
