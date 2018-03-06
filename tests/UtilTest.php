@@ -226,7 +226,7 @@ final class UtilTest extends TestCase
     /**
      * @test
      * @covers ::ensureNot
-     * @expectedException \DominionEnterprises\HttpException
+     * @expectedException \TraderInteractive\HttpException
      * @expectedExceptionMessage bah
      * @expectedExceptionCode    404
      */
@@ -301,7 +301,7 @@ final class UtilTest extends TestCase
     /**
      * @test
      * @covers ::ensure
-     * @expectedException \DominionEnterprises\HttpException
+     * @expectedException \TraderInteractive\HttpException
      * @expectedExceptionMessage bah
      * @expectedExceptionCode    404
      */

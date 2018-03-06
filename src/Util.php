@@ -14,7 +14,7 @@ use Throwable;
  */
 final class Util
 {
-    private static $exceptionAliases = ['http' => '\DominionEnterprises\HttpException'];
+    private static $exceptionAliases = ['http' => '\TraderInteractive\HttpException'];
 
     /**
      * Returns exception info in array.
