@@ -14,7 +14,7 @@ use Throwable;
  */
 final class Util
 {
-    private static $exceptionAliases = ['http' => '\DominionEnterprises\HttpException'];
+    private static $exceptionAliases = ['http' => '\TraderInteractive\HttpException'];
 
     /**
      * Returns exception info in array.
@@ -53,12 +53,13 @@ final class Util
      * Or like: $result = ensure(true, is_string('boo'), 'MyException', ['the message', 2])
      * Or like: $result = ensure(true, is_string('boo'), new MyException('the message', 2))
      *
-     * @param mixed                 $valueToEnsure the value to throw on if $valueToCheck equals it
-     * @param mixed                 $valueToCheck  the value to check against $valueToEnsure
-     * @param null|string|Exception $exception     null, a fully qualified exception class name, string for an Exception
+     * @param mixed      $valueToEnsure            the value to throw on if $valueToCheck equals it
+     * @param mixed      $valueToCheck             the value to check against $valueToEnsure
+     * @param mixed      $exception                null, a fully qualified exception class name, string for an Exception
      *                                             message, or an Exception.  The fully qualified exception class name
      *                                             could also be an alias in getExceptionAliases()
-     * @param array|null            $exceptionArgs arguments to pass to a new instance of $exception. If using this
+     *
+     * @param array|null $exceptionArgs            arguments to pass to a new instance of $exception. If using this
      *                                             parameter make sure these arguments match the constructor for an
      *                                             exception of type $exception.
      *
