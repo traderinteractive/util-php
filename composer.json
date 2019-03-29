@@ -25,7 +25,7 @@
     },
     "require": {
         "php": "^7.0",
-        "traderinteractive/util-arrays": "^3.0",
+        "traderinteractive/util-arrays": "^3.0.1",
         "traderinteractive/util-file": "^3.0",
         "traderinteractive/util-http": "^3.0",
         "traderinteractive/util-time": "^3.0",
