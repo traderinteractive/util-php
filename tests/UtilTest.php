@@ -40,10 +40,10 @@ final class UtilTest extends TestCase
     /**
      * @test
      * @covers ::raiseException
-     * @expectedException ErrorException
      */
     public function raiseExceptionThrowsErrorException()
     {
+        $this->expectException(ErrorException::class);
         set_error_handler('\TraderInteractive\Util::raiseException');
         trigger_error('test');
         restore_error_handler();
@@ -94,60 +94,60 @@ final class UtilTest extends TestCase
     /**
      * @test
      * @covers ::throwIfNotType
-     * @expectedException InvalidArgumentException
      */
     public function throwIfNotTypeStringFailure()
     {
+        $this->expectException(InvalidArgumentException::class);
         Utility::throwIfNotType(['string' => 2]);
     }
 
     /**
      * @test
      * @covers ::throwIfNotType
-     * @expectedException InvalidArgumentException
      */
     public function throwIfNotTypeBoolFailure()
     {
+        $this->expectException(InvalidArgumentException::class);
         Utility::throwIfNotType(['bool' => 2]);
     }
 
     /**
      * @test
      * @covers ::throwIfNotType
-     * @expectedException InvalidArgumentException
      */
     public function throwIfNotTypeNullFailure()
     {
+        $this->expectException(InvalidArgumentException::class);
         Utility::throwIfNotType(['null' => 2]);
     }
 
     /**
      * @test
      * @covers ::throwIfNotType
-     * @expectedException InvalidArgumentException
      */
     public function throwIfNotTypeIntFailure()
     {
+        $this->expectException(InvalidArgumentException::class);
         Utility::throwIfNotType(['int' => [1, 'not an int']]);
     }
 
     /**
      * @test
      * @covers ::throwIfNotType
-     * @expectedException InvalidArgumentException
      */
     public function throwIfNotTypeNotStringTypeArg()
     {
+        $this->expectException(InvalidArgumentException::class);
         Utility::throwIfNotType([1]);
     }
 
     /**
      * @test
      * @covers ::throwIfNotType
-     * @expectedException InvalidArgumentException
      */
     public function throwIfNotTypeBadFunctionName()
     {
+        $this->expectException(InvalidArgumentException::class);
         Utility::throwIfNotType(['FUNCTHATDOESNTEXIST' => 2]);
     }
 
@@ -165,10 +165,10 @@ final class UtilTest extends TestCase
     /**
      * @test
      * @covers ::throwIfNotType
-     * @expectedException InvalidArgumentException
      */
     public function throwIfNotTypeWhitespaceFailure()
     {
+        $this->expectException(InvalidArgumentException::class);
         Utility::throwIfNotType(['int' => 1, 'string' => '   '], true);
     }
 
@@ -184,66 +184,66 @@ final class UtilTest extends TestCase
     /**
      * @test
      * @covers ::ensureNot
-     * @expectedException InvalidArgumentException
      */
     public function ensureNotBadArg()
     {
+        $this->expectException(InvalidArgumentException::class);
         Utility::ensureNot(false, false, 1);
     }
 
     /**
      * @test
      * @covers ::ensureNot
-     * @expectedException Exception
      */
     public function ensureNotBaseException()
     {
+        $this->expectException(Exception::class);
         Utility::ensureNot(false, is_string(1));
     }
 
     /**
      * @test
      * @covers ::ensureNot
-     * @expectedException Exception
-     * @expectedExceptionMessage bah
      */
     public function ensureNotUserMessage()
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('bah');
         Utility::ensureNot(false, is_string(1), 'bah');
     }
 
     /**
      * @test
      * @covers ::ensureNot
-     * @expectedException Exception
-     * @expectedExceptionMessage bah
      */
     public function ensureNotDynamicException()
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('bah');
         Utility::ensureNot(false, is_string(1), 'Exception', ['bah']);
     }
 
     /**
      * @test
      * @covers ::ensureNot
-     * @expectedException \TraderInteractive\HttpException
-     * @expectedExceptionMessage bah
-     * @expectedExceptionCode    404
      */
     public function ensureNotDynamicExceptionWithAlias()
     {
+        $this->expectException(\TraderInteractive\HttpException::class);
+        $this->expectExceptionMessage('bah');
+        $this->expectExceptionCode('404');
         Utility::ensureNot(false, is_string(1), 'http', ['bah', 404, 404]);
     }
 
     /**
      * @test
      * @covers ::ensureNot
-     * @expectedException Exception
-     * @expectedExceptionMessage foo
-     * @expectedExceptionCode    2
      */
     public function ensureNotException()
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('foo');
+        $this->expectExceptionCode('2');
         Utility::ensureNot(false, false, new Exception('foo', 2));
     }
 
@@ -259,66 +259,66 @@ final class UtilTest extends TestCase
     /**
      * @test
      * @covers ::ensure
-     * @expectedException InvalidArgumentException
      */
     public function ensureBadArg()
     {
+        $this->expectException(InvalidArgumentException::class);
         Utility::ensure(false, true, 1);
     }
 
     /**
      * @test
      * @covers ::ensure
-     * @expectedException Exception
      */
     public function ensureBaseException()
     {
+        $this->expectException(Exception::class);
         Utility::ensure(true, is_string(1));
     }
 
     /**
      * @test
      * @covers ::ensure
-     * @expectedException Exception
-     * @expectedExceptionMessage bah
      */
     public function ensureUserMessage()
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('bah');
         Utility::ensure(true, is_string(1), 'bah');
     }
 
     /**
      * @test
      * @covers ::ensure
-     * @expectedException Exception
-     * @expectedExceptionMessage bah
      */
     public function ensureDynamicException()
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('bah');
         Utility::ensure(true, is_string(1), 'Exception', ['bah']);
     }
 
     /**
      * @test
      * @covers ::ensure
-     * @expectedException \TraderInteractive\HttpException
-     * @expectedExceptionMessage bah
-     * @expectedExceptionCode    404
      */
     public function ensureDynamicExceptionWithAlias()
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('bah');
+        $this->expectExceptionCode('404');
         Utility::ensure(true, is_string(1), 'http', ['bah', 404, 404]);
     }
 
     /**
      * @test
      * @covers ::ensure
-     * @expectedException Exception
-     * @expectedExceptionMessage foo
-     * @expectedExceptionCode    2
      */
     public function ensureException()
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('foo');
+        $this->expectExceptionCode('2');
         Utility::ensure(true, false, new Exception('foo', 2));
     }
 

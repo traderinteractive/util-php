@@ -24,15 +24,15 @@
         "sort-packages": true
     },
     "require": {
-        "php": "^7.0",
-        "traderinteractive/util-arrays": "^3.0.1",
-        "traderinteractive/util-file": "^3.0",
-        "traderinteractive/util-http": "^3.0",
-        "traderinteractive/util-time": "^3.0",
-        "traderinteractive/util-string": "^3.0"
+        "php": "^7.3 || ^8.0",
+        "traderinteractive/util-arrays": "^4.0",
+        "traderinteractive/util-file": "^4.0",
+        "traderinteractive/util-http": "^4.0",
+        "traderinteractive/util-time": "^4.0",
+        "traderinteractive/util-string": "^4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0",
+        "phpunit/phpunit": "^9.0",
         "squizlabs/php_codesniffer": "^3.2"
     },
     "autoload": {
