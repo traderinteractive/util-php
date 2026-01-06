@@ -126,7 +126,7 @@ final class Util
      */
     private static function buildException($exception, array $exceptionArgs = null) : Throwable
     {
-        if ($exception instanceof Exception) {
+        if ($exception instanceof Throwable) {
             return $exception;
         }
 
