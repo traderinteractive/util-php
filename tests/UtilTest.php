@@ -2,12 +2,14 @@
 
 namespace TraderInteractive;
 
+use Error;
 use Throwable;
 use TraderInteractive\Util as Utility;
 use ErrorException;
 use Exception;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 /**
  * @coversDefaultClass \TraderInteractive\Util
@@ -260,6 +262,16 @@ final class UtilTest extends TestCase
      * @test
      * @covers ::ensure
      */
+    public function ensureSuccessWithErrorObject()
+    {
+        $error = new Error('the error');
+        $this->assertTrue(Util::ensure(true, is_string('foo'), $error));
+    }
+
+    /**
+     * @test
+     * @covers ::ensure
+     */
     public function ensureBadArg()
     {
         $this->expectException(InvalidArgumentException::class);
@@ -320,6 +332,18 @@ final class UtilTest extends TestCase
         $this->expectExceptionMessage('foo');
         $this->expectExceptionCode('2');
         Utility::ensure(true, false, new Exception('foo', 2));
+    }
+
+    /**
+     * @test
+     * @covers ::ensure
+     */
+    public function ensureThrowsErrorObject()
+    {
+        $error = new TypeError('the error');
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage($error->getMessage());
+        Utility::ensure(true, false, $error);
     }
 
     /**
