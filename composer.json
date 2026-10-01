@@ -27,7 +27,7 @@
         "php": "^7.3 || ^8.0",
         "traderinteractive/util-arrays": "^4.0",
         "traderinteractive/util-file": "^4.0",
-        "traderinteractive/util-http": "^4.0",
+        "traderinteractive/util-http": "^4.0.1",
         "traderinteractive/util-time": "^4.0",
         "traderinteractive/util-string": "^4.0"
     },
